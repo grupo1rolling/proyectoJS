@@ -1,2 +1,2 @@
 # proyectoJS
-Proyecto final de Javascript de RollingCodeSchool comicion 3i grupo 1
+Proyecto final de Javascript de RollingCodeSchool comision 3i grupo 1
