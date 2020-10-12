@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,33 +8,32 @@
 		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
 	<title>Prueba</title>
 </head>
+
 <body>
-
-	<div class="container">
-		<div class="col">
-			<h3>Referencias</h3>
-			<div class="row m-3"><span class="badge badge-success">Usuario Administrador</span></div>
-			<div class="row m-3"><span class="badge badge-danger">Usuario Inactivo</span></div>
-		</div>
-		<hr>
-	</div>
-
-	<div class="container text-center">
+	<div class="container text-center mt-5">
 		<h1>Usuarios</h1>
 		<hr>
 	</div>
 
 	<div class="container">
+		<div class="col">
+			<h7 class="m-1">Referencias de Usuarios:</h7>
+			<div class="row ml-3 m-1"><span class="badge badge-success">Usuario Administrador</span></div>
+			<div class="row ml-3 m-1"><span class="badge badge-danger">Usuario Inactivo</span></div>
+		</div>
+	</div>
+
+	<div class="container mt-3">
 		<!-- <table class="table table-striped table-dark table-bordered"> -->
 		<table class="table table-sm table-striped table-dark">
 			<thead>
 				<tr id="usuariosCabecera">
-					<th scope="col" class="text-center">Código</th>
-					<th scope="col" class="text-center">Usuario</th>
-					<th scope="col" class="text-center">E-mail</th>
+					<th scope="col" class="">Código</th>
+					<th scope="col" class="">Usuario</th>
+					<th scope="col" class="">E-mail</th>
 					<!-- <th scope="col" class="text-center" style="width:80px;">Productos</th> -->
 					<th scope="col" class="text-center">Productos</th>
-					<th scope="col" class="text-center">Password</th>
+					<th scope="col" class="">Password</th>
 					<th scope="col" class="text-center">Activo</th>
 					<th scope="col" class="text-center">Administrador</th>
 				</tr>
@@ -49,18 +49,30 @@
 		</table>
 	</div>
 
-	<div class="container text-center">
+	<div class="container text-center mt-5">
 		<h1>Productos</h1>
 		<hr>
 	</div>
 
 	<div class="container">
+		<div class="col">
+			<h7 class="m-1">Referencias de Stock:</h7>
+			<div class="row ml-3 m-1"><span class="badge badge-danger"> 0 - Sin Stock!</span></div>
+			<div class="row ml-3 m-1"><span class="badge badge-warning"> 5 o menos - Casi Sin Stock</span></div>
+			<div class="row ml-3 m-1"><span class="badge badge-success"> Más de 5 - Suficiente Stock</span></div>
+		</div>
+	</div>
+
+	<div class="container mt-3">
 		<table class="table table-sm table-striped table-dark">
 			<thead>
 				<tr id="productosCabecera">
-					<th scope="col" class="text-center">Código</th>
-					<th scope="col" class="text-center">Nombre</th>
-					<th scope="col" class="text-center">Precio</th>
+					<th scope="col" class="">Código</th>
+					<th scope="col" class="">Nombre</th>
+					<th scope="col" class="text-center">Talle</th>
+					<th scope="col" class="text-center">Precio de Costo</th>
+					<th scope="col" class="text-center">Precio de Venta</th>
+					<th scope="col" class="text-center">Stock</th>
 				</tr>
 			</thead>
 			<tbody id="productosDetalle">
@@ -73,11 +85,88 @@
 			</tbody>
 		</table>
 	</div>
-		
+
+	<!-- Boton Modal (Ejemplo) -->
+	<div class="modal fade" id="usuario" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">(Ejemplo)</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<!-- Inicio Formulario -->
+					<section class="" id="formulario">
+						<div class="container-fluid col-md-12">
+							<div class="row">
+								<br>
+								<form class="col-md-12">
+									<br>
+									<Div class="form-row">
+										<div class="form-group col-md-12">
+											<label for="inputnombre">Apellido y Nombre</label>
+											<input type="text" class="form-control" id="inputnombre"
+												placeholder="Ingrese su Apellido y Nombre" required>
+										</div>
+									</Div>
+									<div class="form-row">
+										<div class="form-group col-md-8">
+											<label for="inputEmail">Email</label>
+											<input type="email" class="form-control" id="inputEmail"
+												placeholder="Ingrese su Email" required>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="inputTelefono">Teléfono</label>
+											<input type="number" class="form-control" id="inputTelefono"
+												placeholder="Ingrese su Teléfono" required>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-md-12">
+											<label for="inputnombre">Asunto</label>
+											<input type="text" class="form-control" id="inputasunto"
+												placeholder="Ingrese Asunto de la consulta" required>
+										</div>
+									</div>
+									<!-- inicio del text-area -->
+									<br>
+									<div class="container tet col-9">
+										<div class="row">
+											<br>
+											<textarea class="form-control" rows="8"
+												placeholder="Ingrese su consulta ..."></textarea>
+										</div>
+									</div>
+									<!-- Final del text-area -->
+									<br>
+									<div class="text-center">
+										<button type="submit" class="btn btn-primary"
+											data-dismiss="modal">Enviar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</section>
+					<!-- Fin seccion Formulario -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FIN Boton Modal -->
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+		crossorigin="anonymous"></script>
+
 	<script src="../js/app.js" type="module"></script>
 </body>
+
 </html>
-
-
-<!-- <button onclick="document.body.bgColor='lightgreen'">Modo Verde</button> -->
-<!-- <button onclick="cambiarColor()">Modo Verde</button> -->

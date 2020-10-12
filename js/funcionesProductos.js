@@ -10,7 +10,7 @@ export function agregarProducto(producto) {
 
 	//-- Verifico si ya existe el codigo de producto ingresado
 	let existeProducto = productosArray.find(function (item) {
-		return item.codigo == producto.codigo ? true : false;
+		return item._codigo == producto.codigo ? true : false;
 	});
 
 	if (existeProducto) {
@@ -24,7 +24,7 @@ export function agregarProducto(producto) {
 // Muestro los productos de un usuario, consultando al LocalStorage
 export function mostrarProductosUsuario(usuario) {
 	//-- Capturo todos los codigos de los productos que contiene el usuario
-	let codProductos = usuario.codigoProductos;
+	let codProductos = usuario.codigosProductos;
 
 	//-- Capturo el listado de todos los productos almacenados en LocalStorage
 	let productosJSON = JSON.parse(localStorage.getItem("productos"));
@@ -32,31 +32,34 @@ export function mostrarProductosUsuario(usuario) {
 	//-- Si existen productos en LocalStorage, realizo la busqueda de los codigos de productos del usuario
 	if (productosJSON) {
 		let productosFiltrados = [];
-		let totalProducto = []; //Variable donde se guarda un arreglo de los productos del usuario
+		// let totalProducto = []; //Variable donde se guarda un arreglo de los productos del usuario
 
 		//Agregado Pablo----------Variable que suma el total del precio de los productos
-		let suma = 0;
+		let sumaTotalPagar = 0;
 		//-----------------------
 
 		codProductos.map(function (item) {
 			productosFiltrados = productosJSON.find(function (item2) {
-				return item2.codigo == item && item2.nombre;
+				return item2._codigo == item && item2;
 			});
 
 			//Agregado Pablo------Agrego los productos al arreglo
-			totalProducto.push(productosFiltrados);
+			// totalProducto.push(productosFiltrados);
+
+			sumaTotalPagar += productosFiltrados._precio;
+
 			//----------------------------
 
 			if (productosFiltrados) {
-				console.log(productosFiltrados.nombre, `$${productosFiltrados.precio}`);
+				console.log(productosFiltrados._nombre, `$${productosFiltrados._precio}`);
 			}
 		});
 
 		// Agregado Pablo--------Calculo el valor total a pagar
-		totalProducto.map(function (produc) {
-			suma += produc.precio;
-		});
-		console.log(`Total a pagar $${suma}`);
+		// totalProducto.map(function (produc) {
+		// 	suma += produc.precio;
+		// });
+		console.log(`Total a pagar $${sumaTotalPagar}`);
 		//---------------------------------
 	}
 }
@@ -70,24 +73,28 @@ export function getProductos() {
 export function mostrarProductos() {
 	getProductos().map(function (item) {
 		let elemento = document.createElement("tr");
-		//elemento.className = "col-md-4";
+		let stockIndicador = '';
 
-		let usuarioInactivo = '';
-		let usuarioAdmin = '';
-
-		if (item.estadoActivo == false) {
-			usuarioInactivo = 'bg-danger';
+		if (item._stock == 0) {
+			stockIndicador = 'text-danger';
 		}
 
-		if (item.admin == true) {
-			usuarioAdmin = 'bg-success';
+		if (item._stock > 0 && item._stock <= 5) {
+			stockIndicador = 'text-warning';
+		}
+
+		if (item._stock > 5) {
+			stockIndicador = 'text-success';
 		}
 
 		let detalle = `
 			<tr>
-				<th scope="row" class="${usuarioInactivo} ${usuarioAdmin}">${item.codigo}</th>
-					<td class="">${item.nombre}</td>
-					<td class="text-center">${item.precio}</td>
+				<th scope="row" class="">${item._codigo}</th>
+					<td class="">${item._nombre}</td>
+					<td class="text-center">${item._talle}</td>
+					<td class="text-center">$ ${item._costo}</td>
+					<td class="text-center">$ ${item._precio}</td>
+					<td class="text-center ${stockIndicador}"> <b>${item._stock}</b></td>
 					<td class="text-center"><button type="button" class="btn btn-outline-warning btn-sm">Modificar</button></td>
 					<td class="text-center"><button type="button" class="btn btn-danger btn-sm">X</button></td>
 			</tr>
