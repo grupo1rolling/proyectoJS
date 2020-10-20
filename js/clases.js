@@ -1,5 +1,5 @@
 export class Usuario {
-	constructor(nombre, email, password, codigosProductos = [], direccion = [],
+	constructor(codigo, nombre, apellido, email, password, codigosProductos = [], direccion = [],
 		// direccion = {
 		// 	dir1,
 		// 	dir2,
@@ -9,7 +9,9 @@ export class Usuario {
 		// },
 		estado, esAdmin
 	) {
+		this._codigo = codigo;
 		this._nombre = nombre;
+		this._apellido = apellido;
 		this._email = email;
 		this._password = password;
 		this._codigosProductos = codigosProductos;
@@ -18,9 +20,23 @@ export class Usuario {
 		this._esAdmin = esAdmin;
 	}
 
+	///OBSERVACION : podemos cambiar Apellido por usuario y en la funcion login
+	//function checkLogin(mailL, passL) {
+	// 	usuarioOK = usuariosArray.find(item => {
+	// 		return (item._email === mailL||item_usuario === mailL) && (item._password === passL)
+	// 	})
+	// }
 	//-----[Getter]-----//
+	get codigo() {
+		return this._codigo;
+	}
+
 	get nombre() {
 		return this._nombre;
+	}
+
+	get apellido() {
+		return this._apellido;
 	}
 
 	get email() {
@@ -49,8 +65,16 @@ export class Usuario {
 
 
 	//-----[Setter]-----//
+	set codigo(codigo) {
+		this._codigo = codigo;
+	}
+
 	set nombre(nombre) {
 		this._nombre = nombre;
+	}
+
+	set apellido(apellido) {
+		this._apellido = apellido;
 	}
 
 	set email(email) {
@@ -74,17 +98,21 @@ export class Usuario {
 	}
 }
 
+
+//CHECK QUE  DESCRIPCION TENGA LA MISMA CANT DE CARACTERES PARA QUE LAS CARD QUEDEN IGUALES Y NO UNA MAS ALTA QUE LA OTRA
 export class Producto {
-	constructor(codigo, nombre, talle, costo, precio, stock) {
+	constructor(codigo, nombre, descripcion, talle, foto, precio, stock, categorias = []) {
 		this._codigo = codigo;
 		this._nombre = nombre;
+		this._descripcion = descripcion;
 		this._talle = talle;
-		this._costo = costo;
+		this._foto = foto;
 		this._precio = precio;
 		this._stock = stock;
+		this._categorias = categorias;
 	}
 
-	// GETTER
+	//-----[Getter]-----//
 	get codigo() {
 		return this._codigo;
 	}
@@ -93,12 +121,16 @@ export class Producto {
 		return this._nombre;
 	}
 
+	get descripcion() {
+		return this._descripcion;
+	}
+
 	get talle() {
 		return this._talle;
 	}
 
-	get costo() {
-		return this._costo;
+	get foto() {
+		return this._foto;
 	}
 
 	get precio() {
@@ -109,7 +141,11 @@ export class Producto {
 		return this._stock;
 	}
 
-	// SETTER 
+	get categorias() {
+		return this._categorias;
+	}
+
+	//-----[Setter]-----//
 	set codigo(codigo) {
 		this._codigo = codigo;
 	}
@@ -118,12 +154,16 @@ export class Producto {
 		this._nombre = nombre;
 	}
 
+	set descripcion(descripcion) {
+		this.decripcion=descripcion;
+	}
+
 	set talle(talle) {
 		this._talle = talle;
 	}
 
-	set costo(costo) {
-		this._costo = costo;
+	set foto(foto) {
+		this._foto = foto;
 	}
 
 	set precio(precio) {
@@ -132,5 +172,52 @@ export class Producto {
 
 	set stock(stock) {
 		this._stock = stock;
+	}
+
+	set categorias(categorias) {
+		this.categorias=categorias;
+	}
+}
+
+export class ItemCarrito {
+	constructor (idProd, nomPrd, cantProd, precioProd)  {
+		this._idProd = idProd;
+		this._nomProd = nomProd;
+		this._cantProd = cantProd;
+		this._precioProd = precioProd;
+	}
+
+	//-----[Getter]-----//
+	get idProd() {
+		return this._idProd;
+	}
+
+	get nomPrd() {
+		return this._nomProd;
+	}
+
+	get cantProd() {
+		return this._cantProd;
+	}
+
+	get precioProd() {
+		return this._precioProd;
+	}
+
+	//-----[Setter]-----//
+	set idProd(idProd) {
+		this._idProd = idProd;
+	}
+
+	set nomPrd(nomProd) {
+		this._nomProd = nomProd;
+	}
+
+	set cantProd(cantProd) {
+		this._cantProd = cantProd;
+	}
+
+	set precioProd(precioProd) {
+		this._precioProd = precioProd;
 	}
 }

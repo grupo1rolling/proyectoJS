@@ -1,7 +1,7 @@
 export function agregarProducto(producto) {
 	let productosArray = [];
 
-	//-- Verifico si existe la key 'productos' en LocalStorage
+	//-- Verificamos si existe la key 'productos' en LocalStorage
 	//-- Si existe y tiene productos, capturo la informacion en un array
 	productosArray =
 		JSON.parse(localStorage.getItem("productos")) == null
@@ -71,8 +71,44 @@ export function getProductos() {
 }
 
 export function mostrarProductos() {
+	// getProductos().map(function (item) {
+	// 	let elemento = document.createElement("tr");
+	// 	let stockIndicador = '';
+
+	// 	if (item._stock == 0) {
+	// 		stockIndicador = 'text-danger';
+	// 	}
+
+	// 	if (item._stock > 0 && item._stock <= 5) {
+	// 		stockIndicador = 'text-warning';
+	// 	}
+
+	// 	if (item._stock > 5) {
+	// 		stockIndicador = 'text-success';
+	// 	}
+
+	// 	let detalle = `
+	// 		<tr>
+	// 			<th scope="row" class="">${item._codigo}</th>
+	// 				<td class="">${item._nombre}</td>
+	// 				<td class="text-center">${item._talle}</td>
+	// 				<td class="text-center">${item._foto}</td>
+	// 				<td class="text-center">$ ${item._precio}</td>
+	// 				<td class="text-center ${stockIndicador}"> <b>${item._stock}</b></td>
+	// 				<td class="text-center"> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modificaProducto">
+	// 				Modificar</button> </td>	
+	// 				<td class="text-center"><button type="button" id="btnBaja" class="btn btn-danger btn-sm">X</button></td>
+	// 		</tr>
+	// 		`;
+
+	// 	elemento.innerHTML = detalle;
+	// 	productosDetalle.appendChild(elemento);
+	// });
+
+	let contenedor = document.getElementById("productosDetalle");
+	contenedor.innerHTML = "";
+
 	getProductos().map(function (item) {
-		let elemento = document.createElement("tr");
 		let stockIndicador = '';
 
 		if (item._stock == 0) {
@@ -92,16 +128,50 @@ export function mostrarProductos() {
 				<th scope="row" class="">${item._codigo}</th>
 					<td class="">${item._nombre}</td>
 					<td class="text-center">${item._talle}</td>
-					<td class="text-center">$ ${item._costo}</td>
+					<td class="text-center">${item._foto}</td>
 					<td class="text-center">$ ${item._precio}</td>
 					<td class="text-center ${stockIndicador}"> <b>${item._stock}</b></td>
-					<td class="text-center"><button type="button" class="btn btn-outline-warning btn-sm">Modificar</button></td>
-					<td class="text-center"><button type="button" class="btn btn-danger btn-sm">X</button></td>
+					<td class="text-center"> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modificaProducto">
+					Modificar</button> </td>	
+					<td class="text-center"><button type="button" id="btnBaja" class="btn btn-danger btn-sm">X</button></td>
 			</tr>
-			`;
+      	`;
+		contenedor.innerHTML += detalle;
 
-		elemento.innerHTML = detalle;
-		productosDetalle.appendChild(elemento);
 	});
 }
 
+// ########################################################
+// FUNCION QUE OBTIENE DATOS PARA EL ALTA DE LOS PRODUCTOS 
+// ########################################################
+
+function obtenerDatosProductos() {
+
+	//codigo
+	let codigo = document.getElementById("codigo").value.toUpperCase();
+	//nombreProd
+	let nombreProd = document.getElementById("nombreProd").value.toUpperCase();
+	//talle
+	let talle = document.getElementById("talle");
+	let talleSeleccionado = talle.options[talle.selectedIndex].value;
+	//foto?
+	let foto = document.getElementById("foto").value;
+	//stock
+	let stock = parseInt(document.getElementById("stock").value);
+	//precio
+	let precio = parseInt(document.getElementById("precio").value);
+
+	//creamos INSTANCIA DEL PRODUCTO
+	producto = new Producto(codigo, nombre, talle, foto, stock, precio);
+
+	//inicializamos INSTANCIA PRODUCTO
+	producto.codigo = codigo;
+	producto.nombre = nombreProd;
+	producto.talle = talleSeleccionado;
+	producto.foto = foto;
+	producto.stock = stock;
+	producto.precio = precio;
+
+	//console.log(producto)
+	agregarProducto(producto);
+} //fin de obtenerDatosProductos() 
