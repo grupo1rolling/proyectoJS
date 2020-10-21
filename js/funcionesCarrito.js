@@ -1,52 +1,104 @@
-import { ItemCarrito } from "./clases.js";
-
-//import { Usuario, Producto, ItemCarrito } from "./clases.js";
+import { Usuario, Producto, ItemCarrito } from "./clases.js";
+import { agregarProducto, getProductos } from "./funcionesProductos.js";
+import { agregarUsuario } from "./funcionesUsuarios.js";
 
 // ------------- [inicialización de variables] ------------- //
 let totalARSCarrito=0, contadorProdCarrito=0;
-
 let dbProductos=[];
 
-// ------------- [actualiza totales del Carrito] ------------- //
-export function actualizarTotalesCarrito() {
-    document.getElementById("totalCarrito").innerHTML=totalARSCarrito.toFixed(2);
-    document.getElementById("contador").innerHTML=contadorProdCarrito;
-}
+// ------------- [inicialización de variables] ------------- //
+cargaInicialDatos();
+getProductos();
+vaciarCarrito();
+//actualizarTotalesCarrito();
+
 
 // ------ [usuarioAutenticado (true/false) en localStorage] ------ //
 //localStorage.setItem("usuarioAutenticado", false);
 //lo ponemos en true para que entre siempre                          #### 4 TESTING PURPOSES ONLY ###
 localStorage.setItem("usuarioAutenticado", true);
+let autenticado=localStorage.getItem("usuarioAutenticado");          // ### OJO QUE ES STRING ### //
+console.log(`valor de autenticado que indica si un usuario esta logueado ${autenticado}`);           
 
-let autenticado=localStorage.getItem("usuarioAutenticado");
-console.log(autenticado) //OJO QUE ES STRING                          #### 4 TESTING PURPOSES ONLY ###
+
+
+// --- ########################## [F U N C I O N E S] ########################## ---//
+
+// -------------- [carga inicial de datos PRODUCTOS Y USUARIOS] -------------- //
+function cargaInicialDatos() {
+    // -------------- [inicializamos ADMINISTRADOR)] -------------- //
+	let admin = new Usuario(0, "Administrador", "Supremo","admin@naturecollection.com", "admin", [], [], true, true);
+	agregarUsuario(admin);
+	//---------------[Creacion de usuarios (Ejemplo)]---------------//
+	let ale = new Usuario(1, "ALE", "CAROL","ale@ale.com", "12345", [], [], true, false);
+	let mary = new Usuario(2, "MARY","BOSCH" ,"mary@mary.com", "65546", [], [], true, true);
+	let silvia = new Usuario(3, "SILVIA", "SOSA", "silvia@silvia", "lalala", [], [], true, false);
+	let lucas = new Usuario(4, "LUCAS", "RAMUNNI","lucas@lucas.com", "20565", [], [], true, true);
+    let franco = new Usuario(5, "FRANCO", "LEIRO","franco@franco.com", "59842", [], [], true, false);
+    // -------- [Agregamos usuarios (por instancias de objetos)] -------- //
+	agregarUsuario(ale);
+	agregarUsuario(mary);
+	agregarUsuario(silvia);
+	agregarUsuario(lucas);
+	agregarUsuario(franco);
+	// ---------- [Creacion de Productos (por instancias de objetos)] ---------- //
+	let prod1 = new Producto(1, "prod uno", "ideal para primavera verano", "M", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 750, 3, ["frío","viajar" ]);
+	let prod2 = new Producto(2, "prod dos", "ideal para primavera verano", "G", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tTalleBoxer.jpg", 1000, 4, ["calor","viajar" ]);
+	let prod3 = new Producto(3, "prod tres",  "ideal para primavera verano", "U", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 1999,99, 3, ["calor","todos los días" ]);
+	let prod4 = new Producto(4, "prod cuatro","ideal para primavera verano", "P", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tTalleBoxer.jpg", 999,9, 3, ["calor"]);
+	let prod5 = new Producto(5, "prod cinco", "ideal para primavera verano", "M", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 799,99, 1, ["todos los días" ]);
+	let prod6 = new Producto(6, "prod seis","ideal para primavera verano", "M", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 850, 3, ["frío" ]);
+	// -------- [Agregamos Productos a la BD (por instancias de objetos)] -------- //
+	agregarProducto(prod1);
+	agregarProducto(prod2);
+	agregarProducto(prod3);
+	agregarProducto(prod4);
+	agregarProducto(prod5);
+	agregarProducto(prod6);
+}
+
+
+
+
+
+
+
+
+
+// ------------- [actualiza totales del Carrito] ------------- //
+function actualizarTotalesCarrito() {
+    document.getElementById("totalCarrito").innerHTML=totalARSCarrito.toFixed(2);
+    document.getElementById("contador").innerHTML=contadorProdCarrito;
+}
+
 
 
 // ---------------------------------------------------- //
 function vaciarCarrito () {
     totalARSCarrito=0;
     contadorProdCarrito=0;
+    actualizarTotalesCarrito();
 };
 
 // ------------- [traemos productos del local Storage] ------------- //
-function getProductos() {
-    dbProductos =
-        JSON.parse(localStorage.getItem("productos")) == null
-            ? []
-			: JSON.parse(localStorage.getItem("productos"));
-	return dbProductos;
-}
+// function getProductos() {
+//     dbProductos =
+//         JSON.parse(localStorage.getItem("productos")) == null
+//             ? []
+// 			: JSON.parse(localStorage.getItem("productos"));
+// 	return dbProductos;
+// }
 
 // ------------- [traemos productos del local Storage] ------------- //
 function setLocalStorage () {
-    localStorage.setItem('productos',JSON.stringify(usuarios))
+    localStorage.setItem('productos',JSON.stringify(dbProductos))
 }
 
 
 // ------------------------ [mostrar tarjetas dinámicamente] ------------------------ //
 let tarjProd = document.getElementById("tarjetasProd");
 
-export function mostrarTarjetas() {
+function mostrarTarjetas() {
     dbProductos.map(function(prod, i){
         let tarjeta = `<div class="card-deck m-5">
                 <div class="card">
@@ -70,10 +122,10 @@ export function mostrarTarjetas() {
 }
 
 
-export function comprarProd(cod) {
+function comprarProd(cod) {
     console.log ("vamos de shopping")
 }
-export function agregarAlCarrito(cod) {
+function agregarAlCarrito(cod) {
 
     // ---------------------- [creamos INSTANCIA ItemCarrito] ---------------------- //
 let itemCart= new ItemCarrito (idProd, nomProd, cantProd, precioProd);
@@ -98,7 +150,7 @@ let itemCart= new ItemCarrito (idProd, nomProd, cantProd, precioProd);
 
 
 // ---------------------- [creamos INSTANCIA ItemCarrito] ---------------------- //
-let itemCart= new ItemCarrito (idProd, nomProd, cantProd, precioProd);
+//let itemCart= new ItemCarrito (idProd, nomProd, cantProd, precioProd);
 // let idP,nomP,cantP, precioP;
 // //inicializamos INSTANCIA ItemCarrito
 // itemCart.idProd = idP;

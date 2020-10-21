@@ -20,7 +20,7 @@ export class Usuario {
 		this._esAdmin = esAdmin;
 	}
 
-	///OBSERVACION : podemos cambiar Apellido por usuario y en la funcion login
+	// OBSERVACION : podemos cambiar Apellido por usuario y en la funcion login
 	//function checkLogin(mailL, passL) {
 	// 	usuarioOK = usuariosArray.find(item => {
 	// 		return (item._email === mailL||item_usuario === mailL) && (item._password === passL)
