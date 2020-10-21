@@ -1,10 +1,10 @@
 import { Usuario, Producto, ItemCarrito } from "./clases.js";
-import { agregarProducto, getProductos } from "./funcionesProductos.js";
+import { agregarProducto } from "./funcionesProductos.js";
 import { agregarUsuario } from "./funcionesUsuarios.js";
 
 // ------------- [inicialización de variables] ------------- //
 let totalARSCarrito=0, contadorProdCarrito=0;
-let dbProductos=[];
+//let dbProductos=[];
 
 // ------------- [inicialización de variables] ------------- //
 cargaInicialDatos();
@@ -57,37 +57,31 @@ function cargaInicialDatos() {
 	agregarProducto(prod6);
 }
 
-
-
-
-
-
-
-
-
 // ------------- [actualiza totales del Carrito] ------------- //
 function actualizarTotalesCarrito() {
     document.getElementById("totalCarrito").innerHTML=totalARSCarrito.toFixed(2);
     document.getElementById("contador").innerHTML=contadorProdCarrito;
 }
 
-
-
 // ---------------------------------------------------- //
 function vaciarCarrito () {
     totalARSCarrito=0;
     contadorProdCarrito=0;
+    console.log("VACIANDO CARRITO.................")
     actualizarTotalesCarrito();
 };
 
 // ------------- [traemos productos del local Storage] ------------- //
-// function getProductos() {
-//     dbProductos =
-//         JSON.parse(localStorage.getItem("productos")) == null
-//             ? []
-// 			: JSON.parse(localStorage.getItem("productos"));
-// 	return dbProductos;
-// }
+///NO FUNCIONA TENGO QUE LLAMARLO DESDE LA CONSOLA                   #### 4 TESTING PURPOSES ONLY ###
+function getProductos() {
+
+    let dbProductos =
+        JSON.parse(localStorage.getItem("productos")) == null
+            ? []
+            : JSON.parse(localStorage.getItem("productos"));
+            
+ 	return dbProductos;
+ }
 
 // ------------- [traemos productos del local Storage] ------------- //
 function setLocalStorage () {
@@ -96,21 +90,23 @@ function setLocalStorage () {
 
 
 // ------------------------ [mostrar tarjetas dinámicamente] ------------------------ //
-let tarjProd = document.getElementById("tarjetasProd");
+//let tarjProd = document.getElementById("tarjetasProd");
 
 function mostrarTarjetas() {
-    dbProductos.map(function(prod, i){
+
+    let tarjProd = document.getElementById("tarjetasProd");
+    dbProductos.map(function(prod, index){
         let tarjeta = `<div class="card-deck m-5">
                 <div class="card">
-                <img id="fotoProducto" src=${prod.foto} class="card-img-top" alt="top-estampa-cactus">
+                <img id="fotoProducto" src=${prod._foto} class="card-img-top" alt="top-estampa-cactus">
                 <div class="card-body">
-                  <h5 id="nombreProducto" class="card-title">${prod.nombre}</h5>
-                  <p id="precioProducto">${prod.precio}</p>
+                  <h5 id="nombreProducto" class="card-title">${prod._nombre}</h5>
+                  <p id="precioProducto">${prod._precio}</p>
                   <p id="descripcionProducto"class="card-text">
-                  ${prod.descripcion}
+                  ${prod._descripcion}
                   </p>
-                  <p id="talleProducto">${prod.talle}</p>
-                  <p id="categoriaProducto">${prod.categoria}</p>
+                  <p id="talleProducto">${prod._talle}</p>
+                  <p id="categoriaProducto">${prod._categoria[0]}</p>
                 </div>
                 <div class="card-footer">
                   <a href="#" class="btn btn-green mt-3" onclick="comprarProd(${index})">Añadir al carro</a>
@@ -121,13 +117,15 @@ function mostrarTarjetas() {
         });
 }
 
-
+// --------- [vamos a poner en un array los codigos de productos comprados] --------- //
 function comprarProd(cod) {
     console.log ("vamos de shopping")
 }
+
+// ---------- [vamos a poner en un array los codigos de productos comprados] ---------- //
 function agregarAlCarrito(cod) {
 
-    // ---------------------- [creamos INSTANCIA ItemCarrito] ---------------------- //
+// ---------------------- [creamos INSTANCIA ItemCarrito] ---------------------- //
 let itemCart= new ItemCarrito (idProd, nomProd, cantProd, precioProd);
 // let idP,nomP,cantP, precioP;
 // //inicializamos INSTANCIA ItemCarrito

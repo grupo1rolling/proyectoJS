@@ -146,7 +146,6 @@ export function mostrarProductos() {
 // ########################################################
 
 function obtenerDatosProductos() {
-
 	//codigo
 	let codigo = document.getElementById("codigo").value.toUpperCase();
 	//nombreProd
