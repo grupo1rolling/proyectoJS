@@ -391,10 +391,16 @@
 									</select>
 								</div>
 							</div>
+
 							<div class="form-row">
 								<div class="col-md-6 mb-3">
-									<label for="file-upload">Imagen del producto</label>
-									<input id="file-upload" type="file" accept="image/*" />
+									<label for="categoria">Categoria</label>
+									<select id="categoria" name="categoria" class="form-control" required>
+										<option value="frio">frio</option>
+										<option value="calor">calor</option>
+										<option value="viajar">viajar</option>
+										<option value="todos_los_dias">todos los dias</option>	
+									</select>
 								</div>
 								<div class="col-md-3 mb-3">
 									<label for="stock">Stock</label>
@@ -406,7 +412,20 @@
 									<label for="precio">Precio</label>
 									<input type="text" class="form-control" id="precio" required>
 								</div>
-							</div>	
+							</div>
+
+							<div class="form-row">					
+								<div class="col-md-6 mb-3">
+									<label for="file-upload">Imagen del producto</label>
+									<input id="file-upload" type="file" accept="image/*" />
+								</div>
+
+								<div class="col-md-6 mb-3">
+									<label for="descripcion">Descripción</label>
+									<textarea class="form-control" id="descripcion" rows="1"></textarea>
+								</div>
+							</div>
+
 							<!-- pongo aqui el boton pero hay que chequear -->
 							<button class="btn btn-success">Enviar</button>
 						</form>
@@ -426,12 +445,12 @@
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title">Modificación de Artículos</h4>
+						<h4 class="modal-title">Modificación de Productos</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 					<div class="modal-body">
 						<!-- Inicio Formulario -->
-						<form>
+						<form id="formAltaProd">
 							<div class="form-row">
 								<div class="col-md-4 mb-3">
 									<label for="codigo">Código</label>
@@ -457,14 +476,14 @@
 
 							<div class="form-row">
 								<div class="col-md-6 mb-3">
-									<label for="foto">Imagen del producto</label>
-									<div class="custom-file">
-										<input type="file" class="custom-file-input" id="foto" lang="es">
-										<label class="custom-file-label" for="customFileLang">Seleccionar
-											Archivo</label>
-									</div>
+									<label for="categoria">Categoria</label>
+									<select id="categoria" name="categoria" class="form-control" required>
+										<option value="frio">frio</option>
+										<option value="calor">calor</option>
+										<option value="viajar">viajar</option>
+										<option value="todos_los_dias">todos los dias</option>	
+									</select>
 								</div>
-
 								<div class="col-md-3 mb-3">
 									<label for="stock">Stock</label>
 									<input type="text" class="form-control" id="stock" required>
@@ -477,6 +496,20 @@
 								</div>
 							</div>
 
+							<div class="form-row">					
+								<div class="col-md-6 mb-3">
+									<label for="file-upload">Imagen del producto</label>
+									<input id="file-upload" type="file" accept="image/*" />
+								</div>
+
+								<div class="col-md-6 mb-3">
+									<label for="descripcion">Descripción</label>
+									<textarea class="form-control" id="descripcion" rows="1"></textarea>
+								</div>
+							</div>
+
+							<!-- pongo aqui el boton pero hay que chequear -->
+							<button class="btn btn-success">Enviar</button>
 						</form>
 						<!-- Fin seccion Formulario -->
 					</div>

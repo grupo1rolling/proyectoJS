@@ -1,3 +1,5 @@
+import { Producto } from "./clases.js";
+
 export function agregarProducto(producto) {
 	let productosArray = [];
 
@@ -140,43 +142,72 @@ export function mostrarProductos() {
 	});
 }
 
-// ########################################################
-// FUNCION QUE OBTIENE DATOS PARA EL ALTA DE LOS PRODUCTOS 
-// ########################################################
 
-function obtenerDatosProductos() {
-	//codigo
-	let codigo = document.getElementById("codigo").value.toUpperCase();
-	//nombreProd
-	let nombreProd = document.getElementById("nombreProd").value.toUpperCase();
-	//talle
-	let talle = document.getElementById("talle");
-	let talleSeleccionado = talle.options[talle.selectedIndex].value;
-	//foto?
-	let foto = document.getElementById("foto").value;
+// ################################################################################# //
+// ---------- [Obtenemos los datos del Formulario de Alta de Productos ] ---------- //
 
-	//llamo a la funcion Pablo
-	//add listener
+let dbProductos=[];
 
-	//stock
-	let stock = parseInt(document.getElementById("stock").value);
-	//precio
-	let precio = parseInt(document.getElementById("precio").value);
 
-	//creamos INSTANCIA DEL PRODUCTO
-	producto = new Producto(codigo, nombre, talle, foto, stock, precio);
+	document
+	.getElementById("formAltaProd")
+	.addEventListener("submit", function (event) {
+		event.preventDefault();
+		console.log("Hizo submit");
+		dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
+		
+		let codigo = document.getElementById("codigo").value.toUpperCase();
+		let nombreProd = document.getElementById("nombreProd").value.toUpperCase();
+		let talle = document.getElementById("talle");
+		let talleSeleccionado = talle.options[talle.selectedIndex].value;
+		//foto del producto
+		//Llamamos a la funcion (VIF) cuando se hace clic en seleccionar archivo y este cambia
+		// NO SE SI AQUI O AFUERA
+		let fileUpload = document.getElementById("file-upload");
+		fileUpload.onchange = function (e) {
+		readFile(e.srcElement);
+		};
 
-	//inicializamos INSTANCIA PRODUCTO
-	producto.codigo = codigo;
-	producto.nombre = nombreProd;
-	producto.talle = talleSeleccionado;
-	producto.foto = foto;
-	producto.stock = stock;
-	producto.precio = precio;
+		let stock = parseInt(document.getElementById("stock").value);
+		let precio = parseFloat(document.getElementById("precio").value);
+		//creamos INSTANCIA DEL PRODUCTO
+		producto = new Producto(codigo, nombre, descripcion, talle, foto, stock, precio, categorias);
+		//inicializamos INSTANCIA PRODUCTO
+		producto.codigo = codigo;
+		producto.nombre = nombreProd;
+		producto.descripcion= descripcion;
+		producto.talle = talleSeleccionado;
+		producto.foto = fotoData;
+		producto.stock = stock;
+		producto.precio = precio;
+		producto.categoria = categoria;
+		//agregarProducto(producto);
+		dbProductos.push({producto});
+		localStorage.setItem("productos", JSON.stringify(dbProductos));
+		limpiarFormAltaProd();
+	});
 
-	//console.log(producto)
-	agregarProducto(producto);
-} //fin de obtenerDatosProductos() 
+// ---------- [Limpiamos el Formulario de Alta de Productos ] ---------- //
+	
+	const limpiarFormAltaProd = () => {
+	imagenData = "";
+	fileUpload.value = "";
+	document.getElementById("codigo").value = "";
+	document.getElementById("nombreProd").value = "";
+	document.getElementById("descripcion").value = "";
+	document.getElementById("stock").value = "";
+	document.getElementById("precio").value = "";
+	document.getElementById("categoria").value = "";
+	
+	};
+
+
+
+
+
+
+
+
 
 // ############## VIF Very Important Function ##################
 
@@ -195,7 +226,3 @@ function readFile(input) {
   }
 }
 //Llamar a la funcion cuando se hace clic en seleccionar archivo y este cambia
-let fileUpload = document.getElementById("file-upload");
-fileUpload.onchange = function (e) {
-  readFile(e.srcElement);
-};

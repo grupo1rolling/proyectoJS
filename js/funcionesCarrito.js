@@ -42,12 +42,12 @@ function cargaInicialDatos() {
 	agregarUsuario(lucas);
 	agregarUsuario(franco);
 	// ---------- [Creacion de Productos (por instancias de objetos)] ---------- //
-	let prod1 = new Producto(1, "prod uno", "ideal para primavera verano", "M", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 750, 3, ["frío","viajar" ]);
-	let prod2 = new Producto(2, "prod dos", "ideal para primavera verano", "G", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tTalleBoxer.jpg", 1000, 4, ["calor","viajar" ]);
-	let prod3 = new Producto(3, "prod tres",  "ideal para primavera verano", "U", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 1999,99, 3, ["calor","todos los días" ]);
-	let prod4 = new Producto(4, "prod cuatro","ideal para primavera verano", "P", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tTalleBoxer.jpg", 999,9, 3, ["calor"]);
-	let prod5 = new Producto(5, "prod cinco", "ideal para primavera verano", "M", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 799,99, 1, ["todos los días" ]);
-	let prod6 = new Producto(6, "prod seis","ideal para primavera verano", "M", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 850, 3, ["frío" ]);
+	let prod1 = new Producto(1, "prod uno", "ideal para primavera verano", "M", "", 750, 3, ["frio" ]);
+	let prod2 = new Producto(2, "prod dos", "ideal para primavera verano", "G", "", 1000, 4, ["calor" ]);
+	let prod3 = new Producto(3, "prod tres",  "ideal para primavera verano", "U", "", 1999,99, 3, ["calor"]);
+	let prod4 = new Producto(4, "prod cuatro","ideal para primavera verano", "P", "", 999,9, 3, ["calor"]);
+	let prod5 = new Producto(5, "prod cinco", "ideal para primavera verano", "M", "", 799,99, 1, ["todos_los_dias" ]);
+	let prod6 = new Producto(6, "prod seis","ideal para primavera verano", "M", "", 850, 3, ["frío" ]);
 	// -------- [Agregamos Productos a la BD (por instancias de objetos)] -------- //
 	agregarProducto(prod1);
 	agregarProducto(prod2);
