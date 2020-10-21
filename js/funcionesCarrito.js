@@ -4,14 +4,14 @@ import { agregarUsuario } from "./funcionesUsuarios.js";
 
 // ------------- [inicialización de variables] ------------- //
 let totalARSCarrito=0, contadorProdCarrito=0;
-//let dbProductos=[];
+let dbProductos=[];
 
 // ------------- [inicialización de variables] ------------- //
 cargaInicialDatos();
 getProductos();
 vaciarCarrito();
 //actualizarTotalesCarrito();
-
+mostrarTarjetas();
 
 // ------ [usuarioAutenticado (true/false) en localStorage] ------ //
 //localStorage.setItem("usuarioAutenticado", false);
@@ -75,12 +75,8 @@ function vaciarCarrito () {
 ///NO FUNCIONA TENGO QUE LLAMARLO DESDE LA CONSOLA                   #### 4 TESTING PURPOSES ONLY ###
 function getProductos() {
 
-    let dbProductos =
-        JSON.parse(localStorage.getItem("productos")) == null
-            ? []
-            : JSON.parse(localStorage.getItem("productos"));
-            
- 	return dbProductos;
+    dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
+ 	console.log(dbProductos);
  }
 
 // ------------- [traemos productos del local Storage] ------------- //
@@ -106,7 +102,7 @@ function mostrarTarjetas() {
                   ${prod._descripcion}
                   </p>
                   <p id="talleProducto">${prod._talle}</p>
-                  <p id="categoriaProducto">${prod._categoria[0]}</p>
+                  <p id="categoriaProducto">lala</p>
                 </div>
                 <div class="card-footer">
                   <a href="#" class="btn btn-green mt-3" onclick="comprarProd(${index})">Añadir al carro</a>

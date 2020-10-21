@@ -368,7 +368,7 @@
 					</div>
 					<div class="modal-body">
 						<!-- Inicio Formulario -->
-						<form>
+						<form id="formAltaProd">
 							<div class="form-row">
 								<div class="col-md-4 mb-3">
 									<label for="codigo">Código</label>
@@ -393,12 +393,8 @@
 							</div>
 							<div class="form-row">
 								<div class="col-md-6 mb-3">
-									<label for="foto">Imagen del producto</label>
-									<div class="custom-file">
-										<input type="file" class="custom-file-input" id="foto" lang="es">
-										<label class="custom-file-label" for="customFileLang">Seleccionar
-											Archivo</label>
-									</div>
+									<label for="file-upload">Imagen del producto</label>
+									<input id="file-upload" type="file" accept="image/*" />
 								</div>
 								<div class="col-md-3 mb-3">
 									<label for="stock">Stock</label>
@@ -410,8 +406,9 @@
 									<label for="precio">Precio</label>
 									<input type="text" class="form-control" id="precio" required>
 								</div>
-							</div>
-
+							</div>	
+							<!-- pongo aqui el boton pero hay que chequear -->
+							<button class="btn btn-success">Enviar</button>
 						</form>
 						<!-- Fin seccion Formulario -->
 					</div>

@@ -3,10 +3,9 @@ export function agregarProducto(producto) {
 
 	//-- Verificamos si existe la key 'productos' en LocalStorage
 	//-- Si existe y tiene productos, capturo la informacion en un array
+
 	productosArray =
-		JSON.parse(localStorage.getItem("productos")) == null
-			? []
-			: JSON.parse(localStorage.getItem("productos"));
+		JSON.parse(localStorage.getItem("productos")) || [] ;
 
 	//-- Verifico si ya existe el codigo de producto ingresado
 	let existeProducto = productosArray.find(function (item) {
@@ -155,6 +154,10 @@ function obtenerDatosProductos() {
 	let talleSeleccionado = talle.options[talle.selectedIndex].value;
 	//foto?
 	let foto = document.getElementById("foto").value;
+
+	//llamo a la funcion Pablo
+	//add listener
+
 	//stock
 	let stock = parseInt(document.getElementById("stock").value);
 	//precio
@@ -174,3 +177,25 @@ function obtenerDatosProductos() {
 	//console.log(producto)
 	agregarProducto(producto);
 } //fin de obtenerDatosProductos() 
+
+// ############## VIF Very Important Function ##################
+
+let fotoData = ""; //Variable donde se guardará la foto del producto
+
+//Funcion para manejar el guardado de la imagen
+function readFile(input) {
+  if (input.files && input.files[0]) {
+    let reader = new FileReader();
+    reader.onload = function (e) {
+      //guardar en localStorage------------------------
+      fotoData = e.target.result;
+      //---------------------------------------------------
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+//Llamar a la funcion cuando se hace clic en seleccionar archivo y este cambia
+let fileUpload = document.getElementById("file-upload");
+fileUpload.onchange = function (e) {
+  readFile(e.srcElement);
+};
