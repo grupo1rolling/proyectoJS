@@ -143,85 +143,84 @@
                 <span id="totalCarrito"></span>
               </a
               >
+              
+            </li>
+            <li>
+              <!-- boton vaciar carrito -->
+              <button id="botonVaciar" class="btn btn-green"> <i class="fa fa-cart-arrow-down"></i> Vaciar</button>
             </li>
           </ul>
         </div>
       </nav>
     <!-- </div> -->
+
+    <!-- <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> -->
     <!--Navbar2-->
 
     <!--Main layout-->
     <main>
-      <div class="card-deck m-5">
-        <div class="card">
-          <img id="fotoProducto" src="../img/Para todos los dias/top-estampa-cactus-min.jpg" class="card-img-top" alt="top-estampa-cactus">
-          <div class="card-body">
-            <h5 id="nombreProducto" class="card-title">Top Cactus</h5>
-            <p id="precioProducto">$1500</p>
-            <p id="descripcionProducto"class="card-text">
-              Top #Cactus de microfibra con elastano. Posee tecnología
-              HYDROWICK: Disipa la transpiración.
-            </p>
-            <p id="talleProducto">M</p>
-            <p id="categoriaProducto">Para todos los dias</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-green mt-3">Añadir al carro</a>
-          </div>
-        </div>       
-      </div>
-    </main>
-    <!--Main layout-->
+
+  
+        <div class="card-deck m-5" id="tarjetasProd">
+        
+        </div> 
+      
+
+      <!-- <div class="row row-cols-1 row-cols-md-3" id="tarjetasProd">
+        <div class="col mb-4">
+        </div>
+      </div>  -->
+
+      
+    
 
      <!-- ################################################################################ -->
+     <!-- BORRAR DE AQUI PA ABAJO -->
      <hr class="my-5">
-     <div class="container">
-       <div class="row">
-         <div class="col-6">
-           <h6> ----------AREA DE TESTING ---------- </h6>
-           <br>
-         </div>
-       </div>
-       
-       </div>
-       <div class="row">
-         <div class="col-6">
-           <h6> ---------- CARDS ---------- </h6>
-           <!-- ######################### tiene que tener id=id="tarjetasProd" -->
-           <div class="card-deck m-5" id="tarjetasProd">
-           </div>
 
-         </div>
-       </div>
+     <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <h6> ----------AREA DE TESTING ---------- </h6>
+          </div>
+        </div>
+         
+         
+
      </div>
    <hr class="my-5">
-
    <!-- *PROBANDO* mostrar carrito -->
    <div class="container">
      <div class="row">
-         <!-- Elementos generados a partir del JSON -->
-         <main id="items" class="col-sm-8 row"></main>
-         <!-- Carrito -->
-         <aside class="col-sm-4">
-             <h6 class="text-center">resumen carrito</h6>
-             <p class="text-right">Total de artículos: <span id="contador"></span></p>
-
-
-             <!-- Elementos del carrito -->
-             <ul id="carrito" class="list-group"></ul>
-             <hr>
-             <!-- Precio total -->
-             <p class="text-right">Total: <span id="totalCarrito"></span>&dollar;</p>
-             <p class="text-center"> <span id="mensajeVaciar"></span></p>
-             <button id="boton-vaciar" class="btn btn-danger btn-sm" onclick="vaciarCarrito()">Vaciar
-             </button>
-             <p class="text-center"> <span> <small id="mensajeVaciar"></small></span> </p>
-         </aside>
-     </div>
- </div>
-  <!-- fin *PROBANDO* mostrar carrito -->
+       <div class="col-6">
+        <p class="text-right">Total de artículos: <span id="totalCosas"></span></p>
+        <p class="text-right">Total: <span id="totalPesos"></span>&dollar;</p>
+       </div>
+      </div> 
+       
+      <div class="row">
+        
+          <div id="items" class="col-sm-8 row">
+            <aside class="col-sm-4">
+              <!-- Elementos del carrito -->
+              <ul id="carrito" class="list-group"></ul>
+              <hr>
+              <!-- VACIAR CARRITO -->
+              <button id="botonVaciar" class="btn btn-danger btn-sm">Vaciar</button>
+              <p class="text-center"> <span> <small id="mensajeVaciar"></small></span> </p>
+            </aside>
+          </div>
+        
+      </div>
+    </div>
+  <!-- fin *PROBANDO* mostrar carrito  BORRAR DE AQUI PA ARRIBA-->
  <!-- ################################################################################ -->
 
+
+    </main>
+    <!--Main layout-->
+
+ 
   <!-- FOOTER -->
   <div class="container-fluid p-0">
     <div class="footer">

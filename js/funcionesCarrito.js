@@ -9,8 +9,8 @@ let dbProductos=[];
 // ------------- [inicialización de variables] ------------- //
 cargaInicialDatos();
 getProductos();
-vaciarCarrito();
-//actualizarTotalesCarrito();
+//vaciarCarrito();
+actualizarTotalesCarrito();
 mostrarTarjetas();
 
 // ------ [usuarioAutenticado (true/false) en localStorage] ------ //
@@ -42,12 +42,12 @@ function cargaInicialDatos() {
 	agregarUsuario(lucas);
 	agregarUsuario(franco);
 	// ---------- [Creacion de Productos (por instancias de objetos)] ---------- //
-	let prod1 = new Producto(1, "prod uno", "ideal para primavera verano", "M", "https://via.placeholder.com/150/f66b97", 750, 3,"frio");
+	let prod1 = new Producto(1, "prod uno", "ideal para los días mas fríos", "M", "https://via.placeholder.com/150/f66b97", 750, 3,"frio");
 	let prod2 = new Producto(2, "prod dos", "ideal para primavera verano", "G", "https://via.placeholder.com/150/24f355", 1000, 4, "calor");
 	let prod3 = new Producto(3, "prod tres",  "ideal para primavera verano", "U", "https://via.placeholder.com/150/771796", 1999,99, 3, "calor");
-	let prod4 = new Producto(4, "prod cuatro","ideal para primavera verano", "P", "https://via.placeholder.com/150/92c952", 999,9, 3, "calor");
-	let prod5 = new Producto(5, "prod cinco", "ideal para primavera verano", "M", "https://via.placeholder.com/150/f66b97", 799,99, 1, "todos_los_dias");
-	let prod6 = new Producto(6, "prod seis","ideal para primavera verano", "M", "https://via.placeholder.com/150/771796", 850, 3, "frío");
+	let prod4 = new Producto(4, "prod cuatro","ideal para viajar en verano", "P", "https://via.placeholder.com/150/92c952", 999,9, 3, "viajar");
+	let prod5 = new Producto(5, "prod cinco", "ideal para cada día", "M", "https://via.placeholder.com/150/f66b97", 799,99, 1, "todos_los_dias");
+	let prod6 = new Producto(6, "prod seis","ideal para viajar cómoda", "M", "https://via.placeholder.com/150/771796", 850, 3, "viajar");
 	// -------- [Agregamos Productos a la BD (por instancias de objetos)] -------- //
 	agregarProducto(prod1);
 	agregarProducto(prod2);
@@ -61,15 +61,23 @@ function cargaInicialDatos() {
 function actualizarTotalesCarrito() {
     document.getElementById("totalCarrito").innerHTML=totalARSCarrito.toFixed(2);
     document.getElementById("contador").innerHTML=contadorProdCarrito;
+
+    document.getElementById("totalPesos").innerHTML=totalARSCarrito.toFixed(2); //#### 4 TESTING PURPOSES ONLY ###
+    document.getElementById("totalCosas").innerHTML=contadorProdCarrito;        //#### 4 TESTING PURPOSES ONLY ###
 }
 
 // ---------------------------------------------------- //
-function vaciarCarrito () {
+let $botonVaciar = document.querySelector('#botonVaciar');
+// Eventos
+$botonVaciar.addEventListener('click', vaciarCarrito);
+
+function vaciarCarrito() {
     totalARSCarrito=0;
     contadorProdCarrito=0;
     console.log("VACIANDO CARRITO.................")
     actualizarTotalesCarrito();
 };
+
 
 // ------------- [traemos productos del local Storage] ------------- //
 ///NO FUNCIONA TENGO QUE LLAMARLO DESDE LA CONSOLA                   #### 4 TESTING PURPOSES ONLY ###
@@ -89,10 +97,9 @@ function setLocalStorage () {
 //let tarjProd = document.getElementById("tarjetasProd");
 
 function mostrarTarjetas() {
-
     let tarjProd = document.getElementById("tarjetasProd");
     dbProductos.map(function(prod, index){
-        let tarjeta = `<div class="card-deck m-5">
+        let tarjeta = `
                 <div class="card">
                 <img id="fotoProducto" src=${prod._foto} class="card-img-top" alt="top-estampa-cactus">
                 <div class="card-body">
@@ -105,17 +112,18 @@ function mostrarTarjetas() {
                   <p id="categoriaProducto">lala</p>
                 </div>
                 <div class="card-footer">
-                  <a href="#" class="btn btn-green mt-3" onclick="comprarProd(${index})">Añadir al carro</a>
+                <a href="#" class="btn btn-green mt-3" onclick="comprarProd(${index})">Añadir al carro</a>
                 </div>
               </div>       
-            </div>`;
+            `;
         tarjProd.innerHTML += tarjeta;
+        console.log (`VAMOS A COMPRAR ${index}`)
         });
 }
 
 // --------- [vamos a poner en un array los codigos de productos comprados] --------- //
 function comprarProd(cod) {
-    console.log ("vamos de shopping")
+    console.log (`VAMOS A COMPRAR ${cod}`)
 }
 
 // ---------- [vamos a poner en un array los codigos de productos comprados] ---------- //
