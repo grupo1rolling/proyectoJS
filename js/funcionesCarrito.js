@@ -6,6 +6,7 @@ import { agregarUsuario } from "./funcionesUsuarios.js";
 let totalARSCarrito=0, contadorProdCarrito=0;
 let dbProductos=[];
 let arrayProdComprados=[];
+//let ItemCompra;
 let carrito=[];
 // -------------------- [inicialización de variables] ---------------------- //
 cargaInicialDatos();
@@ -87,6 +88,7 @@ function getProductos() {
 
 // -------------------- [mostrar tarjetas dinámicamente] ------------------- //
 function mostrarTarjetas() {
+   
     let tarjProd = document.getElementById("tarjetasProd");
     dbProductos.map(function(prod, index){
         let tarjeta = `
@@ -115,29 +117,48 @@ function mostrarTarjetas() {
 
 //FUNCION COMPRAR PRODUCTO
 comprarProd(0);
+
 function comprarProd(i) {
+
     console.log (`VAMOS A COMPRAR ${i}`)
-    //bajo los productos del localStorage
-    
-    //dbProductos=JSON.parse(localStorage.getItem("productos")) || [];
     //busco el prod en el array productos
     let prod = dbProductos[i];
     console.log(prod);
 
     //si hay al menos un prod entonces se puede vender 
-    //armo el objeto itemCompra y lo agrego al array carrito
-//     if (prod._stock >= 1) {
-    arrayProdComprados.push(prod._codigo);
+    if (prod._stock >= 1) {
+            console.log ("actualizamos stock")
+            dbProductos[i].stock -= 1;
+            arrayProdComprados.push(prod._codigo);
+            console.log (`arrayProdComprados ---> ${arrayProdComprados}`);
+            let idProd=prod._codigo;
+            let nomProd=prod._nombre;
+            let cantProd=1;
+            let precioProd=prod._precio;
 
-//         itemCompra = new NuevoItem(idProd, nomProd, cantProd, precioProd)
-//         itemCompra.cantProd 
-//         carrito.push(itemCompra)
+            let itemCompra = new ItemCarrito(idProd, nomProd, cantProd, precioProd);
+            
+            itemCompra._idProd=idProd;
+            itemCompra._nomProd=nomProd;
+            itemCompra._cantProd=cantProd;
+            itemCompra._precioProd=precioProd;
+            console.log ("itemCompra");
+            
+            carrito.push(itemCompra);
+            console.log('Se ha añadido un item al carrito')
 
-//         arrayProdComprados.push(prod._codigo);
 
-//         //en totalCompra sumo los importes de los prod comprados
-//         totalARSCarrito += prod._precio;
-//         contadorProdCarrito += prod._precio;
+            //en totalCompra sumo los importes de los prod comprados
+            totalARSCarrito += prod._precio;
+            contadorProdCarrito += prod._precio;
+            console.log(totalARSCarrito);
+            console.log(contadorProdCarrito);
+            actualizarTotalesCarrito;
+    } else {
+        console.error(`ooops nos quedamos sin ${prod._nombre}`);
+    }
+}
+
         
 //         //actualizo la cantidad del producto vendido en el array de productos
 //         let indice = productos.findIndex(item => {
@@ -148,10 +169,9 @@ function comprarProd(i) {
 //         console.log('Se ha añadido un item al carrito')
 
 //     } else {
-//         console.error(`ooops nos quedamos sin ${prod.nombre}`)
+//         
 //         listarStock()
-//     }
- }
+//  
 
 
 // ----------- [pasamos del array de compra a items del carrito] ----------- //
@@ -207,9 +227,7 @@ function listarCarrito() {
 }
 
 
-function saludar() {
-    alert("hola");
-}
+
 
 // //FUNCION QUITAR PRDUCTO DEL CARRITO
 // function quitarProd() {
