@@ -60,7 +60,7 @@ body
     /* margin-top: 30px; */
     padding: 3rem 2rem;
     color: #ffffff;
-    background: url(../img/portada5.jpg)no-repeat center center fixed;      
+    background: url(../images/portada5.jpg)no-repeat center center fixed;      
     position: relative;
     /* overflow: hidden; */
     -webkit-background-size: cover;
@@ -131,6 +131,7 @@ body
     color: var(--color-naranjaFuerteApagado);
     margin-left: 0px;
     margin-right: 0px;
+    
   }
   .footer .footer-botton {
     background: var(--color-verdeOscuro);
@@ -145,19 +146,20 @@ body
   
   .footer .footer-content .footer-section {
     border: 2px solid var(--color-verdeMedio);
-    padding: 25px;
+    padding: 5px;
     color: var(--color-naranjaFuerteApagado);
     font-size: small;
     text-align: center;
+    height: 170px;
   }
   /* FIN FOOTER */
   
   
-  
-    /* .icono {
-        width: 40px;
-        height: auto;
-    } */
+/*   
+    .icono {
+        /* width: 40px;
+        height: auto; */
+    /* } */ 
 
         /* .sticky-top-2 {
           position: -webkit-sticky;
