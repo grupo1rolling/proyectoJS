@@ -2,29 +2,28 @@ import { Usuario, Producto, ItemCarrito } from "./clases.js";
 import { agregarProducto } from "./funcionesProductos.js";
 import { agregarUsuario } from "./funcionesUsuarios.js";
 
-// ------------- [inicialización de variables] ------------- //
+// --------------------- [inicialización de variables] --------------------- //
 let totalARSCarrito=0, contadorProdCarrito=0;
 let dbProductos=[];
-
-// ------------- [inicialización de variables] ------------- //
+let arrayProdComprados=[];
+let carrito=[];
+// -------------------- [inicialización de variables] ---------------------- //
 cargaInicialDatos();
 getProductos();
-//vaciarCarrito();
 actualizarTotalesCarrito();
 mostrarTarjetas();
 
-// ------ [usuarioAutenticado (true/false) en localStorage] ------ //
+// ----------- [usuarioAutenticado (true/false) en localStorage] ----------- //
 //localStorage.setItem("usuarioAutenticado", false);
 //lo ponemos en true para que entre siempre                          #### 4 TESTING PURPOSES ONLY ###
 localStorage.setItem("usuarioAutenticado", true);
 let autenticado=localStorage.getItem("usuarioAutenticado");          // ### OJO QUE ES STRING ### //
-console.log(`valor de autenticado que indica si un usuario esta logueado ${autenticado}`);           
+console.log(`valor autenticado ${autenticado} indica si un usuario esta logueado `);           
 
 
+// --- ###################### [F U N C I O N E S] ###################### --- //
 
-// --- ########################## [F U N C I O N E S] ########################## ---//
-
-// -------------- [carga inicial de datos PRODUCTOS Y USUARIOS] -------------- //
+// ------------- [carga inicial de datos PRODUCTOS Y USUARIOS] ------------- //
 function cargaInicialDatos() {
     // -------------- [inicializamos ADMINISTRADOR)] -------------- //
 	let admin = new Usuario(0, "Administrador", "Supremo","admin@naturecollection.com", "admin", [], [], true, true);
@@ -57,45 +56,38 @@ function cargaInicialDatos() {
 	agregarProducto(prod6);
 }
 
-// ------------- [actualiza totales del Carrito] ------------- //
+// -------------------- [actualiza totales del Carrito] -------------------- //
 function actualizarTotalesCarrito() {
     document.getElementById("totalCarrito").innerHTML=totalARSCarrito.toFixed(2);
     document.getElementById("contador").innerHTML=contadorProdCarrito;
-
-    document.getElementById("totalPesos").innerHTML=totalARSCarrito.toFixed(2); //#### 4 TESTING PURPOSES ONLY ###
-    document.getElementById("totalCosas").innerHTML=contadorProdCarrito;        //#### 4 TESTING PURPOSES ONLY ###
 }
 
-// ---------------------------------------------------- //
+// -------------------- [actualiza totales del Carrito] -------------------- //
 let $botonVaciar = document.querySelector('#botonVaciar');
 // Eventos
 $botonVaciar.addEventListener('click', vaciarCarrito);
-
 function vaciarCarrito() {
     totalARSCarrito=0;
     contadorProdCarrito=0;
-    console.log("VACIANDO CARRITO.................")
+    console.log("VACIANDO CARRITO.................")                 //#### 4 TESTING PURPOSES ONLY ###
     actualizarTotalesCarrito();
 };
 
 
-// ------------- [traemos productos del local Storage] ------------- //
-///NO FUNCIONA TENGO QUE LLAMARLO DESDE LA CONSOLA                   #### 4 TESTING PURPOSES ONLY ###
+// ----------------- [traemos productos del local Storage] ----------------- //          
 function getProductos() {
-
-    dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
- 	console.log(dbProductos);
+    console.log("entra a getproductos()")
+    dbProductos=JSON.parse(localStorage.getItem("productos")) || [];
+ 	console.log(dbProductos);                                               // #### 4 TESTING PURPOSES ONLY ###
  }
 
-// ------------- [traemos productos del local Storage] ------------- //
-function setLocalStorage () {
-    localStorage.setItem('productos',JSON.stringify(dbProductos))
-}
+// ---------------- [guardamos productos del local Storage] ---------------- //
+/*function setLocalStorageProd () {
+    localStorage.setItem('productos', JSON.stringify(dbProductos))
+}*/
 
 
-// ------------------------ [mostrar tarjetas dinámicamente] ------------------------ //
-//let tarjProd = document.getElementById("tarjetasProd");
-
+// -------------------- [mostrar tarjetas dinámicamente] ------------------- //
 function mostrarTarjetas() {
     let tarjProd = document.getElementById("tarjetasProd");
     dbProductos.map(function(prod, index){
@@ -121,16 +113,53 @@ function mostrarTarjetas() {
         });
 }
 
-// --------- [vamos a poner en un array los codigos de productos comprados] --------- //
-function comprarProd(cod) {
-    console.log (`VAMOS A COMPRAR ${cod}`)
+// ------- [vamos a poner en un array los codigo productos comprados] ------ //
+
+//FUNCION COMPRAR PRODUCTO
+
+function comprarProd(i) {
+
+    console.log (`VAMOS A COMPRAR ${i}`)
+    //bajo los productos del localStorage
+    dbProductos=JSON.parse(localStorage.getItem("productos")) || [];
+    //busco el prod en el array productos
+    let prod = dbProductos[i];
+
+    //si hay al menos un prod entonces se puede vender 
+    //armo el objeto itemCompra y lo agrego al array carrito
+    if (prod._stock >= 1) {
+        itemCompra = new NuevoItem(idProd, nomProd, cantProd, precioProd)
+        itemCompra.cantProd += 1
+        carrito.push(itemCompra)
+
+        arrayProdComprados.push(prod._codigo);
+
+        //en totalCompra sumo los importes de los prod comprados
+        totalARSCarrito += prod._precio;
+        contadorProdCarrito += prod._precio;
+        
+        //actualizo la cantidad del producto vendido en el array de productos
+        let indice = productos.findIndex(item => {
+            return item.id == i
+        })
+        productos[indice].cantidad -= 1
+
+        console.log('Se ha añadido un item al carrito')
+
+    } else {
+        console.error(`ooops nos quedamos sin ${prod.nombre}`)
+        listarStock()
+    }
 }
 
-// ---------- [vamos a poner en un array los codigos de productos comprados] ---------- //
-function agregarAlCarrito(cod) {
 
-// ---------------------- [creamos INSTANCIA ItemCarrito] ---------------------- //
-let itemCart= new ItemCarrito (idProd, nomProd, cantProd, precioProd);
+// ----------- [pasamos del array de compra a items del carrito] ----------- //
+/*
+function agregarAlCarrito(cod) {
+    console.log("VAMOS A COMPLETAR LAS LINEAS DEL CARRITO ")
+
+// -------------------- [creamos INSTANCIA ItemCarrito] -------------------- //
+let itemCarrito= new ItemCarrito (idProd, nomProd, cantProd, precioProd);
 // let idP,nomP,cantP, precioP;
 // //inicializamos INSTANCIA ItemCarrito
 // itemCart.idProd = idP;
@@ -138,27 +167,43 @@ let itemCart= new ItemCarrito (idProd, nomProd, cantProd, precioProd);
 // itemCart.cantProd= cantP;
 // itemCart.precioProd = precioP;
 }
+*/
 
 
-
-// ------------------------ [finalizar compra] ------------------------ //
+// -------------------------- [finalizar compra] --------------------------- //
  function finalizarCompra() {
     alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`)
 }
 
 
 
+// ------------------- [buscar palabra en dbProductos] ------------------- //
+/*
+function validarPalabraBuscar(palabra) {
+    if (dbProductos.categoria.includes(palabra)) {
+        console.log("encontró")
+    } else {console.log("encontró")}
+}
+*/
+
+/*
+// ------------------- [filtrar productos por categoria] ------------------- //
+function filtrarProductos(cat) {
+  const prodXcat = dbProductos.filter (item=> {
+        return item.categoria === cat
+  })
+}
+*/
 
 
-
-// ---------------------- [creamos INSTANCIA ItemCarrito] ---------------------- //
-//let itemCart= new ItemCarrito (idProd, nomProd, cantProd, precioProd);
-// let idP,nomP,cantP, precioP;
-// //inicializamos INSTANCIA ItemCarrito
-// itemCart.idProd = idP;
-// itemCart.nomProd = nomP;
-// itemCart.cantProd= cantP;
-// itemCart.precioProd = precioP;
+// --------------------------- [listar carrito] ---------------------------- //
+function listarCarrito() {
+    if (carrito.lenght > 0) {
+        console.log(`CARRITO.LENGHT = ${carrito.lenght}`)
+    } else {
+        alert ("carrito vacio")
+    }
+}
 
 
 // //FUNCION QUITAR PRDUCTO DEL CARRITO
@@ -193,62 +238,7 @@ let itemCart= new ItemCarrito (idProd, nomProd, cantProd, precioProd);
 //     }
 // }
 
-// //FUNCION VALIDA QUE EL ELEM QUE SE DESEA QUITAR DEL CARRITO SEA VALIDO
-// function validar(p) {
-//     if (isNaN(p) || (p < 1 || p > 7)) {
-//         console.warn('numero invàlido')
-//         return false;
 
-//     } else {
-//         return true
-//     }
-
-// }
-
-// let tipos = ['ave', 'lagarto', 'mamifero', 'roedor', 'reptil']
-
-// function validarTipo(t) {
-
-//     t.toLowerCase
-//     if (tipos.includes(t)) {
-//         return true
-//     } else {
-//         console.warn('no ingreso un tipo válido')
-//         return false
-//     }
-
-// }
-
-
-
-// //FUNCION FILTRAR POR TIPO DE PRODUCTO 
-// function filtrarProd() {
-//     filtro = prompt('Ingrese el tipo a filtar:  Ave, Lagarto, Mamifero, Roedor, Lagarto o Reptil')
-//     if (validarTipo(filtro)) {
-
-//         const tipos = productos.filter(item => {
-//             return item.tipo === filtro
-//         })
-//         console.table(tipos, ['tipo', 'nombre', 'precio'])
-//     }
-
-// }
-
-
-
-// //FUNCION QUE LISTA LOS PRODUCTOS DEL CARRITO
-// function listarCarrito() {
-
-//     if (carrito.length > 0) {
-//         console.log(`Su carrito:                   Total a pagar  $ ${totalCompra}`)
-
-//         console.table(carrito, ['cantProd', 'nombreProd', 'precioProd'])
-
-//     } else {
-//         console.warn('Su carrito está vacío')
-//     }
-
-// }
 
 
 
