@@ -136,14 +136,25 @@
             </button>
           </form>
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
+            <!-- <li class="nav-item active">
               <a class="nav-link text-orange" href="#"
                 > <span id="contador"></span>
                 <i class="fas fa-shopping-cart"></i> $ 
                 <span id="totalCarrito"></span>
               </a
               >
+            </li> -->
+            <li class="nav-item active">
+              <a class="nav-link text-orange" href="#"
+                > <span id="contador"></span>
+                <button type="button" class="btn btn-green" data-toggle="modal" data-target="#verCarrito">
+                  <i class="fas fa-shopping-cart"></i>  
+                 </button> 
+                <span id="totalCarrito">$</span>
+              </a
+              >
             </li>
+
             <li>
               <!-- boton vaciar carrito -->
               <button id="botonVaciar" class="btn btn-green"> <i class="fa fa-cart-arrow-down"></i> Vaciar</button>
@@ -178,7 +189,55 @@
     </main>
     <!--Main layout-->
 
- 
+ <!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#verCarrito">
+  verCarrito
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="verCarrito" tabindex="-1" role="dialog" aria-labelledby="verCarritoTitulo" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="verCarritoTitulo">Modal title</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Cant</th>
+              <th scope="col">Producto</th>
+              <th scope="col">Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>3</td>
+              <td>prod tres</td>
+              <td>1999,99</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>4</td>
+              <td>prod cuatro</td>
+              <td>1000,00</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Finalizar Compra</button>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- FOOTER -->
   <div class="container-fluid p-0">
     <div class="footer">
