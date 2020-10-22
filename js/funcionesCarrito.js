@@ -81,9 +81,9 @@ function actualizarTotalesCarrito() {
 }
 
 // -------------------- [actualiza totales del Carrito] -------------------- //
-let $botonVaciar = document.querySelector('#botonVaciar');
+let botonVaciar = document.querySelector('#botonVaciar');
 // Eventos
-$botonVaciar.addEventListener('click', vaciarCarrito);
+botonVaciar.addEventListener('click', vaciarCarrito);
 function vaciarCarrito() {
     totalARSCarrito=0;
     contadorProdCarrito=0;
@@ -94,9 +94,7 @@ function vaciarCarrito() {
 
 // ----------------- [traemos productos del local Storage] ----------------- //          
 function getProductos() {
-    console.log("entra a getproductos()")
     dbProductos=JSON.parse(localStorage.getItem("productos")) || [];
- 	console.log(dbProductos);                                               // #### 4 TESTING PURPOSES ONLY ###
  }
 
 // ---------------- [guardamos productos del local Storage] ---------------- //
@@ -127,48 +125,51 @@ function mostrarTarjetas() {
               </div>       
             `;
         tarjProd.innerHTML += tarjeta;
-        console.log (`VAMOS A COMPRAR ${index}`)
+        console.log (`se cargó la tarjeta ${index}`)
         });
 }
 
 // ------- [vamos a poner en un array los codigo productos comprados] ------ //
 
 //FUNCION COMPRAR PRODUCTO
-
+comprarProd(0);
 function comprarProd(i) {
-
     console.log (`VAMOS A COMPRAR ${i}`)
     //bajo los productos del localStorage
-    dbProductos=JSON.parse(localStorage.getItem("productos")) || [];
+    
+    //dbProductos=JSON.parse(localStorage.getItem("productos")) || [];
     //busco el prod en el array productos
     let prod = dbProductos[i];
+    console.log(prod);
 
     //si hay al menos un prod entonces se puede vender 
     //armo el objeto itemCompra y lo agrego al array carrito
-    if (prod._stock >= 1) {
-        itemCompra = new NuevoItem(idProd, nomProd, cantProd, precioProd)
-        itemCompra.cantProd += 1
-        carrito.push(itemCompra)
+//     if (prod._stock >= 1) {
+    arrayProdComprados.push(prod._codigo);
 
-        arrayProdComprados.push(prod._codigo);
+//         itemCompra = new NuevoItem(idProd, nomProd, cantProd, precioProd)
+//         itemCompra.cantProd 
+//         carrito.push(itemCompra)
 
-        //en totalCompra sumo los importes de los prod comprados
-        totalARSCarrito += prod._precio;
-        contadorProdCarrito += prod._precio;
+//         arrayProdComprados.push(prod._codigo);
+
+//         //en totalCompra sumo los importes de los prod comprados
+//         totalARSCarrito += prod._precio;
+//         contadorProdCarrito += prod._precio;
         
-        //actualizo la cantidad del producto vendido en el array de productos
-        let indice = productos.findIndex(item => {
-            return item.id == i
-        })
-        productos[indice].cantidad -= 1
+//         //actualizo la cantidad del producto vendido en el array de productos
+//         let indice = productos.findIndex(item => {
+//             return item.id == i
+//         })
+//         productos[indice].cantidad -= 1
 
-        console.log('Se ha añadido un item al carrito')
+//         console.log('Se ha añadido un item al carrito')
 
-    } else {
-        console.error(`ooops nos quedamos sin ${prod.nombre}`)
-        listarStock()
-    }
-}
+//     } else {
+//         console.error(`ooops nos quedamos sin ${prod.nombre}`)
+//         listarStock()
+//     }
+ }
 
 
 // ----------- [pasamos del array de compra a items del carrito] ----------- //
@@ -224,6 +225,10 @@ function listarCarrito() {
 }
 
 
+function saludar() {
+    alert("hola");
+}
+
 // //FUNCION QUITAR PRDUCTO DEL CARRITO
 // function quitarProd() {
 //     p = prompt("Ingrese el item a quitar:  1.Huron 2. Conejo 3.Ninfa 4.Cobaya 5.Chinchilla 6.Iguana o 7 Gecko")
@@ -255,8 +260,3 @@ function listarCarrito() {
 //         }
 //     }
 // }
-
-
-
-
-
