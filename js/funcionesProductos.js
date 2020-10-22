@@ -144,14 +144,11 @@ export function mostrarProductos() {
 
 
 // ################################################################################# //
-// ---------- [Obtenemos los datos del Formulario de Alta de Productos ] ---------- //
+// ---------- [Obtenemos los datos del Formulario de ALTA de Productos ] ---------- //
 
 let dbProductos=[];
-
-
-	document
-	.getElementById("formAltaProd")
-	.addEventListener("submit", function (event) {
+	document.getElementById("formAltaProd");
+	document.addEventListener("submit", function (event) {
 		event.preventDefault();
 		console.log("Hizo submit");
 		dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
@@ -170,8 +167,11 @@ let dbProductos=[];
 
 		let stock = parseInt(document.getElementById("stock").value);
 		let precio = parseFloat(document.getElementById("precio").value);
+
+		let categoria = document.getElementById("categoria");
+		let catSeleccionada = categoria.options[categoria.selectedIndex].value;
 		//creamos INSTANCIA DEL PRODUCTO
-		producto = new Producto(codigo, nombre, descripcion, talle, foto, stock, precio, categorias);
+		producto = new Producto(codigo, nombre, descripcion, talle, foto, stock, precio, categoria);
 		//inicializamos INSTANCIA PRODUCTO
 		producto.codigo = codigo;
 		producto.nombre = nombreProd;
@@ -180,7 +180,7 @@ let dbProductos=[];
 		producto.foto = fotoData;
 		producto.stock = stock;
 		producto.precio = precio;
-		producto.categoria = categoria;
+		producto.categoria = catSeleccionada;
 		//agregarProducto(producto);
 		dbProductos.push({producto});
 		localStorage.setItem("productos", JSON.stringify(dbProductos));
@@ -188,20 +188,76 @@ let dbProductos=[];
 	});
 
 // ---------- [Limpiamos el Formulario de Alta de Productos ] ---------- //
-	
+// funcion flecha equivalete function limpiarFormAltaProd() {}
 	const limpiarFormAltaProd = () => {
-	imagenData = "";
-	fileUpload.value = "";
 	document.getElementById("codigo").value = "";
 	document.getElementById("nombreProd").value = "";
 	document.getElementById("descripcion").value = "";
+	document.getElementById("talle").value = "";
+	imagenData = "";
+	fileUpload.value = "";
 	document.getElementById("stock").value = "";
 	document.getElementById("precio").value = "";
 	document.getElementById("categoria").value = "";
-	
 	};
 
 
+// ################################################################################# //
+// ---------- [Obtenemos los datos del Formulario de MODIFICACION de Productos ] ---------- //
+/*
+let dbProductos=[];
+	document.getElementById("formModiProd");
+	document.addEventListener("submit", function (event) {
+		event.preventDefault();
+		console.log("Hizo submit");
+		dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
+		
+		let nombreProd = document.getElementById("nombreProd").value.toUpperCase();
+		let talle = document.getElementById("talle");
+		let talleSeleccionado = talle.options[talle.selectedIndex].value;
+		//foto del producto
+		//Llamamos a la funcion (VIF) cuando se hace clic en seleccionar archivo y este cambia
+		// NO SE SI AQUI O AFUERA
+		let fileUpload = document.getElementById("file-upload");
+		fileUpload.onchange = function (e) {
+		readFile(e.srcElement);
+		};
+
+		let stock = parseInt(document.getElementById("stock").value);
+		let precio = parseFloat(document.getElementById("precio").value);
+
+		let categoria = document.getElementById("categoria");
+		let catSeleccionada = categoria.options[categoria.selectedIndex].value;
+		//creamos INSTANCIA DEL PRODUCTO
+		producto = new Producto(codigo, nombre, descripcion, talle, foto, stock, precio, categoria);
+		//inicializamos INSTANCIA PRODUCTO
+		producto.codigo = codigo;
+		producto.nombre = nombreProd;
+		producto.descripcion= descripcion;
+		producto.talle = talleSeleccionado;
+		producto.foto = fotoData;
+		producto.stock = stock;
+		producto.precio = precio;
+		producto.categoria = catSeleccionada;
+		//agregarProducto(producto);
+		dbProductos.push({producto});
+		localStorage.setItem("productos", JSON.stringify(dbProductos));
+		limpiarFormAltaProd();
+	}); */
+
+// ---------- [Limpiamos el Formulario de Modificacion de Productos ] ---------- //
+// funcion flecha equivalente function limpiarFormAltaProd() {}
+	const limpiarFormModProd = () => {
+	
+	document.getElementById("nombreProd").value = "";
+	document.getElementById("descripcion").value = "";
+	document.getElementById("talle").value = "";
+	imagenData = "";
+	fileUpload.value = "";
+	document.getElementById("stock").value = "";
+	document.getElementById("precio").value = "";
+	document.getElementById("categoria").value = "";
+	};
 
 
 
