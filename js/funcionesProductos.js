@@ -1,12 +1,13 @@
+import { Producto } from "./clases.js";
+
 export function agregarProducto(producto) {
 	let productosArray = [];
 
 	//-- Verificamos si existe la key 'productos' en LocalStorage
 	//-- Si existe y tiene productos, capturo la informacion en un array
+
 	productosArray =
-		JSON.parse(localStorage.getItem("productos")) == null
-			? []
-			: JSON.parse(localStorage.getItem("productos"));
+		JSON.parse(localStorage.getItem("productos")) || [] ;
 
 	//-- Verifico si ya existe el codigo de producto ingresado
 	let existeProducto = productosArray.find(function (item) {
@@ -141,37 +142,143 @@ export function mostrarProductos() {
 	});
 }
 
-// ########################################################
-// FUNCION QUE OBTIENE DATOS PARA EL ALTA DE LOS PRODUCTOS 
-// ########################################################
 
-function obtenerDatosProductos() {
+// ################################################################################# //
+// ---------- [Obtenemos los datos del Formulario de ALTA de Productos ] ---------- //
 
-	//codigo
-	let codigo = document.getElementById("codigo").value.toUpperCase();
-	//nombreProd
-	let nombreProd = document.getElementById("nombreProd").value.toUpperCase();
-	//talle
-	let talle = document.getElementById("talle");
-	let talleSeleccionado = talle.options[talle.selectedIndex].value;
-	//foto?
-	let foto = document.getElementById("foto").value;
-	//stock
-	let stock = parseInt(document.getElementById("stock").value);
-	//precio
-	let precio = parseInt(document.getElementById("precio").value);
+let dbProductos=[];
+	document.getElementById("formAltaProd");
+	document.addEventListener("submit", function (event) {
+		event.preventDefault();
+		console.log("Hizo submit");
+		dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
+		
+		let codigo = document.getElementById("codigo").value.toUpperCase();
+		let nombreProd = document.getElementById("nombreProd").value.toUpperCase();
+		let talle = document.getElementById("talle");
+		let talleSeleccionado = talle.options[talle.selectedIndex].value;
+		//foto del producto
+		//Llamamos a la funcion (VIF) cuando se hace clic en seleccionar archivo y este cambia
+		// NO SE SI AQUI O AFUERA
+		let fileUpload = document.getElementById("file-upload");
+		fileUpload.onchange = function (e) {
+		readFile(e.srcElement);
+		};
 
-	//creamos INSTANCIA DEL PRODUCTO
-	producto = new Producto(codigo, nombre, talle, foto, stock, precio);
+		let stock = parseInt(document.getElementById("stock").value);
+		let precio = parseFloat(document.getElementById("precio").value);
 
-	//inicializamos INSTANCIA PRODUCTO
-	producto.codigo = codigo;
-	producto.nombre = nombreProd;
-	producto.talle = talleSeleccionado;
-	producto.foto = foto;
-	producto.stock = stock;
-	producto.precio = precio;
+		let categoria = document.getElementById("categoria");
+		let catSeleccionada = categoria.options[categoria.selectedIndex].value;
+		//creamos INSTANCIA DEL PRODUCTO
+		producto = new Producto(codigo, nombre, descripcion, talle, foto, stock, precio, categoria);
+		//inicializamos INSTANCIA PRODUCTO
+		producto.codigo = codigo;
+		producto.nombre = nombreProd;
+		producto.descripcion= descripcion;
+		producto.talle = talleSeleccionado;
+		producto.foto = fotoData;
+		producto.stock = stock;
+		producto.precio = precio;
+		producto.categoria = catSeleccionada;
+		//agregarProducto(producto);
+		dbProductos.push({producto});
+		localStorage.setItem("productos", JSON.stringify(dbProductos));
+		limpiarFormAltaProd();
+	});
 
-	//console.log(producto)
-	agregarProducto(producto);
-} //fin de obtenerDatosProductos() 
+// ---------- [Limpiamos el Formulario de Alta de Productos ] ---------- //
+// funcion flecha equivalete function limpiarFormAltaProd() {}
+	const limpiarFormAltaProd = () => {
+	document.getElementById("codigo").value = "";
+	document.getElementById("nombreProd").value = "";
+	document.getElementById("descripcion").value = "";
+	document.getElementById("talle").value = "";
+	imagenData = "";
+	fileUpload.value = "";
+	document.getElementById("stock").value = "";
+	document.getElementById("precio").value = "";
+	document.getElementById("categoria").value = "";
+	};
+
+
+// ################################################################################# //
+// ---------- [Obtenemos los datos del Formulario de MODIFICACION de Productos ] ---------- //
+/*
+let dbProductos=[];
+	document.getElementById("formModiProd");
+	document.addEventListener("submit", function (event) {
+		event.preventDefault();
+		console.log("Hizo submit");
+		dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
+		
+		let nombreProd = document.getElementById("nombreProd").value.toUpperCase();
+		let talle = document.getElementById("talle");
+		let talleSeleccionado = talle.options[talle.selectedIndex].value;
+		//foto del producto
+		//Llamamos a la funcion (VIF) cuando se hace clic en seleccionar archivo y este cambia
+		// NO SE SI AQUI O AFUERA
+		let fileUpload = document.getElementById("file-upload");
+		fileUpload.onchange = function (e) {
+		readFile(e.srcElement);
+		};
+
+		let stock = parseInt(document.getElementById("stock").value);
+		let precio = parseFloat(document.getElementById("precio").value);
+
+		let categoria = document.getElementById("categoria");
+		let catSeleccionada = categoria.options[categoria.selectedIndex].value;
+		//creamos INSTANCIA DEL PRODUCTO
+		producto = new Producto(codigo, nombre, descripcion, talle, foto, stock, precio, categoria);
+		//inicializamos INSTANCIA PRODUCTO
+		producto.codigo = codigo;
+		producto.nombre = nombreProd;
+		producto.descripcion= descripcion;
+		producto.talle = talleSeleccionado;
+		producto.foto = fotoData;
+		producto.stock = stock;
+		producto.precio = precio;
+		producto.categoria = catSeleccionada;
+		//agregarProducto(producto);
+		dbProductos.push({producto});
+		localStorage.setItem("productos", JSON.stringify(dbProductos));
+		limpiarFormAltaProd();
+	}); */
+
+// ---------- [Limpiamos el Formulario de Modificacion de Productos ] ---------- //
+// funcion flecha equivalente function limpiarFormAltaProd() {}
+	const limpiarFormModProd = () => {
+	
+	document.getElementById("nombreProd").value = "";
+	document.getElementById("descripcion").value = "";
+	document.getElementById("talle").value = "";
+	imagenData = "";
+	fileUpload.value = "";
+	document.getElementById("stock").value = "";
+	document.getElementById("precio").value = "";
+	document.getElementById("categoria").value = "";
+	};
+
+
+
+
+
+
+
+// ############## VIF Very Important Function ##################
+
+let fotoData = ""; //Variable donde se guardará la foto del producto
+
+//Funcion para manejar el guardado de la imagen
+function readFile(input) {
+  if (input.files && input.files[0]) {
+    let reader = new FileReader();
+    reader.onload = function (e) {
+      //guardar en localStorage------------------------
+      fotoData = e.target.result;
+      //---------------------------------------------------
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+//Llamar a la funcion cuando se hace clic en seleccionar archivo y este cambia

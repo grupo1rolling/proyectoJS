@@ -20,7 +20,7 @@ export class Usuario {
 		this._esAdmin = esAdmin;
 	}
 
-	///OBSERVACION : podemos cambiar Apellido por usuario y en la funcion login
+	// OBSERVACION : podemos cambiar Apellido por usuario y en la funcion login
 	//function checkLogin(mailL, passL) {
 	// 	usuarioOK = usuariosArray.find(item => {
 	// 		return (item._email === mailL||item_usuario === mailL) && (item._password === passL)
@@ -101,7 +101,7 @@ export class Usuario {
 
 //CHECK QUE  DESCRIPCION TENGA LA MISMA CANT DE CARACTERES PARA QUE LAS CARD QUEDEN IGUALES Y NO UNA MAS ALTA QUE LA OTRA
 export class Producto {
-	constructor(codigo, nombre, descripcion, talle, foto, precio, stock, categorias = []) {
+	constructor(codigo, nombre, descripcion, talle, foto, precio, stock, categoria) {
 		this._codigo = codigo;
 		this._nombre = nombre;
 		this._descripcion = descripcion;
@@ -109,7 +109,7 @@ export class Producto {
 		this._foto = foto;
 		this._precio = precio;
 		this._stock = stock;
-		this._categorias = categorias;
+		this._categoria = categoria;
 	}
 
 	//-----[Getter]-----//
@@ -141,8 +141,8 @@ export class Producto {
 		return this._stock;
 	}
 
-	get categorias() {
-		return this._categorias;
+	get categoria() {
+		return this._categoria;
 	}
 
 	//-----[Setter]-----//
@@ -174,13 +174,13 @@ export class Producto {
 		this._stock = stock;
 	}
 
-	set categorias(categorias) {
-		this.categorias=categorias;
+	set categoria(categoria) {
+		this.categorias=categoria;
 	}
 }
 
 export class ItemCarrito {
-	constructor (idProd, nomPrd, cantProd, precioProd)  {
+	constructor (idProd, nomProd, cantProd, precioProd)  {
 		this._idProd = idProd;
 		this._nomProd = nomProd;
 		this._cantProd = cantProd;

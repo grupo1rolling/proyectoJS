@@ -11,7 +11,7 @@ export function cargaInicialDatos() {
 	//---------------[Creacion de usuarios (Ejemplo)]---------------//
 	let ale = new Usuario(1, "ALE", "CAROL","ale@ale.com", "12345", [], [], true, false);
 	let mary = new Usuario(2, "MARY","Mary" ,"mary@mary.com", "65546", [], [], true, true);
-	let silvia = new Usuario(3, "SILVIA", "SOSA", "silvia@silvia@silvia.com", "lalala", [], [], true, false);
+	let silvia = new Usuario(3, "SILVIA", "SOSA", "silvia@silvia.com", "lalala", [], [], true, false);
 	let lucas = new Usuario(4, "LUCAS", "RAMUNNI","lucas@lucas.com", "20565", [], [], true, true);
 	let franco = new Usuario(5, "FRANCO", "LEIRO","franco@franco.com", "59842", [], [], true, false);
 
@@ -40,13 +40,12 @@ export function cargaInicialDatos() {
 	mostrarProductosUsuario(ale);
 
 	// ---------- [Creacion de Productos (por instancias de objetos)] ---------- //
-
-	let prod1 = new Producto(1, "prod uno", "ideal para primavera verano", "M", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 750, 3, ["frío","viajar" ]);
-	let prod2 = new Producto(2, "prod dos", "ideal para primavera verano", "G", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tTalleBoxer.jpg", 1000, 4, ["calor","viajar" ]);
-	let prod3 = new Producto(3, "prod tres",  "ideal para primavera verano", "U", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 1999,99, 3, ["calor","todos los días" ]);
-	let prod4 = new Producto(4, "prod cuatro","ideal para primavera verano", "P", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tTalleBoxer.jpg", 999,9, 3, ["calor"]);
-	let prod5 = new Producto(5, "prod cinco", "ideal para primavera verano", "M", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 799,99, 1, ["todos los días" ]);
-	let prod6 = new Producto(6, "prod seis","ideal para primavera verano", "M", "C:\Users\Silvia\Desktop\_ProyectoJS-G1\img\tMedidasTop.jpg", 850, 3, ["frío" ]);
+	let prod1 = new Producto(1, "prod uno", "ideal para primavera verano", "M", "http2.gravatar.comavatarbe47344067db1d41b3e366b5877b558d", 750, 3,"frio");
+	let prod2 = new Producto(2, "prod dos", "ideal para primavera verano", "G", "http2.gravatar.comavatarbe47344067db1d41b3e366b5877b558d", 1000, 4, "calor");
+	let prod3 = new Producto(3, "prod tres",  "ideal para primavera verano", "U", "http2.gravatar.comavatarbe47344067db1d41b3e366b5877b558d", 1999,99, 3, "calor");
+	let prod4 = new Producto(4, "prod cuatro","ideal para primavera verano", "P", "http2.gravatar.comavatarbe47344067db1d41b3e366b5877b558d", 999,9, 3, "calor");
+	let prod5 = new Producto(5, "prod cinco", "ideal para primavera verano", "M", "http2.gravatar.comavatarbe47344067db1d41b3e366b5877b558d", 799,99, 1, "todos_los_dias");
+	let prod6 = new Producto(6, "prod seis","ideal para primavera verano", "M", "http2.gravatar.comavatarbe47344067db1d41b3e366b5877b558d", 850, 3, "frío");
 
 	// -------- [Agregamos Productos a la BD (por instancias de objetos)] -------- //
 	agregarProducto(prod1);
