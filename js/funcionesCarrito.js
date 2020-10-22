@@ -42,12 +42,12 @@ function cargaInicialDatos() {
 	agregarUsuario(lucas);
 	agregarUsuario(franco);
 	// ---------- [Creacion de Productos (por instancias de objetos)] ---------- //
-	let prod1 = new Producto(1, "prod uno", "ideal para primavera verano", "M", "", 750, 3, ["frio" ]);
-	let prod2 = new Producto(2, "prod dos", "ideal para primavera verano", "G", "", 1000, 4, ["calor" ]);
-	let prod3 = new Producto(3, "prod tres",  "ideal para primavera verano", "U", "", 1999,99, 3, ["calor"]);
-	let prod4 = new Producto(4, "prod cuatro","ideal para primavera verano", "P", "", 999,9, 3, ["calor"]);
-	let prod5 = new Producto(5, "prod cinco", "ideal para primavera verano", "M", "", 799,99, 1, ["todos_los_dias" ]);
-	let prod6 = new Producto(6, "prod seis","ideal para primavera verano", "M", "", 850, 3, ["frío" ]);
+	let prod1 = new Producto(1, "prod uno", "ideal para primavera verano", "M", "https://via.placeholder.com/150/f66b97", 750, 3,"frio");
+	let prod2 = new Producto(2, "prod dos", "ideal para primavera verano", "G", "https://via.placeholder.com/150/24f355", 1000, 4, "calor");
+	let prod3 = new Producto(3, "prod tres",  "ideal para primavera verano", "U", "https://via.placeholder.com/150/771796", 1999,99, 3, "calor");
+	let prod4 = new Producto(4, "prod cuatro","ideal para primavera verano", "P", "https://via.placeholder.com/150/92c952", 999,9, 3, "calor");
+	let prod5 = new Producto(5, "prod cinco", "ideal para primavera verano", "M", "https://via.placeholder.com/150/f66b97", 799,99, 1, "todos_los_dias");
+	let prod6 = new Producto(6, "prod seis","ideal para primavera verano", "M", "https://via.placeholder.com/150/771796", 850, 3, "frío");
 	// -------- [Agregamos Productos a la BD (por instancias de objetos)] -------- //
 	agregarProducto(prod1);
 	agregarProducto(prod2);
