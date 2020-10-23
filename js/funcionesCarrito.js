@@ -184,6 +184,18 @@ if (e.target.id == "btnBorrarItem") {
     borrarProducto(e.target.dataset.codigo);
 }
 */
+function mostrarItem() {
+    let items = document.getElementById("items");
+    carrito.map(function(elem, ind){
+        let item = `
+                  
+            `;
+        item.innerHTML += item;
+        });
+}
+
+
+
 
 // ------------------- [buscar palabra en dbProductos] ------------------- //
 /*
