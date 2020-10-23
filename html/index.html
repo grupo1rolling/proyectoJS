@@ -137,8 +137,8 @@
             </button>
           </form>          
         </div>
-        
-        <ul class="navbar-brand mr-5 mt-0 mb-0">
+        <!-- ORIGINAL -->
+        <!-- <ul class="navbar-brand mr-5 mt-0 mb-0">
           <li class="nav-item active">
             <a class="nav-link text-orange" href="#"
             data-toggle="modal" data-target="#verCarrito"
@@ -148,66 +148,48 @@
             </a
             >
           </li>
-        </ul>
+        </ul> -->
+
+        <!-- BOTON QUE ABRE EL MODAL DEL CARRTO  VER ESTETICA-->
+          <ul class="navbar-brand mr-5 mt-0 mb-0">
+            <li>
+
+              <a class="nav-link text-orange" href="#verCarrito"
+              > <span id="contador"></span> 
+              <button type="button" class="btn btn-green" data-toggle="modal" data-target="#verCarrito">
+                <i class="fas fa-shopping-cart"></i> 
+              </button>$
+              <span id="totalCarrito"> </span>
+            </a>
+
+            </li>
+          </ul>
       </nav>
     <!-- </div> -->
 
-    <!-- <i class="fa fa-cart-arrow-down" aria-hidden="true"></i> -->
-    <!--Navbar2-->
+   
+    <!-- /Navbar2-->
 
     <!--Main layout-->
     <main>
-      <div class="card-deck m-5">
-        <div class="card">
-          <img id="fotoProducto" src="../img/Para todos los dias/top-estampa-cactus-min.jpg" class="card-img-top" alt="top-estampa-cactus">
-          <div class="card-body">
-            <h5 id="nombreProducto" class="card-title">Top Cactus</h5>
-            <p id="precioProducto">$1500</p>
-            <p id="descripcionProducto"class="card-text">
-              Top #Cactus de microfibra con elastano. Posee tecnología
-              HYDROWICK: Disipa la transpiración.
-            </p>
-            <p id="talleProducto">M</p>
-            <p id="categoriaProducto">Para todos los dias</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-green mt-3">Añadir al carro</a>
-          </div>
-        </div>       
+
+      <div class="card-deck m-5" id="tarjetasProd">
+          <!-- se cargarán las cards dinámicamente  -->
       </div>
+
     </main>
     <!--Main layout-->
 
   
-        <div class="card-deck m-4" id="tarjetasProd">
-        
-        </div> 
-      
 
-      <!-- <div class="row row-cols-1 row-cols-md-3" id="tarjetasProd">
-        <div class="col mb-4">
-          FIJARSE DE HACERLO RESPONSIVE A TODO
-        </div>
-      </div>  -->
+ 
 
-      
-    
-
-
-    </main>
-    <!--Main layout-->
-
- <!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#verCarrito">
-  verCarrito
-</button> -->
-
-<!-- Modal -->
+<!-- Modal VER CARRITO-->
 <div class="modal fade" id="verCarrito" tabindex="-1" role="dialog" aria-labelledby="verCarritoTitulo" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title" id="verCarritoTitulo">Modal title</h6>
+        <h6 class="modal-title" id="verCarritoTitulo">Tu carrito: </h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -240,9 +222,7 @@
         </table>
       </div>
       <div class="modal-footer">
-        <!-- boton vaciar carrito -->
-        <button id="botonVaciar" class="btn btn-green"> <i class="fa fa-cart-arrow-down"></i> Vaciar</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" id="botonVaciar" class="btn btn-secondary" data-dismiss="modal">Vaciar</button>
         <button type="button" class="btn btn-primary">Finalizar Compra</button>
       </div>
     </div>
