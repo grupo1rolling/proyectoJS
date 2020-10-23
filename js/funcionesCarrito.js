@@ -67,7 +67,7 @@ function actualizarTotalesCarrito() {
 
 // -------------------- [actualiza totales del Carrito] -------------------- //
 let botonVaciar = document.querySelector('#botonVaciar');
-// Eventos
+// Eventos, en este caso escucho al boton vaciarCarrito del modal
 botonVaciar.addEventListener('click', vaciarCarrito);
 function vaciarCarrito() {
     totalARSCarrito=0;
