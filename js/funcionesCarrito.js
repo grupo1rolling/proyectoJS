@@ -9,7 +9,7 @@ let totalARSCarrito=0, contadorProdCarrito=0;
 let dbProductos=[];
 let arrayProdComprados=[];
 let carrito=[];
-let index;
+
 // ------------------------ [llamada a funciones] -------------------------- //
 cargaInicialDatos();
 getProductos();
@@ -47,12 +47,12 @@ function cargaInicialDatos() {
 	agregarUsuario(franco);
 	// ---------- [Creacion de Productos (por instancias de objetos)] ---------- //
 
-	let prod1 = new Producto(1, "prod uno", "ideal para primavera verano", "M", "https://via.placeholder.com/150/f66b97", 750, 3,"frio");
-	let prod2 = new Producto(2, "prod dos", "ideal para primavera verano", "G", "https://via.placeholder.com/150/24f355", 1000, 2, "calor");
-	let prod3 = new Producto(3, "prod tres",  "ideal para primavera verano", "U", "https://via.placeholder.com/150/771796", 1810, 3, "calor");
-	let prod4 = new Producto(4, "prod cuatro","ideal para primavera verano", "P", "https://via.placeholder.com/150/92c952", 999, 3, "calor");
-	let prod5 = new Producto(5, "prod cinco", "ideal para primavera verano", "M", "https://via.placeholder.com/150/f66b97", 876, 0, "todos_los_dias");
-	let prod6 = new Producto(6, "prod seis","ideal para primavera verano", "M", "https://via.placeholder.com/150/771796", 850, 3, "frío");
+	let prod1 = new Producto(1001, "prod uno", "ideal para primavera verano", "M", "https://via.placeholder.com/150/f66b97", 750, 3,"frio");
+	let prod2 = new Producto(1002, "prod dos", "ideal para primavera verano", "G", "https://via.placeholder.com/150/24f355", 1000, 2, "calor");
+	let prod3 = new Producto(1003, "prod tres",  "ideal para primavera verano", "U", "https://via.placeholder.com/150/771796", 1810, 3, "calor");
+	let prod4 = new Producto(1004, "prod cuatro","ideal para primavera verano", "P", "https://via.placeholder.com/150/92c952", 999, 3, "calor");
+	let prod5 = new Producto(1005, "prod cinco", "ideal para primavera verano", "M", "https://via.placeholder.com/150/f66b97", 876, 0, "todos_los_dias");
+	let prod6 = new Producto(1006, "prod seis","ideal para primavera verano", "M", "https://via.placeholder.com/150/771796", 850, 3, "frío");
 
 	// -------- [Agregamos Productos a la BD (por instancias de objetos)] -------- //
 	agregarProducto(prod1);
@@ -113,30 +113,21 @@ function mostrarTarjetas() {
                   <p id="categoriaProducto">lala</p>
                 </div>
                 <div class="card-footer">
-                <a href="#" class="btn btn-green mt-3" id="botonComprar" >Añadir al carro</a>
+                <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
                 </div>
               </div>       
             `;
         tarjProd.innerHTML += tarjeta;
         });
 }
-//<a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
-/*
-1) en la tarjeta dinamica: `...<a href="#" class="btn btn-green mt-3" id="botonComprar" >Añadir al carro</a>..`
-2) en cualquier parte del js (fuera de las funciones):
-   botonComprar.addEventListener('click', ()=>{comprarProd(index); });
-3) definicion de la fcion:function comprarProd(i) {...codigo..}
-*/
-// -------------------- [funcion comprarProducto] -------------------- //
- botonComprar.addEventListener('click', ()=>{
-     comprarProd(index);
-    });
 
-function comprarProd(i) {
+// -------------------- [funcion comprarProducto] -------------------- //
+window.comprarProd= function (i) {
     console.log (`VAMOS A COMPRAR ${i}`)                                //#### 4 TESTING PURPOSES ONLY ###
-    //busco el prod en la bdProductos
+    //busco el prod en la bdProductos por posicion
     let prod = dbProductos[i];
-    console.log(`EL PRODUCTO COMPRADO ------>  ${prod}`);               //#### 4 TESTING PURPOSES ONLY ###
+                       
+    alert(`elegiste ${prod._nombre}`)                                   //#### 4 TESTING PURPOSES ONLY ###
 
     //si hay al menos un producto en stock, se puede vender 
     if (prod._stock >= 1) {
@@ -172,6 +163,7 @@ function comprarProd(i) {
     } else {
             alert(`ooops nos quedamos sin ${prod._nombre}`);
     }
+
 }
    
 
@@ -226,14 +218,38 @@ function filtrarProductos(cat) {
 
 
 // --------------------------- [listar carrito] ---------------------------- //
-// const botonVaciar = document.querySelector('#botonVaciar');
-// botonVaciar.addEventListener('click', vaciarCarrito);
+const btnListarCarrito = document.querySelector('#listarCarrito');
+btnListarCarrito.addEventListener('click', listarCarrito);
+listarCarrito();
 function listarCarrito() {
-    if (carrito.lenght > 0) {
-        console.log(`CARRITO.LENGHT = ${carrito.lenght}`)
-    } else {
-        alert ("carrito vacio")
-    }
+
+    if (carrito.lenght = 0) {
+        alert ("carrito vacio");
+        } else {
+        console.log (`CARRITO.LENGHT = ${carrito.lenght}`)
+    
+        let items = document.getElementById("items");
+        carrito.map (function (p,i) {
+        let linea = ` 
+        <tr>
+            <th scope="row">${i+1}</th>
+            <td>${p._idProd}</td>
+            <td>${p._nomProd}</td>
+            <td>${p._precioProd}</td>
+            <td><button id="btnBorrarItem" 
+                data-codigo="${p._idProd}" 
+                title="eliminar producto" 
+                type="button" class="btn btn-outline-danger btn-sm">
+                <i id="borrarItem" 
+                data-codigo="${i}" 
+                class="fa fa-window-close-o">
+                </i>
+                </button>
+            </td>
+        </tr>`   
+        items.innerHTML += linea;
+        });
+    } //del else carrito con compras
 }
 
 
