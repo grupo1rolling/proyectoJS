@@ -231,6 +231,9 @@ function obtenerDatosLogin() {
 
     if (usuarioOK != null) {
         console.log(`usuario confirmado`);
+
+
+        //////HAY QE MANDAR AL LOCAL STORAGE EL USUARIO ACTIVO
     } else {
         window.alert("usuario o contraseña incorrectos");
     }

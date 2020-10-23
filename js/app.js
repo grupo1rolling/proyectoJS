@@ -9,5 +9,5 @@ cargaInicialDatos();
 actualizarTotalesCarrito(); //actualiza cantidad de productos y total compra en la barra 
 mostrarTarjetas();
 
-//mostrarUsuarios();
+mostrarUsuarios();
 mostrarProductos();
