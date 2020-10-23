@@ -223,6 +223,7 @@ btnListarCarrito.addEventListener('click', listarCarrito);
 listarCarrito();
 function listarCarrito() {
 
+
     if (carrito.lenght = 0) {
         alert ("carrito vacio");
         } else {

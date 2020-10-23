@@ -137,20 +137,9 @@
             </button>
           </form>          
         </div>
-        <!-- ORIGINAL -->
-         <!-- <ul class="navbar-brand mr-5 mt-0 mb-0">
-          <li class="nav-item active">
-            <a class="nav-link text-orange" href="#"
-            data-toggle="modal" data-target="#verCarrito" 
-              > <span id="contador"></span>
-              <i class="fas fa-shopping-cart"></i> $ 
-              <span id="totalCarrito"></span>
-            </a
-            >
-          </li>
-        </ul>  -->
-
-        <!-- BOTON QUE ABRE EL MODAL DEL CARRTO  VER ESTETICA-->
+        
+        <!-- ######################################################## -->
+        <!-- BOTON QUE ABRE EL MODAL DEL CARRTO  ARREGLAR LA ESTETICA-->
         <!-- ######################################################## -->
            <ul class="navbar-brand mr-5 mt-0 mb-0">
               <li>
@@ -192,7 +181,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="container" id="contenedorListaCarrito">
+        <!-- <div class="container" id="contenedorListaCarrito"> -->
           <table class="table table-hover" id="factura">
             <thead>
               <tr>
@@ -204,31 +193,16 @@
               </tr>
             </thead>
             <tbody id="items">
-              <!-- <tr>
-                <th scope="row">1</th>
-                <td>3</td>
-                <td>prod tres</td>
-                <td>1999,99</td>
-                <td><button id="btnBorrarItem" 
-                    data-codigo="${item._codigo}" 
-                    title="eliminar producto" 
-                    type="button" class="btn btn-outline-danger btn-sm">
-                    <i id="btnBorrarUsuariosAdmin" 
-                    data-codigo="${item._codigo}" 
-                    class="fa fa-window-close-o">
-                    </i>
-                    </button></td>
-              </tr> -->
-            
-                
+              
+                 <!-- ---------- [se cargará el carrito dinámicamente] ---------- -->
+                            
             </tbody>
           </table>
-        </div>
+        <!-- </div> -->
       </div>
       <div class="modal-footer">
-        <!-- <button type="button" id="botonVaciar" class="btn btn-deep-orange" data-dismiss="modal">Vaciar</button> -->
         <button type="button" id="botonVaciar" class="btn btn-danger" data-dismiss="modal">Vaciar</button>
-        <button type="button" id="botonFinalizar" class="btn btn-green">Finalizar Compra</button>
+        <button type="button" id="botonFinalizar" class="btn btn-green" data-dismiss="modal">Finalizar Compra</button>
       </div>
     </div>
   </div>
