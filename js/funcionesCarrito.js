@@ -9,6 +9,7 @@ let totalARSCarrito=0, contadorProdCarrito=0;
 let dbProductos=[];
 let arrayProdComprados=[];
 let carrito=[];
+let index;
 // ------------------------ [llamada a funciones] -------------------------- //
 cargaInicialDatos();
 getProductos();
@@ -71,12 +72,13 @@ function actualizarTotalesCarrito() {
 
 // ----------------------- [funcion vaciarCarrito] ----------------------- //
 let botonVaciar = document.querySelector('#botonVaciar');
+//let botonVaciar = document.getElementById('botonVaciar');
 botonVaciar.addEventListener('click', vaciarCarrito);
 //
 function vaciarCarrito() {
     totalARSCarrito=0;
     contadorProdCarrito=0;
-    console.log("VACIANDO CARRITO.................")                 //#### 4 TESTING PURPOSES ONLY ###
+    alert("VACIANDO CARRITO.................")                 //#### 4 TESTING PURPOSES ONLY ###
     actualizarTotalesCarrito();
 };
 
@@ -111,18 +113,25 @@ function mostrarTarjetas() {
                   <p id="categoriaProducto">lala</p>
                 </div>
                 <div class="card-footer">
-                <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
+                <a href="#" class="btn btn-green mt-3" id="botonComprar" >Añadir al carro</a>
                 </div>
               </div>       
             `;
         tarjProd.innerHTML += tarjeta;
         });
 }
-
-
+//<a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
+/*
+1) en la tarjeta dinamica: `...<a href="#" class="btn btn-green mt-3" id="botonComprar" >Añadir al carro</a>..`
+2) en cualquier parte del js (fuera de las funciones):
+   botonComprar.addEventListener('click', ()=>{comprarProd(index); });
+3) definicion de la fcion:function comprarProd(i) {...codigo..}
+*/
 // -------------------- [funcion comprarProducto] -------------------- //
-let botonComprar = document.querySelector('#botonComprar');
-botonComprar.addEventListener('click', comprarProd);
+ botonComprar.addEventListener('click', ()=>{
+     comprarProd(index);
+    });
+
 function comprarProd(i) {
     console.log (`VAMOS A COMPRAR ${i}`)                                //#### 4 TESTING PURPOSES ONLY ###
     //busco el prod en la bdProductos
@@ -205,6 +214,8 @@ function filtrarProductos(cat) {
 
 
 // --------------------------- [listar carrito] ---------------------------- //
+// const botonVaciar = document.querySelector('#botonVaciar');
+// botonVaciar.addEventListener('click', vaciarCarrito);
 function listarCarrito() {
     if (carrito.lenght > 0) {
         console.log(`CARRITO.LENGHT = ${carrito.lenght}`)
