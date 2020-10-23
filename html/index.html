@@ -194,13 +194,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <table class="table table-hover">
+        <table class="table table-hover" id="items">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Cant</th>
               <th scope="col">Producto</th>
               <th scope="col">Precio</th>
+              <th scope="col">Eliminar</th>
             </tr>
           </thead>
           <tbody>
@@ -209,14 +210,18 @@
               <td>3</td>
               <td>prod tres</td>
               <td>1999,99</td>
+              <td><button id="btnBorrarItem" 
+                   data-codigo="${item._codigo}" 
+                   title="eliminar producto" 
+                   type="button" class="btn btn-outline-danger btn-sm">
+                   <i id="btnBorrarUsuariosAdmin" 
+                   data-codigo="${item._codigo}" 
+                   class="fa fa-window-close-o">
+                  </i>
+                  </button></td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>4</td>
-              <td>prod cuatro</td>
-              <td>1000,00</td>
             </tr>
-            
+              
           </tbody>
         </table>
       </div>

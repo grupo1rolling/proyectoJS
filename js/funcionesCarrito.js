@@ -118,12 +118,11 @@ function mostrarTarjetas() {
         tarjProd.innerHTML += tarjeta;
         });
 }
-// <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
+
 
 // -------------------- [funcion comprarProducto] -------------------- //
 let botonComprar = document.querySelector('#botonComprar');
 botonComprar.addEventListener('click', comprarProd);
-//
 function comprarProd(i) {
     console.log (`VAMOS A COMPRAR ${i}`)                                //#### 4 TESTING PURPOSES ONLY ###
     //busco el prod en la bdProductos
@@ -161,8 +160,6 @@ function comprarProd(i) {
         contadorProdCarrito += 1;
         actualizarTotalesCarrito;
 
-        console.log(`TOTAL CARRO --->${totalARSCarrito}`);             //#### 4 TESTING PURPOSES ONLY ###
-        console.log(`CONTADOR ---->${contadorProdCarrito}`);          //#### 4 TESTING PURPOSES ONLY ###
     } else {
             alert(`ooops nos quedamos sin ${prod._nombre}`);
     }
@@ -171,11 +168,22 @@ function comprarProd(i) {
 
 
 // -------------------------- [finalizar compra] --------------------------- //
+let botonFinalizar = document.querySelector('#botonFinalizar');
+botonFinalizar.addEventListener('click', finalizarCompra);   
  function finalizarCompra() {
+    actualizarTotalesCarrito()
     alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`)
 }
 
+//id="items"
 
+
+// Evento del boton para borrar item
+/*
+if (e.target.id == "btnBorrarItem") {
+    borrarProducto(e.target.dataset.codigo);
+}
+*/
 
 // ------------------- [buscar palabra en dbProductos] ------------------- //
 /*
