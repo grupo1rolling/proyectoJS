@@ -141,6 +141,7 @@
         <ul class="navbar-brand mr-5 mt-0 mb-0">
           <li class="nav-item active">
             <a class="nav-link text-orange" href="#"
+            data-toggle="modal" data-target="#verCarrito"
               > <span id="contador"></span>
               <i class="fas fa-shopping-cart"></i> $ 
               <span id="totalCarrito"></span>
@@ -239,6 +240,8 @@
         </table>
       </div>
       <div class="modal-footer">
+        <!-- boton vaciar carrito -->
+        <button id="botonVaciar" class="btn btn-green"> <i class="fa fa-cart-arrow-down"></i> Vaciar</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary">Finalizar Compra</button>
       </div>
