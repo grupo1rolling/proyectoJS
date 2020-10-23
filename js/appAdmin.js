@@ -12,6 +12,7 @@ cargaInicialDatos();
 mostrarUsuarios();
 mostrarProductos();
 
+//-----[Eventos de botones escuchando - USUARIOS]-----//
 const btnModificarUsuario = document.querySelector("#contenedorUsuariosAdmin");
 btnModificarUsuario.addEventListener("click", (e) => {
 
@@ -43,3 +44,7 @@ modalModificaUsuarioAdmin.addEventListener("click", (e) => {
 	// 	console.log(valor);
 	// }
 });
+
+
+
+//-----[Eventos de botones escuchando - PRODUCTOS]-----//
