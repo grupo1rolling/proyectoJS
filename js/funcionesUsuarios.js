@@ -365,6 +365,17 @@ function checkPass(pass, repPass) {
 	}
 }
 
+//VALIDACION DE CONTRASENIA
+
+cont validate = () => {
+	if (pass.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}/)){
+		return pass
+	} else {
+		alert("la contraseña no cumple las condiciones")
+	}
+}
+
+
 // ####################################################
 // FUNCION QUE OBTIENE DATOS DEL FORMULARIO DE LOGIN
 // ####################################################
