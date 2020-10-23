@@ -107,41 +107,6 @@ export function mostrarUsuarios() {
       `;
 		contenedor.innerHTML += detalle;
 	});
-
-	// <td class="${usuarioInactivo} ${usuarioAdmin} text-center"><i style="color:red" class="${usuarioCheckActivo}"></i></td>
-	// 			<td class="${usuarioInactivo} ${usuarioAdmin} text-center"><i class="${usuarioCheckAdmin}"></i></td>
-
-	// getAllUsuarios().map(function (item) {
-	// 	let elemento = document.createElement("tr");
-	// 	let usuarioInactivo = '';
-	// 	let usuarioAdmin = '';
-
-	// 	if (item._estado == false) {
-	// 		usuarioInactivo = 'bg-danger';
-	// 	}
-
-	// 	if (item._esAdmin == true) {
-	// 		usuarioAdmin = 'bg-success';
-	// 	}
-
-	// 	let detalle = `
-	// 	<tr>
-	// 		<th scope="row" class="${usuarioInactivo} ${usuarioAdmin}">${item._codigo}</th>
-	// 			<td class="${usuarioInactivo} ${usuarioAdmin}">${item._nombre}</td>
-	// 			<td class="${usuarioInactivo} ${usuarioAdmin}">${item._apellido}</td>
-	// 			<td class="${usuarioInactivo} ${usuarioAdmin}">${item._email}</td> 
-	// 			<td class="${usuarioInactivo} ${usuarioAdmin} text-center"><a href="">Ver Productos</a></td>
-	// 			<td class="${usuarioInactivo} ${usuarioAdmin}">${item._password}</td>
-	// 			<td class="${usuarioInactivo} ${usuarioAdmin} text-center">${item._estado}</td>
-	// 			<td class="${usuarioInactivo} ${usuarioAdmin} text-center">${item._esAdmin}</td>
-	//     <td class="text-center"><button id="btnModificarUsuariosAdmin" data-codigo=${item._codigo} type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaUsuario">Modificar</button></td>
-	//     <td class="text-center"><button onclick="prueba2(${item._codigo})" type="button" class="btn btn-danger btn-sm">X</button></td>
-	// 	</tr>
-	// 	`;
-
-	// 	elemento.innerHTML = detalle;
-	// 	usuariosDetalle.appendChild(elemento);	
-	// });
 }
 
 export function modificarDatosUsuario(codigoUsuario) {
