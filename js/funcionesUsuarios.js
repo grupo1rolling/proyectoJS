@@ -1,10 +1,12 @@
+import { Usuario } from "./clases.js";
+
 export function agregarUsuario(usuario) {
 	let usuariosArray = [];
 	let existeUs = false;
 	//-- Verifico si ya existe el nombre de Usuario ingresado
 	existeUs = existeUsuario(usuario);
 	if (existeUs) {
-		//console.log("Usuario existente");
+		console.log("Usuario existente");
 	} else {
 		usuariosArray = getAllUsuarios();
 		usuariosArray.push(usuario);
@@ -38,7 +40,7 @@ function existeUsuario(usuario) {
 	let usuariosArray = getAllUsuarios();
 
 	let existeUsuario = usuariosArray.find(item => {
-		return item._nombre == usuario.nombre ? true : false;
+		return item._email == usuario._email ? true : false;
 	});
 
 	return existeUsuario;
@@ -56,6 +58,75 @@ function existeUsuario(usuario) {
 // tbody.getElementById("usuariosDetalle");
 // tbody.innerHTML = "";
 
+export function btnModalAltaUsuarioAdminPage() {
+	let modalAdminUsuarios = document.getElementById("containerBtnAltaUsuarioAdmin");
+
+	let contenido = `
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button id="btnGrabarUsuarioPagAdmin" type="button" class="btn btn-primary">Guardar</button>
+					`;
+
+	modalAdminUsuarios.innerHTML = contenido;
+}
+
+
+function getCodigoGeneradoAltaUsuario() {
+	let cantUsuarios = 0;
+	let usuariosArray = [];
+	let codigosUsuariosArray = [];
+	let maxCodUsuario = 0;
+
+
+	usuariosArray = getAllUsuarios()
+	cantUsuarios = usuariosArray.length;
+
+
+	//debugger
+	if (cantUsuarios > 0) {
+		//console.log(`Cantidad de usuarios: ${cantUsuarios}`);
+		//cantUsuarios = cantUsuarios + 1;
+
+		codigosUsuariosArray = usuariosArray.map((item) => {
+			return item._codigo;
+		});
+
+		// console.log(codigosUsuariosArray);
+
+		maxCodUsuario = Math.max.apply(null, codigosUsuariosArray);
+		maxCodUsuario += 1;
+		// console.log(`Max cod Usuario: ${maxCodUsuario}`);
+		// maxCodUsuario 
+	}
+	else {
+		//console.log("No hay usuarios");
+		maxCodUsuario = 1;
+	}
+
+	return maxCodUsuario;
+}
+
+export function grabarAltaUsuarioAdminPage() {
+
+	let codigo = getCodigoGeneradoAltaUsuario();
+	let nombre = document.getElementById("nombreAltaUsrAdmPage").value;
+	let apellido = document.getElementById("apellidoAltaUsrAdmPage").value;
+	let email = document.getElementById("emailAltaUsrAdmPage").value;
+	let password = document.getElementById("contrasenaAltaUsrAdmPage").value;
+	let estado = document.getElementById("SwitchEstadoAltaUsrAdmPage").checked;
+	let esAdmin = document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked;
+
+	console.log(`Código: ${codigo}`)
+	console.log(`Nombre: ${nombre}`)
+	console.log(`Apellido: ${apellido}`)
+	console.log(`Email: ${email}`)
+	console.log(`Pass: ${password}`)
+	console.log(`Estado: ${estado}`)
+	console.log(`EsAdmin: ${esAdmin}`)
+
+	let nuevoUsuario = new Usuario(codigo, nombre, apellido, email, password, [], [], estado, esAdmin);
+	agregarUsuario(nuevoUsuario);
+	mostrarUsuarios();
+}
 
 export function mostrarUsuarios() {
 	let contenedor = document.getElementById("usuariosDetalle");
@@ -114,10 +185,8 @@ export function modificarDatosUsuario(codigoUsuario) {
 		return item._codigo == codigoUsuario ? item : "";
 	});
 
-
 	let usuarioEstado = (usuarioDatos._estado) ? "checked" : "unchecked"
 	let usuarioEsAdmin = (usuarioDatos._esAdmin) ? "checked" : "unchecked"
-
 
 	let modalAdminUsuarios = document.getElementById("modalBody");
 
@@ -153,8 +222,8 @@ export function modificarDatosUsuario(codigoUsuario) {
 							<div class="form-group">
 								<!-- Default checked -->
 								<div class="custom-control custom-switch">
-									<input type="checkbox" class="custom-control-input" id="customSwitchEstadoAdm" ${usuarioEstado}>
-									<label class="custom-control-label" for="customSwitchEstadoAdm">Estado de Usuario</label>
+									<input type="checkbox" class="custom-control-input" id="SwitchModifEstadoAdmPage" ${usuarioEstado}>
+									<label class="custom-control-label" for="SwitchModifEstadoAdmPage">Estado de Usuario</label>
 								</div>
 							</div>
 						</div>
@@ -162,8 +231,8 @@ export function modificarDatosUsuario(codigoUsuario) {
 							<div class="form-group">								
 								<!-- Default checked -->
 								<div class="custom-control custom-switch">
-									<input type="checkbox" class="custom-control-input" id="customSwitchEsAdm" ${usuarioEsAdmin}>
-									<label class="custom-control-label" for="customSwitchEsAdm">Administrador</label>
+									<input type="checkbox" class="custom-control-input" id="SwitchModifEsAdmPage" ${usuarioEsAdmin}>
+									<label class="custom-control-label" for="SwitchModifEsAdmPage">Administrador</label>
 								</div>
 							</div>
 						</div>
@@ -226,7 +295,7 @@ export function modificarDatosUsuario(codigoUsuario) {
 					</div>
 					<div class="modal-footer" id="modalFooter">
 						<button onclick="" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-						<button id="btnGrabarUsuariosAdmin" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+						<button id="btnGrabarUsuarioModifAdminPage" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
 					</div>
 				</form>
 				<!-- Fin seccion Formulario -->
@@ -244,14 +313,16 @@ export function borrarUsuario(codigo) {
 	mostrarUsuarios();
 }
 
-export function grabarDatosUsuariosAdmin() {
-	let codigo   = document.getElementById("codigoUsrAdm").value;
-	let nombre 	 = document.getElementById("nombreUsrAdm").value;
+
+
+export function grabarModificacionUsuariosAdmin() {
+	let codigo = document.getElementById("codigoUsrAdm").value;
+	let nombre = document.getElementById("nombreUsrAdm").value;
 	let apellido = document.getElementById("apellidoUsrAdm").value;
-	let email    = document.getElementById("emailUsrAdm").value;
+	let email = document.getElementById("emailUsrAdm").value;
 	let password = document.getElementById("contrasenaUsrAdm").value;
-	let estado   = document.getElementById("customSwitchEstadoAdm").checked;
-	let esAdmin  = document.getElementById("customSwitchEsAdm").checked;
+	let estado = document.getElementById("SwitchModifEstadoAdmPage").checked;
+	let esAdmin = document.getElementById("SwitchModifEsAdmPage").checked;
 
 	let usuariosArray = getAllUsuarios();
 
@@ -281,27 +352,22 @@ export function grabarDatosUsuariosAdmin() {
 // ####################################################
 function obtenerDatosUsuarios() {
 
-	//nombre
 	let nombre = document.getElementById("nombre").value.toUpperCase();
-	//apellido
 	let apellido = document.getElementById("apellido").value.toUpperCase();
-	//email
 	let email = document.getElementById("email").value.toLowerCase();
-	//contraseña
 	let pass = document.getElementById("contrasena").value;
 	let repPass = document.getElementById("repContrasena").value;
 	password = checkPass(pass, repPass);
-	//direccion
 	let dir = document.getElementById("direccion").value;
 	let dirAdc = document.getElementById("direccionAdc").value;
 	let ciudad = document.getElementById("ciudad").value;
 	let pcia = document.getElementById("provincia");
 	let pciaSeleccionada = pcia.options[pcia.selectedIndex].value;
 	let zip = document.getElementById("zip").value;
-	//ponemos la direccion en un array 
+
 	let direccion = [];
 	direccion.push(dir, dirAdc, ciudad, pciaSeleccionada, zip);
-	//boletin
+
 	let boletin = document.getElementById("boletin").checked;
 	//creamos INSTANCIA DE LA CLASE USUARIO
 	let estado, admin, codigosProductos;

@@ -173,7 +173,7 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label for="nombre">Nombre</label>
-										<input type="text" class="form-control" id="nombre" placeholder="nombre"
+										<input type="text" class="form-control" id="nombreAltaUsrAdmPage" placeholder="Nombre..."
 											required />
 									</div>
 								</div>
@@ -182,7 +182,7 @@
 								<div class="col-12">
 									<div class="form-group">
 										<label for="apellido">Apellido</label>
-										<input type="text" class="form-control" id="apellido" placeholder="apellido"
+										<input type="text" class="form-control" id="apellidoAltaUsrAdmPage" placeholder="Apellido..."
 											required />
 									</div>
 								</div>
@@ -193,16 +193,16 @@
 									<div class="form-group">
 										<div class="form-group">
 											<label for="email">Correo electrónico</label>
-											<input type="email" class="form-control" id="email"
+											<input type="email" class="form-control" id="emailAltaUsrAdmPage"
 												aria-describedby="emailHelp" placeholder="usuario@dominio.com">
 										</div>
 										<div class="form-group">
 											<label for="contrasena">Contraseña</label>
-											<input type="password" class="form-control" id="contrasena">
+											<input type="password" class="form-control" id="contrasenaAltaUsrAdmPage">
 										</div>
 										<div class="form-group">
 											<label for="repContrasena">Repetir Contraseña</label>
-											<input type="password" class="form-control" id="repContrasena">
+											<input type="password" class="form-control" id="repContrasenaAltaUsrAdmPage">
 										</div>
 									</div>
 								</div>
@@ -258,6 +258,27 @@
 										<div class="form-group col-md-3">
 											<label for="zip">Código Postal</label>
 											<input type="text" class="form-control" id="zip">
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-6">
+									<div class="form-group">
+										<!-- Default checked -->
+										<div class="custom-control custom-switch">
+											<input type="checkbox" class="custom-control-input" id="SwitchEstadoAltaUsrAdmPage" checked>
+											<label class="custom-control-label" for="SwitchEstadoAltaUsrAdmPage">Estado de Usuario</label>
+										</div>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="form-group">								
+										<!-- Default checked -->
+										<div class="custom-control custom-switch">
+											<input type="checkbox" class="custom-control-input" id="SwitchEsAdmAltaUsrAdmPage">
+											<label class="custom-control-label" for="SwitchEsAdmAltaUsrAdmPage">Administrador</label>
 										</div>
 									</div>
 								</div>
@@ -320,9 +341,9 @@
 						</form>
 						<!-- Fin seccion Formulario -->
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<button type="button" class="btn btn-primary">Guardar</button>
+					<div class="modal-footer" id="containerBtnAltaUsuarioAdmin">
+						<!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button> -->
+						<!-- <button type="button" class="btn btn-primary">Guardar</button> -->
 					</div>
 				</div>
 			</div>
@@ -521,14 +542,14 @@
 	<!-- Optional JavaScript -->
 	<script src="../js/appAdmin.js" type="module"></script>
 
-	<script type="module">
+	<!-- <script type="module">
 		$(function () {
 			$('[data-toggle="popover"]').popover({
 				html: true,
 				delay: 500
 			});
 		});
-	</script>
+	</script> -->
 
 
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->

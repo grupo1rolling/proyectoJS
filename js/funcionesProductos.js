@@ -6,8 +6,7 @@ export function agregarProducto(producto) {
 	//-- Verificamos si existe la key 'productos' en LocalStorage
 	//-- Si existe y tiene productos, capturo la informacion en un array
 
-	productosArray =
-		JSON.parse(localStorage.getItem("productos")) || [];
+	productosArray = JSON.parse(localStorage.getItem("productos")) || [];
 
 	//-- Verifico si ya existe el codigo de producto ingresado
 	let existeProducto = productosArray.find(function (item) {
