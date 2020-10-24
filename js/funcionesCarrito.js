@@ -18,7 +18,6 @@ actualizarTotalesCarrito();
 mostrarTarjetas();
 
 
-
 // ----------- [usuarioAutenticado (true/false) en localStorage] ----------- //
 //localStorage.setItem("usuarioAutenticado", false);
 //lo ponemos en true para que entre siempre                          #### 4 TESTING PURPOSES ONLY ###
@@ -304,6 +303,7 @@ function listarCarrito() {
     // -- [lo quito del arreglo de productos comprados y del carrito] --/
     arrayProdComprados.splice(i,1);
     carrito.splice(i,1);   
+    setCarrito();
 
     // -- [actualizamos dbProductos] --/
     getProductos();
