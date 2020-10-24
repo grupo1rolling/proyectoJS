@@ -1,4 +1,5 @@
 import { Usuario } from "./clases.js";
+import { getCodigoGeneradoByKey } from "./funcionesAuxiliares.js";
 
 export function agregarUsuario(usuario) {
 	let usuariosArray = [];
@@ -6,7 +7,7 @@ export function agregarUsuario(usuario) {
 	//-- Verifico si ya existe el nombre de Usuario ingresado
 	existeUs = existeUsuario(usuario);
 	if (existeUs) {
-		console.log("Usuario existente");
+		alert("Usuario existente");
 	} else {
 		usuariosArray = getAllUsuarios();
 		usuariosArray.push(usuario);
@@ -106,14 +107,13 @@ function getCodigoGeneradoAltaUsuario() {
 }
 
 export function grabarAltaUsuarioAdminPage() {
-
-	let codigo = getCodigoGeneradoAltaUsuario();
-	let nombre = document.getElementById("nombreAltaUsrAdmPage").value;
+	let codigo 	 = getCodigoGeneradoByKey("usuarios");
+	let nombre 	 = document.getElementById("nombreAltaUsrAdmPage").value;
 	let apellido = document.getElementById("apellidoAltaUsrAdmPage").value;
-	let email = document.getElementById("emailAltaUsrAdmPage").value;
+	let email 	 = document.getElementById("emailAltaUsrAdmPage").value;
 	let password = document.getElementById("contrasenaAltaUsrAdmPage").value;
-	let estado = document.getElementById("SwitchEstadoAltaUsrAdmPage").checked;
-	let esAdmin = document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked;
+	let estado 	 = document.getElementById("SwitchEstadoAltaUsrAdmPage").checked;
+	let esAdmin  = document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked;
 
 	console.log(`Código: ${codigo}`)
 	console.log(`Nombre: ${nombre}`)
@@ -321,8 +321,6 @@ export function borrarUsuario(codigo) {
 	localStorage.setItem("usuarios", JSON.stringify(usuariosFiltrados));
 	mostrarUsuarios();
 }
-
-
 
 export function grabarModificacionUsuariosAdmin() {
 	let codigo = parseInt(document.getElementById("codigoUsrAdm").value);

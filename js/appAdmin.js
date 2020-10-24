@@ -10,8 +10,6 @@ cargaInicialDatos();
 //actualizarTotalesCarrito(); //actualiza cantidad de productos y total compra en la barra 
 //mostrarTarjetas();
 
-
-
 mostrarUsuarios();
 mostrarProductos();
 btnModalAltaUsuarioAdminPage();
@@ -64,6 +62,7 @@ modalModificaUsuarioAdmin.addEventListener("click", (e) => {
 
 
 //-----[Eventos de botones escuchando - PRODUCTOS]-----//
+
 const btnModificarProducto = document.querySelector("#contenedorProductosAdmin");
 btnModificarProducto.addEventListener("click", (e) => {
 

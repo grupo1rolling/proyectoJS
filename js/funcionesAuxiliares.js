@@ -1,7 +1,7 @@
 
 import { Usuario, Producto } from "./clases.js";
-import { agregarProducto, mostrarProductosUsuario, getProductos, mostrarProductos } from "./funcionesProductos.js";
-import { agregarUsuario, getAllUsuarios, mostrarUsuarios } from "./funcionesUsuarios.js";
+import { agregarProducto, getProductos } from "./funcionesProductos.js";
+import { agregarUsuario, getAllUsuarios } from "./funcionesUsuarios.js";
 
 export function cargaInicialDatos() {
 
@@ -87,4 +87,40 @@ export function getCategorias(){
 		"Viajar",
 		"Todos los días"
 	];
+}
+
+export function getCodigoGeneradoByKey(tabla) {
+	let cantRegistros = 0;
+	let datosArray = [];
+	let codigosDatosArray = [];
+	let maxCodigo = 0;
+
+	switch (tabla) {
+		case "usuarios":
+			datosArray = getAllUsuarios();
+			break;
+	
+		case "productos":
+			datosArray = getProductos();
+			break;
+	
+		default:
+			break;
+	}
+
+	cantRegistros = datosArray.length;
+
+	if (cantRegistros > 0) {
+		codigosDatosArray = datosArray.map((item) => {
+			return item._codigo;
+		});
+
+		maxCodigo = Math.max.apply(null, codigosDatosArray);
+		maxCodigo += 1;
+	}
+	else {
+		maxCodigo = 1;
+	}
+
+	return maxCodigo;
 }

@@ -1,5 +1,5 @@
 import { Producto } from "./clases.js";
-import { getTalles, getCategorias } from "./funcionesAuxiliares.js";
+import { getTalles, getCategorias, getCodigoGeneradoByKey } from "./funcionesAuxiliares.js";
 
 export function agregarProducto(producto) {
 	let productosArray = [];
@@ -98,13 +98,14 @@ export function mostrarProductos() {
 			<tr>
 				<th scope="row" class="">${item._codigo}</th>
 					<td class="">${item._nombre}</td>
+					<td class="">${item._categoria}</td>
 					<td class="text-center">${item._talle}</td>
 					<td class="text-center">${item._foto}</td>
 					<td class="text-center">$ ${item._precio}</td>
 					<td class="text-center ${stockIndicador}"> <b>${item._stock}</b></td>
 					<td class="text-center">
-						<button id="btnModificarProductosAdmin" data-codigo="${item._codigo}" title="Modificar Producto" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modificaProducto"> Modificar</button>
-						<button id="btnBorrarProductosAdmin" data-codigo="${item._codigo}" title="Eliminar Producto" type="button" id="btnBaja" class="btn btn-danger btn-sm">X</button>
+						<button id="btnModificarProductosAdmin" data-codigo="${item._codigo}" title="Modificar Producto" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaProducto"><i id="btnModificarProductosAdmin" data-codigo="${item._codigo}" class="far fa-edit"></i></button>
+						<button id="btnBorrarProductosAdmin" data-codigo="${item._codigo}" title="Eliminar Producto" type="button" id="btnBaja" class="btn btn-outline-danger btn-sm"><i id="btnBorrarProductosAdmin" data-codigo="${item._codigo}" class="fas fa-trash-alt"></i></button>
 					</td>
 			</tr>
 		  `;
