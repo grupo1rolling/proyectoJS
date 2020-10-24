@@ -155,7 +155,7 @@ export class Producto {
 	}
 
 	set descripcion(descripcion) {
-		this.decripcion=descripcion;
+		this._decripcion = descripcion;
 	}
 
 	set talle(talle) {
@@ -175,12 +175,12 @@ export class Producto {
 	}
 
 	set categoria(categoria) {
-		this.categorias=categoria;
+		this._categoria = categoria;
 	}
 }
 
 export class ItemCarrito {
-	constructor (idProd, nomProd, cantProd, precioProd)  {
+	constructor(idProd, nomProd, cantProd, precioProd) {
 		this._idProd = idProd;
 		this._nomProd = nomProd;
 		this._cantProd = cantProd;

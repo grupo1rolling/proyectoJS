@@ -63,7 +63,7 @@ export function btnModalAltaUsuarioAdminPage() {
 
 	let contenido = `
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button id="btnGrabarUsuarioPagAdmin" type="button" class="btn btn-primary">Guardar</button>
+					<button id="btnGrabarUsuarioPagAdmin" type="button" class="btn btn-primary" data-dismiss="modal">Grabar</button>
 					`;
 
 	modalAdminUsuarios.innerHTML = contenido;
@@ -188,7 +188,7 @@ export function modificarDatosUsuario(codigoUsuario) {
 	let usuarioEstado = (usuarioDatos._estado) ? "checked" : "unchecked"
 	let usuarioEsAdmin = (usuarioDatos._esAdmin) ? "checked" : "unchecked"
 
-	let modalAdminUsuarios = document.getElementById("modalBody");
+	let modalAdminUsuarios = document.getElementById("modalBodyUsuarios");
 
 	let contenido = `
 		<!-- Inicio Formulario -->
@@ -293,15 +293,24 @@ export function modificarDatosUsuario(codigoUsuario) {
 							</div>
 						</div>
 					</div>
-					<div class="modal-footer" id="modalFooter">
-						<button onclick="" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-						<button id="btnGrabarUsuarioModifAdminPage" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-					</div>
 				</form>
+				<div class="modal-footer" id="modalFooter">
+					
+				</div>
 				<!-- Fin seccion Formulario -->
 	`;
 
 	modalAdminUsuarios.innerHTML = contenido;
+
+	//--- Footer del Model de modificacion de Productos ---//
+	modalAdminUsuarios = document.getElementById("modalFooterModifUsuarioAdminPage");
+	contenido = `
+				<button onclick="" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				<button id="btnGrabarUsuarioModifAdminPage" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+				`;
+
+	modalAdminUsuarios.innerHTML = contenido;
+
 }
 
 export function borrarUsuario(codigo) {
@@ -316,7 +325,7 @@ export function borrarUsuario(codigo) {
 
 
 export function grabarModificacionUsuariosAdmin() {
-	let codigo = document.getElementById("codigoUsrAdm").value;
+	let codigo = parseInt(document.getElementById("codigoUsrAdm").value);
 	let nombre = document.getElementById("nombreUsrAdm").value;
 	let apellido = document.getElementById("apellidoUsrAdm").value;
 	let email = document.getElementById("emailUsrAdm").value;
