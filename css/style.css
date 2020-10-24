@@ -117,6 +117,12 @@ body
         margin-left: 150px;
     }
 
+    .ulCarrito{
+        display: inline-block;
+        margin: 0px;
+        padding: opx;
+    }
+
 
 
     /* footer -----------*/
