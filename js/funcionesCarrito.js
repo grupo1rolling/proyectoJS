@@ -9,6 +9,8 @@ let totalARSCarrito=0, contadorProdCarrito=0;
 let dbProductos=[];
 let arrayProdComprados=[];
 let carrito=[];
+let mensajes=document.getElementById("mensajes");
+
 
 
 // ------------------------ [llamada a funciones] -------------------------- //
@@ -24,6 +26,7 @@ mostrarTarjetas();
 localStorage.setItem("usuarioAutenticado", true);
 let autenticado = localStorage.getItem("usuarioAutenticado");          // ### OJO QUE ES STRING ### //
 console.log(`valor autenticado ${autenticado} indica si un usuario esta logueado `);
+mensajes.innerHTML="bienvenido"
 
 
 // --- ###################### [F U N C I O N E S] ###################### --- //
@@ -208,16 +211,15 @@ function validarPalabraBuscar(palabra) {
 
 
 // ------------------- [filtrar productos por categoria] ------------------- //
-//filtrarProductos("frio");
 window.filtrarProductos = function (cat) {
-  getProductos();
-  const productosXcat = dbProductos.filter (p=> {
-		return p._categoria === cat
-  });
-
-  let tarjProd = document.getElementById("tarjetasProd");
-	productosXcat.map(function (prod, index) {
-		let tarjeta = `
+    getProductos();
+    const productosXcat = dbProductos.filter (p=> {
+          return p._categoria === cat
+    });
+  
+    let tarjProd = document.getElementById("tarjetasProd");
+      productosXcat.map(function (prod, index) {
+          let tarjeta = `
                 <div class="card">
                 <img id="fotoProducto" src=${prod._foto} class="card-img-top" alt="top-estampa-cactus">
                 <div class="card-body">
@@ -227,7 +229,7 @@ window.filtrarProductos = function (cat) {
                   ${prod._descripcion}
                   </p>
                   <p id="talleProducto">${prod._talle}</p>
-                  <p id="categoriaProducto">lala</p>
+                  <p id="categoriaProducto">${prod._descripcion}</p>
                 </div>
                 <div class="card-footer">
                 <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
