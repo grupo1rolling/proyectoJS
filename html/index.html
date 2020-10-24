@@ -140,16 +140,17 @@
         <!-- BOTON QUE ABRE EL MODAL DEL CARRTO -->
         <!-- ######################################################## -->
 
-
-        <button type="button" class="btn btn-green" id="listarCarrito" data-toggle="modal" data-target="#verCarrito">
-          <i class="fas fa-shopping-cart"></i> 
-        </button>    
-           <ul class="navbar-brand ulCarrito" >
-              <li>
-                <a class="nav-link text-orange" href="#"> <span id="totalCarrito">$</span> </a>
-                <!-- <a class="nav-link text-orange" href="#"> <span id="contador"></span> </a>         -->
-                </li>
-          </ul> 
+        <ul class="navbar-brand mr-5 mt-0 mb-0">
+          <li>
+            <a class="nav-link text-orange" href="#"> <span id="contador"></span> </a>
+          
+            <button type="button" class="btn btn-green" id="listarCarrito" data-toggle="modal" data-target="#verCarrito">
+              <i class="fas fa-shopping-cart"></i> 
+            </button>
+    
+            <a class="nav-link text-orange" href="#"> <span id="totalCarrito">$</span> </a>
+          </li>
+      </ul> 
       </nav>
     <!-- </div> -->
     <!-- /Navbar2-->
@@ -215,7 +216,7 @@
   </div>
   <!--Fín de Footer-->
 
-  <!-- ------------------------- [Modal verCarrito] ------------------------- -->
+ <!-- ------------------------- [Modal verCarrito] ------------------------- -->
 <div class="modal fade" id="verCarrito" tabindex="-1" role="dialog" aria-labelledby="verCarritoTitulo" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

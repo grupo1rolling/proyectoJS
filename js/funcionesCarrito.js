@@ -1,5 +1,6 @@
-import { ItemCarrito } from "./clases.js";
-import { cargaInicialDatos } from "./funcionesAuxiliares.js";
+import { Usuario, Producto, ItemCarrito } from "./clases.js";
+import { agregarProducto } from "./funcionesProductos.js";
+import { agregarUsuario } from "./funcionesUsuarios.js";
 
 // --------------------- [inicialización de variables] --------------------- //
 let total=document.getElementById("totalCarrito");
@@ -65,7 +66,7 @@ function cargaInicialDatos() {
 
 // -------------------- [actualiza totales del Carrito] -------------------- //
 function actualizarTotalesCarrito() {
-	console.log("PASA POR ACTUALIZAR TOTALES");
+	console.log("PASA POR ACTUALIZAR TOTALES");                                //#### 4 TESTING PURPOSES ONLY ### 
 	total.innerHTML = totalARSCarrito.toFixed(2);
 	conta.innerHTML = contadorProdCarrito;
 }
@@ -80,19 +81,19 @@ function vaciarCarrito() {
     arrayProdComprados=[];
     carrito=[];
     actualizarTotalesCarrito();
-    alert("VACIANDO CARRITO.................")                 //#### 4 TESTING PURPOSES ONLY ###
+    console.log("VACIANDO CARRITO.................")                    //#### 4 TESTING PURPOSES ONLY ###
 };
 
 
 // ----------------- [traemos dbProductos del localStorage] ----------------- //          
 function getProductos() {
-	console.log("db productos ACTUALIZADOS");                //#### 4 TESTING PURPOSES ONLY ###
+	console.log("dbProductos ACTUALIZADA");                             //#### 4 TESTING PURPOSES ONLY ###
 	dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
 }
 
 // ---------------- [guardamos productos del localStorage] ---------------- //
 function setProductos () {
-    console.log("local storage productos ACTUALIZADOS");                //#### 4 TESTING PURPOSES ONLY ###
+    console.log("localStorage productos ACTUALIZADOS");                 //#### 4 TESTING PURPOSES ONLY ###
     localStorage.setItem('productos', JSON.stringify(dbProductos));
 }
 
@@ -124,7 +125,7 @@ function mostrarTarjetas() {
 
 function agregarCarrito(producto) {
 	let productosAgregados = [];
-	//-- Verificamos si existe la key 'productos' en LocalStorage
+	//-- Verificamos si existe key='productosCarrito' en localStorage --//
 	productosAgregados = JSON.parse(localStorage.getItem("productosCarrito")) || [] ;
 	productosAgregados.push(producto);
 	localStorage.setItem("productosCarrito", JSON.stringify(productosAgregados));
@@ -133,8 +134,8 @@ function agregarCarrito(producto) {
 // ----------------- [traemos Carrito del localStorage] ----------------- //          
 function getCarrito() {
     carrito=JSON.parse(localStorage.getItem("productosCarrito")) || [];
-    console.log("paso por getCarrito");                //#### 4 TESTING PURPOSES ONLY ###
-    console.log(carrito);
+    console.log("paso por getCarrito");                                 //#### 4 TESTING PURPOSES ONLY ###
+    console.log(carrito);                                               //#### 4 TESTING PURPOSES ONLY ###
  }
 
 // ---------------- [guardamos Carrito al localStorage] ---------------- //
@@ -173,7 +174,7 @@ window.comprarProd= function (i) {
         getCarrito();
         alert(`Se ha añadido un item al carrito y carrito.- ${carrito}`)   //#### 4 TESTING PURPOSES ONLY ###
 
-        //en totalCompra sumo los importes de los prod comprados
+        // -- suma de precios y cantidad de productos comprados --/
         totalARSCarrito += prod._precio;
         contadorProdCarrito += 1;
         actualizarTotalesCarrito() ;
@@ -190,6 +191,8 @@ botonFinalizar.addEventListener('click', finalizarCompra);
  function finalizarCompra() {
     actualizarTotalesCarrito();
     alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`);
+    // -- actualizar usuarios.odigosProductos[]  con arrayProdComprados --/
+    // llamar a getUsuario(cod) 
 }
 
 
