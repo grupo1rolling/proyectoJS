@@ -14,9 +14,10 @@ let carrito=[];
 // ------------------------ [llamada a funciones] -------------------------- //
 cargaInicialDatos();
 getProductos();
-console.log(dbProductos);                                            //#### 4 TESTING PURPOSES ONLY ###
 actualizarTotalesCarrito();
 mostrarTarjetas();
+
+
 
 // ----------- [usuarioAutenticado (true/false) en localStorage] ----------- //
 //localStorage.setItem("usuarioAutenticado", false);
@@ -48,20 +49,20 @@ function cargaInicialDatos() {
 	agregarUsuario(franco);
 	// ---------- [Creacion de Productos (por instancias de objetos)] ---------- //
 
-	let prod1 = new Producto(1001, "prod uno", "ideal para primavera verano", "M", "https://via.placeholder.com/150/f66b97", 750, 2,"frio");
-	let prod2 = new Producto(1002, "prod dos", "ideal para primavera verano", "G", "https://via.placeholder.com/150/24f355", 1000, 2, "calor");
-	let prod3 = new Producto(1003, "prod tres",  "ideal para primavera verano", "U", "https://via.placeholder.com/150/771796", 1810, 3, "calor");
-	let prod4 = new Producto(1004, "prod cuatro","ideal para primavera verano", "P", "https://via.placeholder.com/150/92c952", 999, 3, "calor");
-	//let prod5 = new Producto(1005, "prod cinco", "ideal para primavera verano", "M", "https://via.placeholder.com/150/f66b97", 876, 0, "todos_los_dias");
-	//let prod6 = new Producto(1006, "prod seis","ideal para primavera verano", "M", "https://via.placeholder.com/150/771796", 850, 3, "frío");
+	let prod1 = new Producto(1001, "Sweter", "ideal para los días más fríos", "M", "https://via.placeholder.com/150/f66b97", 750, 2,"frio");
+	let prod2 = new Producto(1002, "Top", "ideal para días más cálidos", "S", "https://via.placeholder.com/150/24f355", 1000, 2, "calor");
+	let prod3 = new Producto(1003, "Short de baño",  "para la piscina o la playa", "G", "https://via.placeholder.com/150/771796", 1810, 3, "calor");
+	let prod4 = new Producto(1004, "bolso extensible","para todo lo que necesites llevar", "U", "https://via.placeholder.com/150/92c952", 999, 3, "viaje");
+	let prod5 = new Producto(1005, "jeans", "jeans unisex negros", "M", "https://via.placeholder.com/150/f66b97", 876, 0, "todos_los_dias");
+	let prod6 = new Producto(1006, "polar","polar gris", "U", "https://via.placeholder.com/150/771796", 850, 3, "frio");
 
 	// -------- [Agregamos Productos a la BD (por instancias de objetos)] -------- //
 	agregarProducto(prod1);
 	agregarProducto(prod2);
 	agregarProducto(prod3);
 	agregarProducto(prod4);
-	// agregarProducto(prod5);
-	// agregarProducto(prod6);
+	agregarProducto(prod5);
+	agregarProducto(prod6);
 }
 
 // -------------------- [actualiza totales del Carrito] -------------------- //
@@ -112,7 +113,7 @@ function mostrarTarjetas() {
                   ${prod._descripcion}
                   </p>
                   <p id="talleProducto">${prod._talle}</p>
-                  <p id="categoriaProducto">lala</p>
+                  <p id="categoriaProducto">${prod._categoria}</p>
                 </div>
                 <div class="card-footer">
                 <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
@@ -172,7 +173,7 @@ window.comprarProd= function (i) {
 
         agregarCarrito(itemCompra);
         getCarrito();
-        alert(`Se ha añadido un item al carrito y carrito.- ${carrito}`)   //#### 4 TESTING PURPOSES ONLY ###
+        alert(`Se ha añadido un producto al carrito`)   //#### 4 TESTING PURPOSES ONLY ###
 
         // -- suma de precios y cantidad de productos comprados --/
         totalARSCarrito += prod._precio;
@@ -206,14 +207,38 @@ function validarPalabraBuscar(palabra) {
 }
 */
 
-/*
+
 // ------------------- [filtrar productos por categoria] ------------------- //
-function filtrarProductos(cat) {
-  const prodXcat = dbProductos.filter (item=> {
-		return item.categoria === cat
-  })
+//filtrarProductos("frio");
+window.filtrarProductos = function (cat) {
+  getProductos();
+  const productosXcat = dbProductos.filter (p=> {
+		return p._categoria === cat
+  });
+
+  let tarjProd = document.getElementById("tarjetasProd");
+	productosXcat.map(function (prod, index) {
+		let tarjeta = `
+                <div class="card">
+                <img id="fotoProducto" src=${prod._foto} class="card-img-top" alt="top-estampa-cactus">
+                <div class="card-body">
+                  <h5 id="nombreProducto" class="card-title">${prod._nombre}</h5>
+                  <p id="precioProducto">${prod._precio}</p>
+                  <p id="descripcionProducto"class="card-text">
+                  ${prod._descripcion}
+                  </p>
+                  <p id="talleProducto">${prod._talle}</p>
+                  <p id="categoriaProducto">lala</p>
+                </div>
+                <div class="card-footer">
+                <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
+                </div>
+              </div>       
+            `;
+		tarjProd.innerHTML += tarjeta;
+	});
 }
-*/
+
 
 // --------------------------- [listar carrito] ---------------------------- //
 const btnListarCarrito = document.querySelector('#listarCarrito');
@@ -227,7 +252,7 @@ function listarCarrito() {
         carrito.map (function (p,i) {
         let linea = ` 
         <tr>
-            <th scope="row">${i + 1}</th>
+            <th scope="row" id="fila">${i + 1}</th>
             <td>${p._idProd}</td>
             <td>${p._nomProd}</td>
             <td>${p._precioProd}</td>
@@ -252,6 +277,14 @@ function listarCarrito() {
 
 // ------------------------ [borra item del carrito] ------------------------ //
  window.borrarItem = function (idP,i) {
+    let fila=document.getElementById("fila").childElementCount;
+    console.log(`CONTENIDO DE FILA --->${fila}`)
+    // borramos la fila con el producto que quitamos
+    let elemTabla = document.getElementById('items');
+    let tablaFila = elemTabla.getElementsByTagName('tr');
+    elemTabla.removeChild(tablaFila[fila]);
+    //
+   
     console.log("entra en borrarItem los valores de idP e i son:");
     console.log(idP, i);
     getCarrito();
@@ -270,9 +303,7 @@ function listarCarrito() {
 
     // -- [lo quito del arreglo de productos comprados y del carrito] --/
     arrayProdComprados.splice(i,1);
-    carrito.splice(i,1);
-    
-    setCarrito();
+    carrito.splice(i,1);   
 
     // -- [actualizamos dbProductos] --/
     getProductos();
@@ -283,4 +314,3 @@ function listarCarrito() {
     setProductos();
 }
     
-      

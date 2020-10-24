@@ -155,7 +155,7 @@ export class Producto {
 	}
 
 	set descripcion(descripcion) {
-		this.decripcion=descripcion;
+		this._decripcion = descripcion;
 	}
 
 	set talle(talle) {
@@ -175,7 +175,7 @@ export class Producto {
 	}
 
 	set categoria(categoria) {
-		this.categorias=categoria;
+		this._categoria=categoria;
 	}
 }
 
