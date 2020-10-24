@@ -100,12 +100,7 @@
 					</tr>
 				</thead>
 				<tbody id="usuariosDetalle">
-					<!-- <tr>
-					<th scope="row">1</th>
-					<td>Mark</td>
-					<td>Otto</td>
-					<td>@mdo</td>
-				</tr> -->
+					<!-- CARGA DINAMICA DEL DETALLE EN LA FUNCION mostrarUsuarios() de funcionesUsuarios.js -->
 				</tbody>
 			</table>
 		</div>
@@ -524,54 +519,15 @@
 	</main>
 
 	<!-- Optional JavaScript -->
-	<script src="../js/app.js" type="module"></script>
+	<script src="../js/appAdmin.js" type="module"></script>
 
 	<script type="module">
-		import { modificarDatosUsuario, borrarUsuario, grabarDatosUsuariosAdmin } from "../js/funcionesUsuarios.js";
-
 		$(function () {
 			$('[data-toggle="popover"]').popover({
 				html: true,
 				delay: 500
 			});
 		});
-
-		const btnModificarUsuario = document.querySelector("#contenedorUsuariosAdmin");
-		btnModificarUsuario.addEventListener("click", (e) => {
-
-			/*Evento del boton para editar un usuario (Pagina Admin)*/
-			if (e.target.id == "btnModificarUsuariosAdmin") {
-				modificarDatosUsuario(e.target.dataset.codigo);
-			}
-
-			/*Evento del boton para editar un usuario (Pagina Admin)*/
-			if (e.target.id == "btnBorrarUsuariosAdmin") {
-				borrarUsuario(e.target.dataset.codigo);
-			}
-		});
-
-		/*Evento del boton para guardar los cambios de un usuario (Pagina Admin)*/
-		const modalModificaUsuarioAdmin = document.querySelector("#contenedorModificarUsuariosAdmin");
-		modalModificaUsuarioAdmin.addEventListener("click", (e) => {
-			if (e.target.id == "btnGrabarUsuariosAdmin") {
-				grabarDatosUsuariosAdmin();
-			}
-
-			// if(e.target.id == "customSwitchEstadoAdm"){
-			// 	let valor = document.getElementById("customSwitchEstadoAdm").checked;
-			// 	console.log(valor);
-			// }
-
-			// if(e.target.id == "customSwitchEsAdm"){
-			// 	let valor = document.getElementById("customSwitchEsAdm").checked;
-			// 	console.log(valor);
-			// }
-		});
-
-		// function cancelar() {
-		// 	alert("Cancelar");
-		// }
-
 	</script>
 
 
