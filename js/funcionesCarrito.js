@@ -1,6 +1,5 @@
-import { Usuario, Producto, ItemCarrito } from "./clases.js";
-import { agregarProducto } from "./funcionesProductos.js";
-import { agregarUsuario } from "./funcionesUsuarios.js";
+import { ItemCarrito } from "./clases.js";
+import { cargaInicialDatos } from "./funcionesAuxiliares.js";
 
 // --------------------- [inicialización de variables] --------------------- //
 let total=document.getElementById("totalCarrito");
@@ -22,8 +21,8 @@ mostrarTarjetas();
 //localStorage.setItem("usuarioAutenticado", false);
 //lo ponemos en true para que entre siempre                          #### 4 TESTING PURPOSES ONLY ###
 localStorage.setItem("usuarioAutenticado", true);
-let autenticado=localStorage.getItem("usuarioAutenticado");          // ### OJO QUE ES STRING ### //
-console.log(`valor autenticado ${autenticado} indica si un usuario esta logueado `);           
+let autenticado = localStorage.getItem("usuarioAutenticado");          // ### OJO QUE ES STRING ### //
+console.log(`valor autenticado ${autenticado} indica si un usuario esta logueado `);
 
 
 // --- ###################### [F U N C I O N E S] ###################### --- //
@@ -66,9 +65,9 @@ function cargaInicialDatos() {
 
 // -------------------- [actualiza totales del Carrito] -------------------- //
 function actualizarTotalesCarrito() {
-    console.log ("PASA POR ACTUALIZAR TOTALES");
-    total.innerHTML=totalARSCarrito.toFixed(2);
-    conta.innerHTML=contadorProdCarrito;
+	console.log("PASA POR ACTUALIZAR TOTALES");
+	total.innerHTML = totalARSCarrito.toFixed(2);
+	conta.innerHTML = contadorProdCarrito;
 }
 
 // ----------------------- [funcion vaciarCarrito] ----------------------- //
@@ -87,9 +86,9 @@ function vaciarCarrito() {
 
 // ----------------- [traemos dbProductos del localStorage] ----------------- //          
 function getProductos() {
-    console.log("db productos ACTUALIZADOS");                //#### 4 TESTING PURPOSES ONLY ###
-    dbProductos=JSON.parse(localStorage.getItem("productos")) || [];
- }
+	console.log("db productos ACTUALIZADOS");                //#### 4 TESTING PURPOSES ONLY ###
+	dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
+}
 
 // ---------------- [guardamos productos del localStorage] ---------------- //
 function setProductos () {
@@ -100,9 +99,9 @@ function setProductos () {
 
 // -------------------- [mostrar tarjetas dinámicamente] ------------------- //
 function mostrarTarjetas() {
-    let tarjProd = document.getElementById("tarjetasProd");
-    dbProductos.map(function(prod, index){
-        let tarjeta = `
+	let tarjProd = document.getElementById("tarjetasProd");
+	dbProductos.map(function (prod, index) {
+		let tarjeta = `
                 <div class="card">
                 <img id="fotoProducto" src=${prod._foto} class="card-img-top" alt="top-estampa-cactus">
                 <div class="card-body">
@@ -119,8 +118,8 @@ function mostrarTarjetas() {
                 </div>
               </div>       
             `;
-        tarjProd.innerHTML += tarjeta;
-        });
+		tarjProd.innerHTML += tarjeta;
+	});
 }
 
 function agregarCarrito(producto) {
@@ -183,7 +182,7 @@ window.comprarProd= function (i) {
             alert(`ooops nos quedamos sin ${prod._nombre}`);
     }
 }
-   
+
 
 // -------------------------- [finalizar compra] --------------------------- //
 let botonFinalizar = document.querySelector('#botonFinalizar');
@@ -198,9 +197,9 @@ botonFinalizar.addEventListener('click', finalizarCompra);
 // ------------------- [buscar palabra en dbProductos] ------------------- //
 /*
 function validarPalabraBuscar(palabra) {
-    if (dbProductos.categoria.includes(palabra)) {
-        console.log("encontró")
-    } else {console.log("encontró")}
+	if (dbProductos.categoria.includes(palabra)) {
+		console.log("encontró")
+	} else {console.log("encontró")}
 }
 */
 
@@ -208,7 +207,7 @@ function validarPalabraBuscar(palabra) {
 // ------------------- [filtrar productos por categoria] ------------------- //
 function filtrarProductos(cat) {
   const prodXcat = dbProductos.filter (item=> {
-        return item.categoria === cat
+		return item.categoria === cat
   })
 }
 */
@@ -225,7 +224,7 @@ function listarCarrito() {
         carrito.map (function (p,i) {
         let linea = ` 
         <tr>
-            <th scope="row">${i+1}</th>
+            <th scope="row">${i + 1}</th>
             <td>${p._idProd}</td>
             <td>${p._nomProd}</td>
             <td>${p._precioProd}</td>
