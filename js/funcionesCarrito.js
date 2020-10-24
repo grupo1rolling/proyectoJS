@@ -12,7 +12,6 @@ let carrito=[];
 let mensajes=document.getElementById("mensajes");
 
 
-
 // ------------------------ [llamada a funciones] -------------------------- //
 cargaInicialDatos();
 getProductos();
@@ -200,16 +199,48 @@ botonFinalizar.addEventListener('click', finalizarCompra);
 
 
 
-// ------------------- [buscar palabra en dbProductos] ------------------- //
-/*
-function bucar(texto) {
+// ------------------- [buscar texto en dbProductos] ------------------- //
+
+texto=document.getElementById("texto").value
+
+window.buscarTexto = function() {
     getProductos();
-    	if (
-            dbProductos.categoria.includes(texto)) {
-		console.log("encontró")
-	} else {console.log("encontró")}
+    mensajes.innerHTML= `buscando ....`;
+    
+    let productosTexto = dbProductos.find (p => {
+        return ((p._categoria.includes(texto) || p._nombre.includes(texto)) || p._descripcion.includes(texto))
+    });
+    console.log(productosTexto);                                          //#### 4 TESTING PURPOSES ONLY ###
+    
+    let tarjetasProd = document.getElementById("tarjetasProd");
+    
+    if (productosTexto.lenght>0) {
+        productosTexto.map(function (prod, index) {
+            let tarjeta = `
+                <div class="card">
+                <img id="fotoProducto" src=${prod._foto} class="card-img-top" alt="top-estampa-cactus">
+                <div class="card-body">
+                  <h5 id="nombreProducto" class="card-title">${prod._nombre}</h5>
+                  <p id="precioProducto">${prod._precio}</p>
+                  <p id="descripcionProducto"class="card-text">
+                  ${prod._descripcion}
+                  </p>
+                  <p id="talleProducto">${prod._talle}</p>
+                  <p id="categoriaProducto">${prod._categoria}</p>
+                </div>
+                <div class="card-footer">
+                <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
+                </div>
+              </div>       
+            `;
+            tarjetasProd.innerHTML += tarjeta;
+            });
+        mensajes.innerHTML= "se encontraron los siguientes productos ";
+        } else {
+            mensajes.innerHTML= "no se encontraron productos con el texto buscado ";  
+        }
 }
-*/
+
 
 
 // ------------------- [filtrar productos por categoria] ------------------- //
@@ -245,7 +276,7 @@ window.filtrarProductos = function(cat) {
             `;
             tarjetasProd.innerHTML += tarjeta;
             });
-           
+            mensajes.innerHTML= "se encontraron los siguientes productos para la categoría ";  
         } else {
             mensajes.innerHTML= "no se encontraron productos para la categoría ";  
         }
@@ -297,11 +328,11 @@ function listarCarrito() {
     elemTabla.removeChild(tablaFila[fila]);
     //
    
-    console.log("entra en borrarItem los valores de idP e i son:");
-    console.log(idP, i);
+    console.log("entra en borrarItem los valores de idP e i son:");             //#### 4 TESTING PURPOSES ONLY ###
+    console.log(idP, i);                                                        //#### 4 TESTING PURPOSES ONLY ###
     getCarrito();
-    console.log("carrito es:");
-    console.log(carrito);
+    console.log("carrito es:");                                                  //#### 4 TESTING PURPOSES ONLY ###
+    console.log(carrito);                                                         //#### 4 TESTING PURPOSES ONLY ###
 
     let prodBorrar = carrito.find(itemC => {
        return itemC._idProd === idP
@@ -312,7 +343,7 @@ function listarCarrito() {
     // -- [actualizamos los totales del Carrito] --/
     totalARSCarrito-=prodBorrar._precioProd;
     contadorProdCarrito-=1;
-
+    actualizarTotalesCarrito();
     // -- [lo quito del arreglo de productos comprados y del carrito] --/
     arrayProdComprados.splice(i,1);
     carrito.splice(i,1);   

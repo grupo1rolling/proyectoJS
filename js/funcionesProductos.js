@@ -111,7 +111,7 @@ export function mostrarProductos() {
 
 // ################################################################################# //
 // ---------- [Obtenemos los datos del Formulario de ALTA de Productos ] ---------- //
-
+/*
 let dbProductos = [];
 document.getElementById("formAltaProd");
 
@@ -153,7 +153,7 @@ document.addEventListener("submit", function (event) {
 	localStorage.setItem("productos", JSON.stringify(dbProductos));
 	limpiarFormAltaProd();
 });
-
+*/
 // ---------- [Limpiamos el Formulario de Alta de Productos ] ---------- //
 // funcion flecha equivalete function limpiarFormAltaProd() {}
 const limpiarFormAltaProd = () => {
