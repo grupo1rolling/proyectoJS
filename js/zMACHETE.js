@@ -22,36 +22,8 @@ window.comprarProd= function (i) {
     console.log ("escribir la funcion que se tiene que ejecutar cuando se presiona click en el boton")
     }
 
-
-
-    function listarCarrito() {
-        if (carrito.lenght = 0) {
-            alert ("carrito vacio");
-            } else {
-            console.log (`CARRITO.LENGHT = ${carrito.lenght}`)
-        
-            let items = document.getElementById("items");
-            carrito.map (function (p,i) {
-            let linea = ` 
-            <tr>
-                <th scope="row">${i+1}</th>
-                <td>${p._idProd}</td>
-                <td>${p._nomProd}</td>
-                <td>${p._precioProd}</td>
-                <td><button id="btnBorrarItem" 
-                    data-codigo="${p._idProd}" 
-                    title="eliminar producto" 
-                    type="button" class="btn btn-outline-danger btn-sm">
-                    <i id="borrarItem" 
-                    data-codigo="${i}" 
-                    class="fa fa-window-close-o">
-                    </i>
-                    </button>
-                </td>
-            </tr>`   
-            items.innerHTML += linea;
-            });
-        } //del else carrito con compras
-    }
-    
-    
+    /*
+    let botonVaciar = document.querySelector('#botonVaciar');
+    let botonVaciar = document.getElementById('botonVaciar');
+*/
+   

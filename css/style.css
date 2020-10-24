@@ -14,10 +14,12 @@ body
  {
     height: 100%;
     padding:0px;
+    font-family: Arial, Helvetica, sans-serif;
+
     
 }
 
-/* backgrounds y botones  */
+/* backgrounds y botones---------------  */
 
 .bg-green{
     background-color: #17300C;
@@ -54,22 +56,19 @@ body
     
 }
 
-/* imagen de portada */
+/* imagen de portada-------------------------- */
 #portada {
-    height: 720px;
-    /* margin-top: 30px; */
+    height: 720px;    
     padding: 3rem 2rem;
     color: #ffffff;
     background: url(../img/portada5.jpg)no-repeat center center fixed;      
-    position: relative;
-    /* overflow: hidden; */
+    position: relative;    
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover; 
     
 }
-
 
 /* animacion del texto de portada */
 .texto {
@@ -80,13 +79,10 @@ body
     position:relative; 
     top:170px; 
     width: 700px; 
-    height:350px;  
-    
-     /* opacity: 0.6; */
-     /* font-family:""; */
-     }  
-    
-    
+    height:350px;    
+  
+     }       
+        
     .texto h1{
      margin: 100px 0px 0px 40px;
      position:absolute; 
@@ -96,8 +92,7 @@ body
      transition:all .7s ease;
      color: var(--color-blanco);
      font-weight: bold;
-    } 
-    
+    }     
     .texto:hover:before{ 
      width: 90%;
       }
@@ -113,7 +108,6 @@ body
      transition:all .7s ease;
     
     }
-
     .text-shadow {
         text-shadow: 0 0 0.2em #ff5b00;
     }
@@ -123,9 +117,15 @@ body
         margin-left: 150px;
     }
 
+    .ulCarrito{
+        display: inline-block;
+        margin: 0px;
+        padding: opx;
+    }
 
 
-    /* footer */
+
+    /* footer -----------*/
 .footer {
     background: var(--color-verdeOscuro);
     color: var(--color-naranjaFuerteApagado);
@@ -152,8 +152,74 @@ body
     text-align: center;
     height: 170px;
   }
-  /* FIN FOOTER */
-  
+  /* fin del footer */
+
+ 
+  /* Formulario de registro*-----------------------------*/
+
+#registro{
+    padding-top: 80px; 
+   
+}
+
+  /* controles de formulario */
+.form-control-style {
+    background-color:  var(--color-blanco);    
+    border: 2px solid  var(--color-verdeOscuro);
+    border-radius: .2rem;   
+    color: var(--color-light);
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background-clip: padding-box;    
+    
+}
+.form-control-style:focus {
+    background-color: var(--color-blanco);
+    border: 2px solid var(--color-verdeOscuro);
+    box-shadow: var(--color-naranjaChillon) ;
+  }
+
+  .custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color:var(--color-naranjaFuerteApagado);
+    background-color: var(--color-naranjaFuerteApagado);
+}
+
+label {
+    color: var(--color-verdeOscuro);
+    font-weight: bold;
+
+}
+
+/* IMPORTANT PARA LAS TARJETAS--------------- */
+.card-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: .5rem;
+}
+
+
+
+
+/* #mainBg{
+    background-image: url(../img/portada5.jpg); 
+
+}*/
+/* 
+.border{
+  border: 4px solid var(--color-verdeOscuro) !important; 
+  margin: 10px;  
+  background-color: #f5f6f8 !important;  
+  color: var(--color-verdeOscuro);
+  margin-right: 10px !important;
+  margin-left: 10px !important;
+
+}  */
   
 /*   
     .icono {
@@ -178,9 +244,3 @@ body
             }
           } */
 
-/* IMPORTANT PARA LAS TARJETAS */
-    .card-deck {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: .5rem;
-}
