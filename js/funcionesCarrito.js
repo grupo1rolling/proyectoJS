@@ -202,8 +202,10 @@ botonFinalizar.addEventListener('click', finalizarCompra);
 
 // ------------------- [buscar palabra en dbProductos] ------------------- //
 /*
-function validarPalabraBuscar(palabra) {
-	if (dbProductos.categoria.includes(palabra)) {
+function bucar(texto) {
+    getProductos();
+    	if (
+            dbProductos.categoria.includes(texto)) {
 		console.log("encontró")
 	} else {console.log("encontró")}
 }
@@ -211,15 +213,20 @@ function validarPalabraBuscar(palabra) {
 
 
 // ------------------- [filtrar productos por categoria] ------------------- //
-window.filtrarProductos = function (cat) {
+window.filtrarProductos = function(cat) {
     getProductos();
-    const productosXcat = dbProductos.filter (p=> {
+    mensajes.innerHTML= `buscando ${cat}....`;
+    
+    let productosXcat = dbProductos.filter (p=> {
           return p._categoria === cat
     });
-  
-    let tarjProd = document.getElementById("tarjetasProd");
-      productosXcat.map(function (prod, index) {
-          let tarjeta = `
+    console.log(productosXcat);                                          //#### 4 TESTING PURPOSES ONLY ###
+
+    let tarjetasProd = document.getElementById("tarjetasProd");
+    if (productosXcat.length > 0) {
+       
+        productosXcat.map(function (prod, index) {
+            let tarjeta = `
                 <div class="card">
                 <img id="fotoProducto" src=${prod._foto} class="card-img-top" alt="top-estampa-cactus">
                 <div class="card-body">
@@ -229,15 +236,19 @@ window.filtrarProductos = function (cat) {
                   ${prod._descripcion}
                   </p>
                   <p id="talleProducto">${prod._talle}</p>
-                  <p id="categoriaProducto">${prod._descripcion}</p>
+                  <p id="categoriaProducto">${prod._categoria}</p>
                 </div>
                 <div class="card-footer">
                 <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
                 </div>
               </div>       
             `;
-		tarjProd.innerHTML += tarjeta;
-	});
+            tarjetasProd.innerHTML += tarjeta;
+            });
+           
+        } else {
+            mensajes.innerHTML= "no se encontraron productos para la categoría ";  
+        }
 }
 
 
