@@ -10,14 +10,13 @@ let dbProductos=[];
 let arrayProdComprados=[];
 let carrito=[];
 let mensajes=document.getElementById("mensajes");
-
+let texto="" ;
 
 // ------------------------ [llamada a funciones] -------------------------- //
 cargaInicialDatos();
 getProductos();
 actualizarTotalesCarrito();
 mostrarTarjetas();
-
 
 // ----------- [usuarioAutenticado (true/false) en localStorage] ----------- //
 //localStorage.setItem("usuarioAutenticado", false);
@@ -58,17 +57,17 @@ function cargaInicialDatos() {
 	let prod6 = new Producto(1006, "polar","polar gris", "U", "https://via.placeholder.com/150/771796", 850, 3, "frio");
 
 	// -------- [Agregamos Productos a la BD (por instancias de objetos)] -------- //
-	agregarProducto(prod1);
+    agregarProducto(prod1);
+    agregarProducto(prod6);
 	agregarProducto(prod2);
 	agregarProducto(prod3);
 	agregarProducto(prod4);
 	agregarProducto(prod5);
-	agregarProducto(prod6);
+	
 }
 
 // -------------------- [actualiza totales del Carrito] -------------------- //
-function actualizarTotalesCarrito() {
-	console.log("PASA POR ACTUALIZAR TOTALES");                                //#### 4 TESTING PURPOSES ONLY ### 
+function actualizarTotalesCarrito() { 
 	total.innerHTML = totalARSCarrito.toFixed(2);
 	conta.innerHTML = contadorProdCarrito;
 }
@@ -78,12 +77,18 @@ let botonVaciar = document.querySelector('#botonVaciar');
 botonVaciar.addEventListener('click', vaciarCarrito);
 //
 function vaciarCarrito() {
-    totalARSCarrito=0;
-    contadorProdCarrito=0;
-    arrayProdComprados=[];
-    carrito=[];
-    actualizarTotalesCarrito();
-    console.log("VACIANDO CARRITO.................")                    //#### 4 TESTING PURPOSES ONLY ###
+    
+    if (confirm("estas seguro?")) {
+        totalARSCarrito=0;
+        contadorProdCarrito=0;
+        arrayProdComprados=[];
+        carrito=[];
+        actualizarTotalesCarrito();
+        mensajes.innerHTML="carrito vacío"                 //#### 4 TESTING PURPOSES ONLY ###
+    } else {
+        mensajes.innerHTML="carrito vacío"                 //#### 4 TESTING PURPOSES ONLY ###
+    }
+    
 };
 
 
@@ -205,16 +210,16 @@ texto=document.getElementById("texto").value
 
 window.buscarTexto = function() {
     getProductos();
-    mensajes.innerHTML= `buscando ....`;
+    mensajes.innerHTML= `buscando ${texto}....`;
     
-    let productosTexto = dbProductos.find (p => {
+    let productosTexto = dbProductos.filter (p => {
         return ((p._categoria.includes(texto) || p._nombre.includes(texto)) || p._descripcion.includes(texto))
     });
     console.log(productosTexto);                                          //#### 4 TESTING PURPOSES ONLY ###
     
     let tarjetasProd = document.getElementById("tarjetasProd");
     
-    if (productosTexto.lenght>0) {
+    if (productosTexto != []) {
         productosTexto.map(function (prod, index) {
             let tarjeta = `
                 <div class="card">
