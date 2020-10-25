@@ -63,20 +63,18 @@ function cargaInicialDatos() {
 	agregarProducto(prod4);
 	agregarProducto(prod5);
 	
-}
+} // FIN [carga inicial de datos PRODUCTOS Y USUARIOS]
 
 // -------------------- [actualiza totales del Carrito] -------------------- //
 function actualizarTotalesCarrito() { 
 	total.innerHTML = totalARSCarrito.toFixed(2);
 	conta.innerHTML = contadorProdCarrito;
-}
+} // FIN [actualiza totales del Carrito]
 
 // ----------------------- [funcion vaciarCarrito] ----------------------- //
 let botonVaciar = document.querySelector('#botonVaciar');
 botonVaciar.addEventListener('click', vaciarCarrito);
-//
 function vaciarCarrito() {
-    
     if (confirm("estas seguro?")) {
         totalARSCarrito=0;
         contadorProdCarrito=0;
@@ -85,23 +83,22 @@ function vaciarCarrito() {
         actualizarTotalesCarrito();
         mensajes.innerHTML="carrito vacío"                 //#### 4 TESTING PURPOSES ONLY ###
     } else {
-        mensajes.innerHTML="carrito vacío"                 //#### 4 TESTING PURPOSES ONLY ###
+        mensajes.innerHTML="sigue comprando"                 //#### 4 TESTING PURPOSES ONLY ###
     }
-    
-};
+}; // FIN [funcion vaciarCarrito]
 
 
 // ----------------- [traemos dbProductos del localStorage] ----------------- //          
 function getProductos() {
 	console.log("dbProductos ACTUALIZADA");                             //#### 4 TESTING PURPOSES ONLY ###
 	dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
-}
+} // FIN [traemos dbProductos del localStorage]
 
-// ---------------- [guardamos productos del localStorage] ---------------- //
+// ----------------- [guardamos productos del localStorage] ---------------- //
 function setProductos () {
     console.log("localStorage productos ACTUALIZADOS");                 //#### 4 TESTING PURPOSES ONLY ###
     localStorage.setItem('productos', JSON.stringify(dbProductos));
-}
+} // FIN [guardamos productos del localStorage]
 
 
 // -------------------- [mostrar tarjetas dinámicamente] ------------------- //
@@ -127,27 +124,28 @@ function mostrarTarjetas() {
             `;
 		tarjProd.innerHTML += tarjeta;
 	});
-}
+} // FIN [mostrar tarjetas dinámicamente]
 
+// -------------------------- [agregarCarrito] -------------------------- // 
 function agregarCarrito(producto) {
 	let productosAgregados = [];
 	//-- Verificamos si existe key='productosCarrito' en localStorage --//
 	productosAgregados = JSON.parse(localStorage.getItem("productosCarrito")) || [] ;
 	productosAgregados.push(producto);
 	localStorage.setItem("productosCarrito", JSON.stringify(productosAgregados));
-}
+} // FIN [agregarCarrito]
 
 // ----------------- [traemos Carrito del localStorage] ----------------- //          
 function getCarrito() {
     carrito=JSON.parse(localStorage.getItem("productosCarrito")) || [];
     console.log("paso por getCarrito");                                 //#### 4 TESTING PURPOSES ONLY ###
     console.log(carrito);                                               //#### 4 TESTING PURPOSES ONLY ###
- }
+ } // FIN [traemos Carrito del localStorage] 
 
 // ---------------- [guardamos Carrito al localStorage] ---------------- //
 function setCarrito() {
     localStorage.setItem('productosCarrito', JSON.stringify(carrito));
-}
+} // FIN [guardamos Carrito al localStorage]
 
 // -------------------- [funcion comprarProducto] -------------------- //
 window.comprarProd= function (i) {
@@ -188,7 +186,7 @@ window.comprarProd= function (i) {
     } else {
             alert(`ooops nos quedamos sin ${prod._nombre}`);
     }
-}
+} // FIN [funcion comprarProducto]
 
 
 // -------------------------- [finalizar compra] --------------------------- //
@@ -196,16 +194,20 @@ let botonFinalizar = document.querySelector('#botonFinalizar');
 botonFinalizar.addEventListener('click', finalizarCompra);   
  function finalizarCompra() {
     actualizarTotalesCarrito();
-    alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`);
+    //alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`);
+    if (autenticado=="true") {
+        alert("usuario autenticado");
+    } else {
+        alert ("usuario NO autenticado");
+    }
+    
     // -- actualizar usuarios.odigosProductos[]  con arrayProdComprados --/
     // llamar a getUsuario(cod) 
-}
+} // FIN [finalizar compra]
 
 
 // ------------------- [buscar texto en dbProductos] ------------------- //
-
 texto=document.getElementById("texto").value
-
 window.buscarTexto = function() {
     getProductos();
     mensajes.innerHTML= `buscando ${texto}....`;
@@ -242,8 +244,8 @@ window.buscarTexto = function() {
         } else {
             mensajes.innerHTML= "no se encontraron productos con el texto buscado ";  
         }
-        document.getElementById("texto").value="";
-}
+    document.getElementById("texto").value="";    
+} // FIN [buscar texto en dbProductos]
 
 
 // ------------------- [filtrar productos por categoria] ------------------- //
@@ -283,7 +285,7 @@ window.filtrarProductos = function(cat) {
         } else {
             mensajes.innerHTML= "no se encontraron productos para la categoría ";  
         }
-}
+} // FIN [filtrar productos por categoria]
 
 
 // --------------------------- [listar carrito] ---------------------------- //
@@ -292,17 +294,15 @@ btnListarCarrito.addEventListener('click', listarCarrito);
 
 function listarCarrito() {
     if (carrito.length > 0)  {
-        console.log (`CARRITO.LENGHT = ${carrito.lenght}`)
-    
         let items = document.getElementById("items");
         carrito.map (function (p,i) {
         let linea = ` 
         <tr>
             <td scope="row" id="fila">${i + 1}</td>
-            <td>${p._idProd}</td>
-            <td>${p._nomProd}</td>
-            <td>${p._precioProd}</td>
-            <td><button id="btnBorrarItem" 
+            <td class="text-center">${p._cantProd}</td>
+            <td class="text-left">${p._nomProd}</td>
+            <td class="text-rigth">${p._precioProd.toFixed(2)}</td>
+            <td align="center"><button id="btnBorrarItem" 
                 title="eliminar producto" 
                 type="button" class="btn btn-outline-danger btn-sm"
                 onclick="borrarItem(${p._idProd},${i})">
@@ -317,26 +317,21 @@ function listarCarrito() {
     } else {
         alert ("carrito vacio");
     }   
-} // FIN listarCarrito()
+} // FIN [listar carrito] 
 
 
 
 // ------------------------ [borra item del carrito] ------------------------ //
  window.borrarItem = function (idP,i) {
     let fila=document.getElementById("fila").childElementCount;
-    console.log(`CONTENIDO DE FILA --->${fila}`)
+    
     // borramos la fila con el producto que quitamos
     let elemTabla = document.getElementById('items');
     let tablaFila = elemTabla.getElementsByTagName('tr');
     elemTabla.removeChild(tablaFila[fila]);
     //
-   
-    console.log("entra en borrarItem los valores de idP e i son:");             //#### 4 TESTING PURPOSES ONLY ###
-    console.log(idP, i);                                                        //#### 4 TESTING PURPOSES ONLY ###
     getCarrito();
-    console.log("carrito es:");                                                  //#### 4 TESTING PURPOSES ONLY ###
-    console.log(carrito);                                                         //#### 4 TESTING PURPOSES ONLY ###
-
+    //
     let prodBorrar = carrito.find(itemC => {
        return itemC._idProd === idP
     });
@@ -347,7 +342,7 @@ function listarCarrito() {
     totalARSCarrito-=prodBorrar._precioProd;
     contadorProdCarrito-=1;
     actualizarTotalesCarrito();
-    // -- [lo quito del arreglo de productos comprados y del carrito] --/
+    // -- [lo quitamos del arreglo de productos comprados y del carrito] --/
     arrayProdComprados.splice(i,1);
     carrito.splice(i,1);   
     setCarrito();
@@ -359,5 +354,5 @@ function listarCarrito() {
     });
     dbProductos[indice]._stock +=1;
     setProductos();
-}
+} // FIN [borra item del carrito]
     
