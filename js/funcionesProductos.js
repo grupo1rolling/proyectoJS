@@ -4,14 +4,13 @@ import { getTalles, getCategorias, getCodigoGeneradoByKey } from "./funcionesAux
 export function agregarProducto(producto) {
 	let productosArray = [];
 
-	//-- Verificamos si existe la key 'productos' en LocalStorage
+	//-- Verifica si existe la key 'productos' en LocalStorage
 	//-- Si existe y tiene productos, capturo la informacion en un array
-
 	productosArray = JSON.parse(localStorage.getItem("productos")) || [];
 
-	//-- Verifico si ya existe el codigo de producto ingresado
+	//-- Verifica, por codigo o por nombre, si ya existe el productos ingresado.
 	let existeProducto = productosArray.find(function (item) {
-		return item._codigo == producto.codigo ? true : false;
+		return (item._codigo == producto.codigo || item._nombre == producto.nombre) ? true : false;
 	});
 
 	if (existeProducto) {
@@ -118,11 +117,98 @@ export function mostrarProductos() {
 }
 
 
+export function altaDatosProductos() {
+
+	let contenidoTalles = "";
+	let contenidoCategorias = "";
+	let modalAdminProductos;
+	let contenido = "";
+
+	//----- Captura de Talles -----//
+	getTalles().map(item => {
+		contenidoTalles += `<option value="${item}">${item}</option>`
+	});
+
+	//----- Captura de Categorias -----//		
+	getCategorias().map(item => {
+		contenidoCategorias += `<option value="${item}">${item}</option>`
+	});
+
+	modalAdminProductos = document.getElementById("modalBodyProductos");
+
+	//--- Body del Model de modificacion de Productos ---//
+	contenido = `
+				<!-- Inicio Formulario -->
+					<form id="formModProd">
+						<div class="form-row">
+							<div class="col-md-4 mb-3">
+								<label for="codigo">Código</label>
+								<input type="text" class="form-control" id="codigoProdAdm" value="" disabled>
+							</div>
+
+							<div class="col-md-5 mb-3">
+								<label for="nombreProd">Producto</label>
+								<input type="text" class="form-control" id="nombreProdAdm" value="" required>
+							</div>
+
+							<div class="col-md-3 mb-3">
+								<label for="talle">Talle</label>
+								<select id="talleProdAdm" name="talle" class="form-control" required>
+									${contenidoTalles}
+								</select>
+							</div>
+						</div>
+
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<label for="categoria">Categoría</label>
+								<select id="categoriaProdAdm" name="categoria" class="form-control" required>
+									${contenidoCategorias}
+								</select>
+							</div>
+							<div class="col-md-3 mb-3">
+								<label for="stock">Stock</label>
+								<input type="text" class="form-control" id="stockProdAdm" value="" required>
+							</div>
+
+							<div class="col-md-3 mb-3">
+								<label for="precio">Precio $</label>
+								<input type="text" class="form-control" id="precioProdAdm" value="" required>
+							</div>
+						</div>
+
+						<div class="form-row">					
+							<div class="col-md-6 mb-3">
+								<label for="file-upload">Imagen del producto</label>
+								<input id="file-upload" type="file" accept="image/*" />
+							</div>
+
+							<div class="col-md-6 mb-3">
+								<label for="descripcion">Descripción</label>
+								<textarea class="form-control" id="descripcionProdAdm" rows="1"></textarea>
+							</div>
+						</div>
+					</form>
+				<!-- Fin seccion Formulario -->
+			`;
+
+	modalAdminProductos.innerHTML = contenido;
+	document.getElementById("descripcionProdAdm").value = productosDatos._descripcion;
+
+	//--- Footer del Model de modificacion de Productos ---//
+	modalAdminProductos = document.getElementById("modalFooterProductos");
+	contenido = `
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				<button id="btnGrabarProductoModifAdminPage" type="button" class="btn btn-primary" data-dismiss="modal">Grabar</button>
+				`;
+
+	modalAdminProductos.innerHTML = contenido;
+}
+
 export function modificarDatosProductos(codigoProducto) {
 	let productosDatos = getProductos().find(item => {
 		return item._codigo == codigoProducto ? item : "";
 	});
-
 
 	console.log(`Categoría: ${productosDatos._categoria}`);
 	console.log(`Talle: ${productosDatos._talle}`);

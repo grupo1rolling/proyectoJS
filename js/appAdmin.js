@@ -1,9 +1,9 @@
 import { mostrarProductos, modificarDatosProductos, grabarModificacionProductoAdmin } from "./funcionesProductos.js";
+import { cargaInicialDatos } from "./funcionesAuxiliares.js";
 import {
 	mostrarUsuarios, modificarDatosUsuario, borrarUsuario, grabarModificacionUsuariosAdmin,
 	btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage
 } from "./funcionesUsuarios.js";
-import { cargaInicialDatos } from "./funcionesAuxiliares.js";
 
 
 localStorage.clear();
