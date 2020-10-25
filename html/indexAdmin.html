@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="../css/style.css">
 	<title>Nature Collection\Admin</title>
 </head>
+
 <body>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -110,7 +111,7 @@
 			<hr>
 		</div>
 
-		<div class="container">
+		<div class="container" id="contenedorAltaProductosAdmin">
 			<div class="row">
 				<div class="col">
 					<h7 class="m-1">Referencias de Stock:</h7>
@@ -121,7 +122,9 @@
 				</div>
 
 				<div class="col">
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#altaProducto">
+					<button id="btnAgregarProductosAdmin" data-codigo="0" type="button" class="btn btn-primary"
+						data-toggle="modal" data-target="#modificaProducto">
+						<!-- class="btn btn-primary" data-toggle="modal" data-target="#altaProducto"> -->
 						Alta Producto
 					</button>
 				</div>
@@ -415,7 +418,7 @@
 										<option value="frio">Para el frío</option>
 										<option value="calor">Para el calor</option>
 										<option value="viajar">Para viajar</option>
-										<option value="todos_los_dias">Para todos los dias</option>	
+										<option value="todos_los_dias">Para todos los dias</option>
 									</select>
 								</div>
 								<div class="col-md-3 mb-3">
@@ -444,14 +447,14 @@
 
 							<!-- pongo aqui el boton pero hay que chequear -->
 							<button class="btn btn-success">Enviar</button>
-						<button class="btn btn-primary">Guardar</button>
+							<button class="btn btn-primary">Guardar</button>
 
 						</form>
 						<!-- Fin seccion Formulario -->
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<button  class="btn btn-primary">Guardar</button>
+						<button class="btn btn-primary">Guardar</button>
 					</div>
 				</div>
 			</div>
