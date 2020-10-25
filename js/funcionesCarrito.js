@@ -1,6 +1,6 @@
-import { ItemCarrito } from "./clases.js";
-import { cargaInicialDatos } from "./funcionesAuxiliares.js";
-
+import { Usuario, Producto, ItemCarrito } from "./clases.js";
+import { agregarProducto } from "./funcionesProductos.js";
+import { agregarUsuario } from "./funcionesUsuarios.js";
 
 // --------------------- [inicialización de variables] --------------------- //
 let total = document.getElementById("totalCarrito");
@@ -28,6 +28,42 @@ mensajes.innerHTML = "bienvenido"
 
 
 // --- ###################### [F U N C I O N E S] ###################### --- //
+// ------------- [carga inicial de datos PRODUCTOS Y USUARIOS] ------------- //
+function cargaInicialDatos() {
+    localStorage.clear();
+    // -------------- [inicializamos ADMINISTRADOR)] -------------- //
+	let admin = new Usuario(0, "Administrador", "Supremo","admin@naturecollection.com", "admin", [], [], true, true);
+	agregarUsuario(admin);
+	//---------------[Creacion de usuarios (Ejemplo)]---------------//
+	let ale = new Usuario(1, "ALE", "CAROL","ale@ale.com", "12345", [], [], true, false);
+	let mary = new Usuario(2, "MARY","BOSCH" ,"mary@mary.com", "65546", [], [], true, true);
+	let silvia = new Usuario(3, "SILVIA", "SOSA", "silvia@silvia", "lalala", [], [], true, false);
+	let lucas = new Usuario(4, "LUCAS", "RAMUNNI","lucas@lucas.com", "20565", [], [], true, true);
+    let franco = new Usuario(5, "FRANCO", "LEIRO","franco@franco.com", "59842", [], [], true, false);
+    // -------- [Agregamos usuarios (por instancias de objetos)] -------- //
+	agregarUsuario(ale);
+	agregarUsuario(mary);
+	agregarUsuario(silvia);
+	agregarUsuario(lucas);
+	agregarUsuario(franco);
+	// ---------- [Creacion de Productos (por instancias de objetos)] ---------- //
+
+	let prod1 = new Producto(1001, "Sweter", "ideal para los días más fríos", "M", "https://via.placeholder.com/150/f66b97", 750, 2,"frio");
+	let prod2 = new Producto(1002, "Top", "ideal para días más cálidos", "S", "https://via.placeholder.com/150/24f355", 1000, 2, "calor");
+	let prod3 = new Producto(1003, "Short de baño",  "para la piscina o la playa", "G", "https://via.placeholder.com/150/771796", 1810, 3, "calor");
+	let prod4 = new Producto(1004, "bolso extensible","para todo lo que necesites llevar", "U", "https://via.placeholder.com/150/92c952", 999, 3, "viaje");
+	let prod5 = new Producto(1005, "jeans", "jeans unisex negros", "M", "https://via.placeholder.com/150/f66b97", 876, 0, "todos_los_dias");
+	let prod6 = new Producto(1006, "polar","polar gris", "U", "https://via.placeholder.com/150/771796", 850, 3, "frio");
+
+	// -------- [Agregamos Productos a la BD (por instancias de objetos)] -------- //
+    agregarProducto(prod1);
+    agregarProducto(prod6);
+	agregarProducto(prod2);
+	agregarProducto(prod3);
+	agregarProducto(prod4);
+	agregarProducto(prod5);
+	
+} // FIN [carga inicial de datos PRODUCTOS Y USUARIOS]
 
 // -------------------- [actualiza totales del Carrito] -------------------- //
 function actualizarTotalesCarrito() {
@@ -171,21 +207,21 @@ function finalizarCompra() {
 
 
 // ------------------- [buscar texto en dbProductos] ------------------- //
-texto = document.getElementById("texto").value
-window.buscarTexto = function () {
-	getProductos();
-	mensajes.innerHTML = `buscando ${texto}....`;
-
-	let productosTexto = dbProductos.filter(p => {
-		return ((p._categoria.includes(texto) || p._nombre.includes(texto)) || p._descripcion.includes(texto))
-	});
-	console.log(productosTexto);                                          //#### 4 TESTING PURPOSES ONLY ###
-
-	let tarjetasProd = document.getElementById("tarjetasProd");
-
-	if (productosTexto != []) {
-		productosTexto.map(function (prod, index) {
-			let tarjeta = `
+texto=document.getElementById("texto").value
+window.buscarTexto = function() {
+    getProductos();
+    mensajes.innerHTML= `buscando ${texto}....`;
+    
+    let productosTexto = dbProductos.filter (p => {
+        return ((p._categoria.includes(texto) || p._nombre.includes(texto)) || p._descripcion.includes(texto))
+    });
+    console.log(productosTexto);                                          //#### 4 TESTING PURPOSES ONLY ###
+    
+    let tarjetasProd = document.getElementById("tarjetasProd");
+    
+    if (productosTexto != []) {
+        productosTexto.map(function (prod, index) {
+            let tarjeta = `
                 <div class="card">
                 <img id="fotoProducto" src=${prod._foto} class="card-img-top" alt="top-estampa-cactus">
                 <div class="card-body">
@@ -202,13 +238,13 @@ window.buscarTexto = function () {
                 </div>
               </div>       
             `;
-			tarjetasProd.innerHTML += tarjeta;
-		});
-		mensajes.innerHTML = "se encontraron los siguientes productos ";
-	} else {
-		mensajes.innerHTML = "no se encontraron productos con el texto buscado ";
-	}
-	document.getElementById("texto").value = "";
+            tarjetasProd.innerHTML += tarjeta;
+            });
+        mensajes.innerHTML= "se encontraron los siguientes productos ";
+        } else {
+            mensajes.innerHTML= "no se encontraron productos con el texto buscado ";  
+        }
+    document.getElementById("texto").value="";    
 } // FIN [buscar texto en dbProductos]
 
 
