@@ -203,7 +203,6 @@ botonFinalizar.addEventListener('click', finalizarCompra);
 }
 
 
-
 // ------------------- [buscar texto en dbProductos] ------------------- //
 
 texto=document.getElementById("texto").value
@@ -244,8 +243,8 @@ window.buscarTexto = function() {
         } else {
             mensajes.innerHTML= "no se encontraron productos con el texto buscado ";  
         }
+        document.getElementById("texto").value="";
 }
-
 
 
 // ------------------- [filtrar productos por categoria] ------------------- //
@@ -300,7 +299,7 @@ function listarCarrito() {
         carrito.map (function (p,i) {
         let linea = ` 
         <tr>
-            <th scope="row" id="fila">${i + 1}</th>
+            <td scope="row" id="fila">${i + 1}</td>
             <td>${p._idProd}</td>
             <td>${p._nomProd}</td>
             <td>${p._precioProd}</td>
