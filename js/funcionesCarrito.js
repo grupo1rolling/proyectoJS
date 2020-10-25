@@ -1,5 +1,6 @@
-import { ItemCarrito } from "./clases.js";
-import { cargaInicialDatos } from "./funcionesAuxiliares.js";
+import { Usuario, Producto, ItemCarrito } from "./clases.js";
+import { agregarProducto } from "./funcionesProductos.js";
+import { agregarUsuario } from "./funcionesUsuarios.js";
 
 // --------------------- [inicialización de variables] --------------------- //
 let total=document.getElementById("totalCarrito");
@@ -313,7 +314,8 @@ function listarCarrito() {
         </tr>`   
         items.innerHTML += linea;
         });
-    
+        let t=document.getElementById("totales");
+        t.innerHTML=totalARSCarrito.toFixed(2);
     } else {
         alert ("carrito vacio");
     }   
