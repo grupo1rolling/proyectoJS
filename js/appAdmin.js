@@ -1,8 +1,8 @@
-import { mostrarProductos, modificarAgregarDatosProductos, /*modificarDatosProductos,*/ /*grabarModificacionProductoAdmin,*/ grabarModificacionAltProductoAdmin, borrarProducto } from "./funcionesProductos.js";
 import { cargaInicialDatos } from "./funcionesAuxiliares.js";
+import { mostrarProductos, modificarAgregarDatosProductos, /*modificarDatosProductos,*/ /*grabarModificacionProductoAdmin,*/ grabarModificacionAltProductoAdmin, borrarProducto } from "./funcionesProductos.js";
 import {
 	mostrarUsuarios, modificarDatosUsuario, borrarUsuario, grabarModificacionUsuariosAdmin,
-	btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage
+	btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage, verProductosUsuariosAdmin
 } from "./funcionesUsuarios.js";
 
 
@@ -102,3 +102,20 @@ modalModificaProductoAdmin.addEventListener("click", (e) => {
 		// console.log("Prueba boton GRABAR Producto");
 	}
 });
+
+
+
+
+
+
+
+/*Evento del boton para guardar los cambios de un Producto (Pagina Admin)*/
+const productosUsuarioAdmin = document.querySelector("#contenedorUsuariosAdmin");
+productosUsuarioAdmin.addEventListener("click", (e) => {
+	if (e.target.id == "btnProductosUsuariosAdminPage") {
+		//grabarModificacionProductoAdmin();
+		verProductosUsuariosAdmin(e.target.dataset.codigo);
+		// console.log("Prueba boton GRABAR Producto");
+	}
+});
+

@@ -14,7 +14,7 @@ export function agregarProducto(producto) {
 	});
 
 	if (existeProducto) {
-		alert("El producto que desea ingresar ya existe.");
+		alert("El código del producto que desea ingresar ya existe.");
 	} else {
 		productosArray.push(producto);
 		localStorage.setItem("productos", JSON.stringify(productosArray));
@@ -24,7 +24,7 @@ export function agregarProducto(producto) {
 // Muestro los productos de un usuario, consultando al LocalStorage
 export function mostrarProductosUsuario(usuario) {
 	//-- Capturo todos los codigos de los productos que contiene el usuario
-	let codProductos = usuario.codigosProductos;
+	let codProductos = usuario._codigosProductos;
 
 	//-- Capturo el listado de todos los productos almacenados en LocalStorage
 	let productosJSON = JSON.parse(localStorage.getItem("productos"));
@@ -206,25 +206,27 @@ export function mostrarProductos() {
 // }
 
 export function modificarAgregarDatosProductos(codigoProducto) {
-	
+
 	let contenidoTalles = "";
 	let contenidoCategorias = "";
 	let modalAdminProductos;
 	let contenido = "";
 	let accion = "";
+	let habilitarDesabilitarCampo = "";
 
 	let codigoValue;
 	let nombreValue;
 	let stockValue;
-	let precioValue;	
-	let descripcionValue;	
+	let precioValue;
+	let descripcionValue;
 
 
-	if (codigoProducto > 0){	// MODIFICACION //
+	if (codigoProducto > 0) {	// MODIFICACION //
 
 		console.log("Modificar Producto");
 		accion = "M";
-		
+		habilitarDesabilitarCampo = "disabled";
+
 		let productosDatos = getProductos().find(item => {
 			return item._codigo == codigoProducto ? item : "";
 		});
@@ -234,36 +236,37 @@ export function modificarAgregarDatosProductos(codigoProducto) {
 		stockValue = productosDatos._stock;
 		precioValue = productosDatos._precio;
 		descripcionValue = productosDatos._descripcion;
-	
+
 		console.log(`Categoría: ${productosDatos._categoria}`);
 		console.log(`Talle: ${productosDatos._talle}`);
 		// console.log(`Categoría: ${productosDatos._categoria}`);
 		// console.log(`Categoría: ${productosDatos._categoria}`);
-	
+
 		//----- Captura de Talles -----//
 		let arrayTalles = getTalles();
 		let posicionTalle = arrayTalles.indexOf(productosDatos._talle);
 		arrayTalles.splice(posicionTalle, 1);
 		arrayTalles.unshift(productosDatos._talle);
-	
+
 		arrayTalles.map(item => {
 			contenidoTalles += `<option value="${item}">${item}</option>`
 		});
-	
+
 		//----- Captura de Categorias -----//
 		let arrayCategorias = getCategorias();
 		let posicionCategoria = arrayCategorias.indexOf(productosDatos._categoria);
 		arrayCategorias.splice(posicionCategoria, 1);
 		arrayCategorias.unshift(productosDatos._categoria);
-	
+
 		arrayCategorias.map(item => {
 			contenidoCategorias += `<option value="${item}">${item}</option>`
 		});
 	}
-	else{	// ALTA //
+	else {	// ALTA //
 
 		console.log("Alta Producto");
 		accion = "A";
+		habilitarDesabilitarCampo = "";
 
 		codigoValue = getCodigoGeneradoByKey("productos"); //generar;
 		nombreValue = "";
@@ -272,7 +275,7 @@ export function modificarAgregarDatosProductos(codigoProducto) {
 		descripcionValue = "";
 
 		console.log(`Código: ${codigoValue}`);
-		
+
 		//----- Captura de Talles -----//
 		getTalles().map(item => {
 			contenidoTalles += `<option value="${item}">${item}</option>`
@@ -295,7 +298,7 @@ export function modificarAgregarDatosProductos(codigoProducto) {
 						<div class="form-row">
 							<div class="col-md-4 mb-3">
 								<label for="codigo">Código</label>
-								<input type="text" class="form-control" id="codigoProdAdm" value="${codigoValue}" disabled>
+								<input type="text" class="form-control" id="codigoProdAdm" value="${codigoValue}" ${habilitarDesabilitarCampo}>
 							</div>
 
 							<div class="col-md-5 mb-3">
@@ -478,7 +481,7 @@ export function grabarModificacionAltProductoAdmin(accion) {
 	console.log(`talle: ${talle}`);
 	console.log(`categoria: ${categoria}`);
 	console.log(`stock: ${stock}`);
-	console.log(`precio: ${precio}`); 	
+	console.log(`precio: ${precio}`);
 	console.log(`descripcion: ${descripcion}`);
 
 
@@ -488,7 +491,7 @@ export function grabarModificacionAltProductoAdmin(accion) {
 			let nuevoProducto = new Producto(codigo, nombre, descripcion, talle, "", precio, stock, categoria)
 			agregarProducto(nuevoProducto);
 			break;
-	
+
 		case "M":	//--- MODIFICACION ---//
 			let productosusuariosArray = getProductos();
 
@@ -503,15 +506,15 @@ export function grabarModificacionAltProductoAdmin(accion) {
 					item._descripcion = descripcion;
 				}
 			});
-		
-			localStorage.setItem("productos", JSON.stringify(productosusuariosArray))		
+
+			localStorage.setItem("productos", JSON.stringify(productosusuariosArray))
 			break;
-	
+
 		default:
 			break;
 	}
 
-	
+
 	mostrarProductos();
 }
 
