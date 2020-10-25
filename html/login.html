@@ -24,7 +24,7 @@
      <!--fontawesome-->
      <script src="https://kit.fontawesome.com/2e324fbfc1.js" crossorigin="anonymous"></script>
 
-    <title>Nature Collection</title>
+    <title>Login</title>
   </head>
 
   <body>
@@ -43,7 +43,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand ml-3" href="#">
+        <a class="navbar-brand ml-3" href="index.html">
           <img
             src="../img/natureLogo.png"
             width="120px"
@@ -57,10 +57,10 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item">
-              <a class="nav-link text-orangeLight" href="usuario.html">¿Eres nuevo aqui?</a>
+              <a class="nav-link text-orangeLight" href="registro.html">¿Eres nuevo aqui?</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-orange" href="usuario.html">Iniciar seccion</a>
+              <a class="nav-link text-orange" href="login.html">Iniciar seccion</a>
             </li>
           </ul>
         </div>
@@ -68,20 +68,7 @@
     <!-- </div> -->
     <!--Navbar1----------->
     
-    <!-- <div id="portada" class="container-fluid text-center text-md-left">
-      <div class="row align-items-center">
-        <div
-          class="col-10 offset-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 texto"
-        >
-          <h1 class="text-center text-shadow">
-            <strong
-              >"La ropa no significa nada hasta que alguien vive en
-              ella"</strong
-            >
-          </h1>
-        </div>
-      </div>
-    </div> -->
+
 
     
 
@@ -94,37 +81,38 @@
       <div class="container" id="login"> 
         <div class="row">
           <div class="col-md-6 offset-md-3 pt-2">
-            <div class="col text-center text-uppercase mb-4">
-              <h4>login</h4>
+            <div class="col text-uppercase mb-4 text-orange">
+              <h4 class="font-weight-bold mb-1 mt-3 text-center">Login</h4>
             </div>
             <form id="flogin" class="mt-3" autocomplete="off">
               <div class="form-group">
                 <label for="mailLogin">Usuario</label>
                 <input
                   type="email"
-                  class="form-control"
+                  class="form-control-style"
                   id="mailLogin"
                   name="mailLogin"
-                  placeholder="correo electrónico"
+                  placeholder="Correo electrónico"
                  
                 />
-                <small class="olvidoPassword"
-                  ><a href="" data-toggle="modal" data-target="#olvidoPass">¿Olvidaste tu contraseña?</a></small
-                >
+                
               </div>
-              <div class="form-group">
+              <div class="form-group mt-4">
                 <label for="passwordLogin">Contraseña</label>
                 <input
                   type="password"
-                  class="form-control"
+                  class="form-control-style"
                   id="passwordLogin"
                   name="passwordLogin"
-                  placeholder="contraseña"
+                  placeholder="Contraseña"
                   
                 />
+                <small class="olvidoPassword"
+                  ><a class="text-orange"href="" data-toggle="modal" data-target="#olvidoPass">¿Olvidaste tu contraseña?</a></small
+                >
               </div>
-              <div class="form-group">
-                <button class="btn btn-primary btn-block" onclick="obtenerDatosLogin()"> Ingresar</button>
+              <div class="form-group mt-4">
+                <button class="btn btn-green btn-block" onclick="obtenerDatosLogin()"> Ingresar</button>
               </div>
             </form>
           </div>
@@ -141,7 +129,7 @@
     <!--Main layout-->
 
     <!--Footer-->    
-  <div class="container-fluid p-0">
+  <div class="container-fluid p-0 mt-5 mb-0">
     <div class="footer">
       <div class="footer-content">
         <div class="row m-0">
@@ -198,16 +186,16 @@
           <div class="form-group">
             <input
               type="email"
-              class="form-control"
+              class="form-control-style"
               id="mailOlvidoPass"
               name="mailOlvidoPass"
-              placeholder="correo electrónico"
+              placeholder="Correo electrónico"
             />
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">cerrar</button>
-          <button type="button" class="btn btn-primary btn-sm" onclick="olvidoPass()">enviar</button>
+          <button type="button" class="btn btn-buscar btn-sm" data-dismiss="modal">cerrar</button>
+          <button type="button" class="btn btn-green btn-sm" onclick="olvidoPass()">enviar</button>
         </div>
       </div>
     </div>
