@@ -107,13 +107,13 @@ function getCodigoGeneradoAltaUsuario() {
 }
 
 export function grabarAltaUsuarioAdminPage() {
-	let codigo 	 = getCodigoGeneradoByKey("usuarios");
-	let nombre 	 = document.getElementById("nombreAltaUsrAdmPage").value;
+	let codigo = getCodigoGeneradoByKey("usuarios");
+	let nombre = document.getElementById("nombreAltaUsrAdmPage").value;
 	let apellido = document.getElementById("apellidoAltaUsrAdmPage").value;
-	let email 	 = document.getElementById("emailAltaUsrAdmPage").value;
+	let email = document.getElementById("emailAltaUsrAdmPage").value;
 	let password = document.getElementById("contrasenaAltaUsrAdmPage").value;
-	let estado 	 = document.getElementById("SwitchEstadoAltaUsrAdmPage").checked;
-	let esAdmin  = document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked;
+	let estado = document.getElementById("SwitchEstadoAltaUsrAdmPage").checked;
+	let esAdmin = document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked;
 
 	console.log(`Código: ${codigo}`)
 	console.log(`Nombre: ${nombre}`)

@@ -1,6 +1,8 @@
 import { mostrarProductos, modificarDatosProductos, grabarModificacionProductoAdmin } from "./funcionesProductos.js";
-import { mostrarUsuarios, modificarDatosUsuario, borrarUsuario, grabarModificacionUsuariosAdmin,
-		btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage} from "./funcionesUsuarios.js";
+import {
+	mostrarUsuarios, modificarDatosUsuario, borrarUsuario, grabarModificacionUsuariosAdmin,
+	btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage
+} from "./funcionesUsuarios.js";
 import { cargaInicialDatos } from "./funcionesAuxiliares.js";
 
 
@@ -47,15 +49,15 @@ modalModificaUsuarioAdmin.addEventListener("click", (e) => {
 	}
 
 	//----- USAR PARA CAMBIAR DE COLOR EL TITULO SEGUN EL ESTADO (si hay tiempo) -----//
-		// if(e.target.id == "customSwitchEstadoAdm"){
-		// 	let valor = document.getElementById("customSwitchEstadoAdm").checked;
-		// 	console.log(valor);
-		// }
+	// if(e.target.id == "customSwitchEstadoAdm"){
+	// 	let valor = document.getElementById("customSwitchEstadoAdm").checked;
+	// 	console.log(valor);
+	// }
 
-		// if(e.target.id == "customSwitchEsAdm"){
-		// 	let valor = document.getElementById("customSwitchEsAdm").checked;
-		// 	console.log(valor);
-		// }
+	// if(e.target.id == "customSwitchEsAdm"){
+	// 	let valor = document.getElementById("customSwitchEsAdm").checked;
+	// 	console.log(valor);
+	// }
 	//--------------------------------------------------------------------------------//
 });
 

@@ -118,7 +118,7 @@ export function mostrarProductos() {
 }
 
 
-export function modificarDatosProductos(codigoProducto){
+export function modificarDatosProductos(codigoProducto) {
 	let productosDatos = getProductos().find(item => {
 		return item._codigo == codigoProducto ? item : "";
 	});
@@ -213,7 +213,7 @@ export function modificarDatosProductos(codigoProducto){
 
 	modalAdminProductos.innerHTML = contenido;
 	document.getElementById("descripcionProdAdm").value = productosDatos._descripcion;
-	
+
 	//--- Footer del Model de modificacion de Productos ---//
 	modalAdminProductos = document.getElementById("modalFooterProductos");
 	contenido = `
@@ -224,15 +224,15 @@ export function modificarDatosProductos(codigoProducto){
 	modalAdminProductos.innerHTML = contenido;
 }
 
-export function grabarModificacionProductoAdmin(){
-	
+export function grabarModificacionProductoAdmin() {
+
 	// console.log("Prueba boton GRABAR Producto\n");
-	let codigo 		= parseInt(document.getElementById("codigoProdAdm").value);
-	let nombre 		= document.getElementById("nombreProdAdm").value;
-	let talle 		= document.getElementById("talleProdAdm").value;
-	let categoria 	= document.getElementById("categoriaProdAdm").value;
-	let stock 		= parseInt(document.getElementById("stockProdAdm").value);
-	let precio 		= parseFloat(document.getElementById("precioProdAdm").value);
+	let codigo = parseInt(document.getElementById("codigoProdAdm").value);
+	let nombre = document.getElementById("nombreProdAdm").value;
+	let talle = document.getElementById("talleProdAdm").value;
+	let categoria = document.getElementById("categoriaProdAdm").value;
+	let stock = parseInt(document.getElementById("stockProdAdm").value);
+	let precio = parseFloat(document.getElementById("precioProdAdm").value);
 	let descripcion = document.getElementById("descripcionProdAdm").value;
 
 	// console.log(`codigo: ${codigo}`);
@@ -247,13 +247,13 @@ export function grabarModificacionProductoAdmin(){
 
 	productosusuariosArray.map(item => {
 		if (item._codigo == codigo) {
-			item._codigo 		= codigo;
-			item._nombre 		= nombre;
-			item._talle 		= talle;
-			item._categoria 	= categoria;
-			item._stock 		= stock;
-			item._precio 		= precio;
-			item._descripcion 	= descripcion;
+			item._codigo = codigo;
+			item._nombre = nombre;
+			item._talle = talle;
+			item._categoria = categoria;
+			item._stock = stock;
+			item._precio = precio;
+			item._descripcion = descripcion;
 		}
 	});
 
@@ -261,7 +261,7 @@ export function grabarModificacionProductoAdmin(){
 	mostrarProductos();
 }
 
-function borrarProducto(){
+function borrarProducto() {
 
 }
 

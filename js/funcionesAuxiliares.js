@@ -74,12 +74,12 @@ export function cargaInicialDatos() {
 	agregarProducto(prod6);
 }
 
-export function getTalles(){
+export function getTalles() {
 	let arrayTalles = [];
 	return arrayTalles = ["XS", "S", "M", "L", "XL"];
 }
 
-export function getCategorias(){
+export function getCategorias() {
 	let arrayCategorias = [];
 	return arrayCategorias = [
 		"Frío",
@@ -99,11 +99,11 @@ export function getCodigoGeneradoByKey(tabla) {
 		case "usuarios":
 			datosArray = getAllUsuarios();
 			break;
-	
+
 		case "productos":
 			datosArray = getProductos();
 			break;
-	
+
 		default:
 			break;
 	}
