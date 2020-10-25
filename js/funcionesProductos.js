@@ -4,18 +4,17 @@ import { getTalles, getCategorias, getCodigoGeneradoByKey } from "./funcionesAux
 export function agregarProducto(producto) {
 	let productosArray = [];
 
-	//-- Verificamos si existe la key 'productos' en LocalStorage
+	//-- Verifica si existe la key 'productos' en LocalStorage
 	//-- Si existe y tiene productos, capturo la informacion en un array
-
 	productosArray = JSON.parse(localStorage.getItem("productos")) || [];
 
-	//-- Verifico si ya existe el codigo de producto ingresado
+	//-- Verifica, por codigo o por nombre, si ya existe el productos ingresado.
 	let existeProducto = productosArray.find(function (item) {
-		return item._codigo == producto.codigo ? true : false;
+		return (item._codigo == producto.codigo /*|| item._nombre == producto.nombre*/) ? true : false;
 	});
 
 	if (existeProducto) {
-		//console.log("Producto repetido");
+		alert("El código del producto que desea ingresar ya existe.");
 	} else {
 		productosArray.push(producto);
 		localStorage.setItem("productos", JSON.stringify(productosArray));
@@ -25,7 +24,7 @@ export function agregarProducto(producto) {
 // Muestro los productos de un usuario, consultando al LocalStorage
 export function mostrarProductosUsuario(usuario) {
 	//-- Capturo todos los codigos de los productos que contiene el usuario
-	let codProductos = usuario.codigosProductos;
+	let codProductos = usuario._codigosProductos;
 
 	//-- Capturo el listado de todos los productos almacenados en LocalStorage
 	let productosJSON = JSON.parse(localStorage.getItem("productos"));
@@ -118,113 +117,355 @@ export function mostrarProductos() {
 }
 
 
-export function modificarDatosProductos(codigoProducto) {
-	let productosDatos = getProductos().find(item => {
-		return item._codigo == codigoProducto ? item : "";
-	});
+// export function altaDatosProductos() {
+
+// 	let contenidoTalles = "";
+// 	let contenidoCategorias = "";
+// 	let modalAdminProductos;
+// 	let contenido = "";
+
+// 	//----- Captura de Talles -----//
+// 	getTalles().map(item => {
+// 		contenidoTalles += `<option value="${item}">${item}</option>`
+// 	});
+
+// 	//----- Captura de Categorias -----//		
+// 	getCategorias().map(item => {
+// 		contenidoCategorias += `<option value="${item}">${item}</option>`
+// 	});
+
+// 	modalAdminProductos = document.getElementById("modalBodyProductos");
+
+// 	//--- Body del Model de modificacion de Productos ---//
+// 	contenido = `
+// 				<!-- Inicio Formulario -->
+// 					<form id="formModProd">
+// 						<div class="form-row">
+// 							<div class="col-md-4 mb-3">
+// 								<label for="codigo">Código</label>
+// 								<input type="text" class="form-control" id="codigoProdAdm" value="" disabled>
+// 							</div>
+
+// 							<div class="col-md-5 mb-3">
+// 								<label for="nombreProd">Producto</label>
+// 								<input type="text" class="form-control" id="nombreProdAdm" value="" required>
+// 							</div>
+
+// 							<div class="col-md-3 mb-3">
+// 								<label for="talle">Talle</label>
+// 								<select id="talleProdAdm" name="talle" class="form-control" required>
+// 									${contenidoTalles}
+// 								</select>
+// 							</div>
+// 						</div>
+
+// 						<div class="form-row">
+// 							<div class="col-md-6 mb-3">
+// 								<label for="categoria">Categoría</label>
+// 								<select id="categoriaProdAdm" name="categoria" class="form-control" required>
+// 									${contenidoCategorias}
+// 								</select>
+// 							</div>
+// 							<div class="col-md-3 mb-3">
+// 								<label for="stock">Stock</label>
+// 								<input type="text" class="form-control" id="stockProdAdm" value="" required>
+// 							</div>
+
+// 							<div class="col-md-3 mb-3">
+// 								<label for="precio">Precio $</label>
+// 								<input type="text" class="form-control" id="precioProdAdm" value="" required>
+// 							</div>
+// 						</div>
+
+// 						<div class="form-row">					
+// 							<div class="col-md-6 mb-3">
+// 								<label for="file-upload">Imagen del producto</label>
+// 								<input id="file-upload" type="file" accept="image/*" />
+// 							</div>
+
+// 							<div class="col-md-6 mb-3">
+// 								<label for="descripcion">Descripción</label>
+// 								<textarea class="form-control" id="descripcionProdAdm" rows="1"></textarea>
+// 							</div>
+// 						</div>
+// 					</form>
+// 				<!-- Fin seccion Formulario -->
+// 			`;
+
+// 	modalAdminProductos.innerHTML = contenido;
+// 	document.getElementById("descripcionProdAdm").value = productosDatos._descripcion;
+
+// 	//--- Footer del Model de modificacion de Productos ---//
+// 	modalAdminProductos = document.getElementById("modalFooterProductos");
+// 	contenido = `
+// 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+// 				<button id="btnGrabarProductoModifAdminPage" type="button" class="btn btn-primary" data-dismiss="modal">Grabar</button>
+// 				`;
+
+// 	modalAdminProductos.innerHTML = contenido;
+// }
+
+export function modificarAgregarDatosProductos(codigoProducto) {
+
+	let contenidoTalles = "";
+	let contenidoCategorias = "";
+	let modalAdminProductos;
+	let contenido = "";
+	let accion = "";
+	let habilitarDesabilitarCampo = "";
+
+	let codigoValue;
+	let nombreValue;
+	let stockValue;
+	let precioValue;
+	let descripcionValue;
 
 
-	console.log(`Categoría: ${productosDatos._categoria}`);
-	console.log(`Talle: ${productosDatos._talle}`);
-	// console.log(`Categoría: ${productosDatos._categoria}`);
-	// console.log(`Categoría: ${productosDatos._categoria}`);
+	if (codigoProducto > 0) {	// MODIFICACION //
 
-	//----- Captura de Talles -----//
-	let arrayTalles = getTalles();
-	let posicionTalle = arrayTalles.indexOf(productosDatos._talle);
-	arrayTalles.splice(posicionTalle, 1);
-	arrayTalles.unshift(productosDatos._talle);
+		console.log("Modificar Producto");
+		accion = "M";
+		habilitarDesabilitarCampo = "disabled";
 
-	let contenidoTalles;
-	arrayTalles.map(item => {
-		contenidoTalles += `<option value="${item}">${item}</option>`
-	});
+		let productosDatos = getProductos().find(item => {
+			return item._codigo == codigoProducto ? item : "";
+		});
 
-	//----- Captura de Categorias -----//
-	let arrayCategorias = getCategorias();
-	let posicionCategoria = arrayCategorias.indexOf(productosDatos._categoria);
-	arrayCategorias.splice(posicionCategoria, 1);
-	arrayCategorias.unshift(productosDatos._categoria);
+		codigoValue = productosDatos._codigo;
+		nombreValue = productosDatos._nombre;
+		stockValue = productosDatos._stock;
+		precioValue = productosDatos._precio;
+		descripcionValue = productosDatos._descripcion;
 
-	let contenidoCategorias;
-	arrayCategorias.map(item => {
-		contenidoCategorias += `<option value="${item}">${item}</option>`
-	});
+		console.log(`Categoría: ${productosDatos._categoria}`);
+		console.log(`Talle: ${productosDatos._talle}`);
+		// console.log(`Categoría: ${productosDatos._categoria}`);
+		// console.log(`Categoría: ${productosDatos._categoria}`);
 
+		//----- Captura de Talles -----//
+		let arrayTalles = getTalles();
+		let posicionTalle = arrayTalles.indexOf(productosDatos._talle);
+		arrayTalles.splice(posicionTalle, 1);
+		arrayTalles.unshift(productosDatos._talle);
 
-	let modalAdminProductos = document.getElementById("modalBodyProductos");
+		arrayTalles.map(item => {
+			contenidoTalles += `<option value="${item}">${item}</option>`
+		});
+
+		//----- Captura de Categorias -----//
+		let arrayCategorias = getCategorias();
+		let posicionCategoria = arrayCategorias.indexOf(productosDatos._categoria);
+		arrayCategorias.splice(posicionCategoria, 1);
+		arrayCategorias.unshift(productosDatos._categoria);
+
+		arrayCategorias.map(item => {
+			contenidoCategorias += `<option value="${item}">${item}</option>`
+		});
+	}
+	else {	// ALTA //
+
+		console.log("Alta Producto");
+		accion = "A";
+		habilitarDesabilitarCampo = "";
+
+		codigoValue = getCodigoGeneradoByKey("productos"); //generar;
+		nombreValue = "";
+		stockValue = 0;
+		precioValue = 0;
+		descripcionValue = "";
+
+		console.log(`Código: ${codigoValue}`);
+
+		//----- Captura de Talles -----//
+		getTalles().map(item => {
+			contenidoTalles += `<option value="${item}">${item}</option>`
+		});
+
+		//----- Captura de Categorias -----//		
+		getCategorias().map(item => {
+			contenidoCategorias += `<option value="${item}">${item}</option>`
+		});
+	}
+
+	modalAdminProductos = document.getElementById("modalBodyProductos");
+	console.log(`Código: ${codigoValue}`);
+
 
 	//--- Body del Model de modificacion de Productos ---//
-	let contenido = `
-					<!-- Inicio Formulario -->
-						<form id="formModProd">
-							<div class="form-row">
-								<div class="col-md-4 mb-3">
-									<label for="codigo">Código</label>
-									<input type="text" class="form-control" id="codigoProdAdm" value="${productosDatos._codigo}" disabled>
-								</div>
-
-								<div class="col-md-5 mb-3">
-									<label for="nombreProd">Producto</label>
-									<input type="text" class="form-control" id="nombreProdAdm" value="${productosDatos._nombre}" required>
-								</div>
-
-								<div class="col-md-3 mb-3">
-									<label for="talle">Talle</label>
-									<select id="talleProdAdm" name="talle" class="form-control" required>
-										${contenidoTalles}
-									</select>
-								</div>
+	contenido = `
+				<!-- Inicio Formulario -->
+					<form id="formModProd">
+						<div class="form-row">
+							<div class="col-md-4 mb-3">
+								<label for="codigo">Código</label>
+								<input type="text" class="form-control" id="codigoProdAdm" value="${codigoValue}" ${habilitarDesabilitarCampo}>
 							</div>
 
-							<div class="form-row">
-								<div class="col-md-6 mb-3">
-									<label for="categoria">Categoría</label>
-									<select id="categoriaProdAdm" name="categoria" class="form-control" required>
-										${contenidoCategorias}
-									</select>
-								</div>
-								<div class="col-md-3 mb-3">
-									<label for="stock">Stock</label>
-									<input type="text" class="form-control" id="stockProdAdm" value="${productosDatos._stock}" required>
-								</div>
-
-								<div class="col-md-3 mb-3">
-									<label for="precio">Precio $</label>
-									<input type="text" class="form-control" id="precioProdAdm" value="${productosDatos._precio}" required>
-								</div>
+							<div class="col-md-5 mb-3">
+								<label for="nombreProd">Producto</label>
+								<input type="text" class="form-control" id="nombreProdAdm" value="${nombreValue}" required>
 							</div>
 
-							<div class="form-row">					
-								<div class="col-md-6 mb-3">
-									<label for="file-upload">Imagen del producto</label>
-									<input id="file-upload" type="file" accept="image/*" />
-								</div>
-
-								<div class="col-md-6 mb-3">
-									<label for="descripcion">Descripción</label>
-									<textarea class="form-control" id="descripcionProdAdm" rows="1"></textarea>
-								</div>
+							<div class="col-md-3 mb-3">
+								<label for="talle">Talle</label>
+								<select id="talleProdAdm" name="talle" class="form-control" required>
+									${contenidoTalles}
+								</select>
 							</div>
-						</form>
+						</div>
 
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<label for="categoria">Categoría</label>
+								<select id="categoriaProdAdm" name="categoria" class="form-control" required>
+									${contenidoCategorias}
+								</select>
+							</div>
+							<div class="col-md-3 mb-3">
+								<label for="stock">Stock</label>
+								<input type="text" class="form-control" id="stockProdAdm" value="${stockValue}" required>
+							</div>
+
+							<div class="col-md-3 mb-3">
+								<label for="precio">Precio $</label>
+								<input type="text" class="form-control" id="precioProdAdm" value="${precioValue}" required>
+							</div>
+						</div>
+
+						<div class="form-row">					
+							<div class="col-md-6 mb-3">
+								<label for="file-upload">Imagen del producto</label>
+								<input id="file-upload" type="file" accept="image/*" />
+							</div>
+
+							<div class="col-md-6 mb-3">
+								<label for="descripcion">Descripción</label>
+								<textarea class="form-control" id="descripcionProdAdm" rows="1"></textarea>
+							</div>
+						</div>
+					</form>
 				<!-- Fin seccion Formulario -->
 				`;
 
 	modalAdminProductos.innerHTML = contenido;
-	document.getElementById("descripcionProdAdm").value = productosDatos._descripcion;
+	document.getElementById("descripcionProdAdm").value = descripcionValue;
 
 	//--- Footer del Model de modificacion de Productos ---//
 	modalAdminProductos = document.getElementById("modalFooterProductos");
 	contenido = `
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-				<button id="btnGrabarProductoModifAdminPage" type="button" class="btn btn-primary" data-dismiss="modal">Grabar</button>
+				<button id="btnGrabarProductoModifAdminPage" data-accion="${accion}" type="button" class="btn btn-primary" data-dismiss="modal">Grabar</button>
 				`;
 
 	modalAdminProductos.innerHTML = contenido;
 }
 
-export function grabarModificacionProductoAdmin() {
+// export function modificarDatosProductos(codigoProducto) {
+// 	let productosDatos = getProductos().find(item => {
+// 		return item._codigo == codigoProducto ? item : "";
+// 	});
+
+// 	console.log(`Categoría: ${productosDatos._categoria}`);
+// 	console.log(`Talle: ${productosDatos._talle}`);
+// 	// console.log(`Categoría: ${productosDatos._categoria}`);
+// 	// console.log(`Categoría: ${productosDatos._categoria}`);
+
+// 	//----- Captura de Talles -----//
+// 	let arrayTalles = getTalles();
+// 	let posicionTalle = arrayTalles.indexOf(productosDatos._talle);
+// 	arrayTalles.splice(posicionTalle, 1);
+// 	arrayTalles.unshift(productosDatos._talle);
+
+// 	let contenidoTalles;
+// 	arrayTalles.map(item => {
+// 		contenidoTalles += `<option value="${item}">${item}</option>`
+// 	});
+
+// 	//----- Captura de Categorias -----//
+// 	let arrayCategorias = getCategorias();
+// 	let posicionCategoria = arrayCategorias.indexOf(productosDatos._categoria);
+// 	arrayCategorias.splice(posicionCategoria, 1);
+// 	arrayCategorias.unshift(productosDatos._categoria);
+
+// 	let contenidoCategorias;
+// 	arrayCategorias.map(item => {
+// 		contenidoCategorias += `<option value="${item}">${item}</option>`
+// 	});
+
+
+// 	let modalAdminProductos = document.getElementById("modalBodyProductos");
+
+// 	//--- Body del Model de modificacion de Productos ---//
+// 	let contenido = `
+// 					<!-- Inicio Formulario -->
+// 						<form id="formModProd">
+// 							<div class="form-row">
+// 								<div class="col-md-4 mb-3">
+// 									<label for="codigo">Código</label>
+// 									<input type="text" class="form-control" id="codigoProdAdm" value="${productosDatos._codigo}" disabled>
+// 								</div>
+
+// 								<div class="col-md-5 mb-3">
+// 									<label for="nombreProd">Producto</label>
+// 									<input type="text" class="form-control" id="nombreProdAdm" value="${productosDatos._nombre}" required>
+// 								</div>
+
+// 								<div class="col-md-3 mb-3">
+// 									<label for="talle">Talle</label>
+// 									<select id="talleProdAdm" name="talle" class="form-control" required>
+// 										${contenidoTalles}
+// 									</select>
+// 								</div>
+// 							</div>
+
+// 							<div class="form-row">
+// 								<div class="col-md-6 mb-3">
+// 									<label for="categoria">Categoría</label>
+// 									<select id="categoriaProdAdm" name="categoria" class="form-control" required>
+// 										${contenidoCategorias}
+// 									</select>
+// 								</div>
+// 								<div class="col-md-3 mb-3">
+// 									<label for="stock">Stock</label>
+// 									<input type="text" class="form-control" id="stockProdAdm" value="${productosDatos._stock}" required>
+// 								</div>
+
+// 								<div class="col-md-3 mb-3">
+// 									<label for="precio">Precio $</label>
+// 									<input type="text" class="form-control" id="precioProdAdm" value="${productosDatos._precio}" required>
+// 								</div>
+// 							</div>
+
+// 							<div class="form-row">					
+// 								<div class="col-md-6 mb-3">
+// 									<label for="file-upload">Imagen del producto</label>
+// 									<input id="file-upload" type="file" accept="image/*" />
+// 								</div>
+
+// 								<div class="col-md-6 mb-3">
+// 									<label for="descripcion">Descripción</label>
+// 									<textarea class="form-control" id="descripcionProdAdm" rows="1"></textarea>
+// 								</div>
+// 							</div>
+// 						</form>
+
+// 				<!-- Fin seccion Formulario -->
+// 				`;
+
+// 	modalAdminProductos.innerHTML = contenido;
+// 	document.getElementById("descripcionProdAdm").value = productosDatos._descripcion;
+
+// 	//--- Footer del Model de modificacion de Productos ---//
+// 	modalAdminProductos = document.getElementById("modalFooterProductos");
+// 	contenido = `
+// 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+// 				<button id="btnGrabarProductoModifAdminPage" type="button" class="btn btn-primary" data-dismiss="modal">Grabar</button>
+// 				`;
+
+// 	modalAdminProductos.innerHTML = contenido;
+// }
+
+export function grabarModificacionAltProductoAdmin(accion) {
 
 	// console.log("Prueba boton GRABAR Producto\n");
 	let codigo = parseInt(document.getElementById("codigoProdAdm").value);
@@ -235,34 +476,92 @@ export function grabarModificacionProductoAdmin() {
 	let precio = parseFloat(document.getElementById("precioProdAdm").value);
 	let descripcion = document.getElementById("descripcionProdAdm").value;
 
-	// console.log(`codigo: ${codigo}`);
-	// console.log(`nombre: ${nombre}`);
-	// console.log(`talle: ${talle}`);
-	// console.log(`categoria: ${categoria}`);
-	// console.log(`stock: ${stock}`);
-	// console.log(`precio: ${precio}`); 	
-	// console.log(`descripcion: ${descripcion}`);
+	console.log(`código: ${codigo}`);
+	console.log(`nombre: ${nombre}`);
+	console.log(`talle: ${talle}`);
+	console.log(`categoria: ${categoria}`);
+	console.log(`stock: ${stock}`);
+	console.log(`precio: ${precio}`);
+	console.log(`descripcion: ${descripcion}`);
 
-	let productosusuariosArray = getProductos();
 
-	productosusuariosArray.map(item => {
-		if (item._codigo == codigo) {
-			item._codigo = codigo;
-			item._nombre = nombre;
-			item._talle = talle;
-			item._categoria = categoria;
-			item._stock = stock;
-			item._precio = precio;
-			item._descripcion = descripcion;
-		}
-	});
+	switch (accion) {
+		case "A":	//--- ALTA ---//
 
-	localStorage.setItem("productos", JSON.stringify(productosusuariosArray))
+			let nuevoProducto = new Producto(codigo, nombre, descripcion, talle, "", precio, stock, categoria)
+			agregarProducto(nuevoProducto);
+			break;
+
+		case "M":	//--- MODIFICACION ---//
+			let productosusuariosArray = getProductos();
+
+			productosusuariosArray.map(item => {
+				if (item._codigo == codigo) {
+					item._codigo = codigo;
+					item._nombre = nombre;
+					item._talle = talle;
+					item._categoria = categoria;
+					item._stock = stock;
+					item._precio = precio;
+					item._descripcion = descripcion;
+				}
+			});
+
+			localStorage.setItem("productos", JSON.stringify(productosusuariosArray))
+			break;
+
+		default:
+			break;
+	}
+
+
 	mostrarProductos();
 }
 
-function borrarProducto() {
+// export function grabarModificacionProductoAdmin() {
 
+// 	// console.log("Prueba boton GRABAR Producto\n");
+// 	let codigo = parseInt(document.getElementById("codigoProdAdm").value);
+// 	let nombre = document.getElementById("nombreProdAdm").value;
+// 	let talle = document.getElementById("talleProdAdm").value;
+// 	let categoria = document.getElementById("categoriaProdAdm").value;
+// 	let stock = parseInt(document.getElementById("stockProdAdm").value);
+// 	let precio = parseFloat(document.getElementById("precioProdAdm").value);
+// 	let descripcion = document.getElementById("descripcionProdAdm").value;
+
+// 	console.log(`código: ${codigo}`);
+// 	console.log(`nombre: ${nombre}`);
+// 	console.log(`talle: ${talle}`);
+// 	console.log(`categoria: ${categoria}`);
+// 	console.log(`stock: ${stock}`);
+// 	console.log(`precio: ${precio}`); 	
+// 	console.log(`descripcion: ${descripcion}`);
+
+// 	let productosusuariosArray = getProductos();
+
+// 	productosusuariosArray.map(item => {
+// 		if (item._codigo == codigo) {
+// 			item._codigo = codigo;
+// 			item._nombre = nombre;
+// 			item._talle = talle;
+// 			item._categoria = categoria;
+// 			item._stock = stock;
+// 			item._precio = precio;
+// 			item._descripcion = descripcion;
+// 		}
+// 	});
+
+// 	localStorage.setItem("productos", JSON.stringify(productosusuariosArray))
+// 	mostrarProductos();
+// }
+
+export function borrarProducto(codigo) {
+	let productosFiltrados = getProductos().filter(function (item) {
+		return item._codigo != codigo
+	});
+
+	localStorage.setItem("productos", JSON.stringify(productosFiltrados));
+	mostrarProductos();
 }
 
 

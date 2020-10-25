@@ -1,9 +1,9 @@
-import { mostrarProductos, modificarDatosProductos, grabarModificacionProductoAdmin } from "./funcionesProductos.js";
+import { cargaInicialDatos } from "./funcionesAuxiliares.js";
+import { mostrarProductos, modificarAgregarDatosProductos, /*modificarDatosProductos,*/ /*grabarModificacionProductoAdmin,*/ grabarModificacionAltProductoAdmin, borrarProducto } from "./funcionesProductos.js";
 import {
 	mostrarUsuarios, modificarDatosUsuario, borrarUsuario, grabarModificacionUsuariosAdmin,
-	btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage
+	btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage, verProductosUsuariosAdmin
 } from "./funcionesUsuarios.js";
-import { cargaInicialDatos } from "./funcionesAuxiliares.js";
 
 
 localStorage.clear();
@@ -70,14 +70,25 @@ btnModificarProducto.addEventListener("click", (e) => {
 
 	/*Evento del boton para editar un producto (Pagina Admin)*/
 	if (e.target.id == "btnModificarProductosAdmin") {
-		modificarDatosProductos(e.target.dataset.codigo);
+		// modificarDatosProductos(e.target.dataset.codigo);
+		modificarAgregarDatosProductos(e.target.dataset.codigo);
 		// console.log("Prueba boton Modificar Producto");
 	}
 
 	/*Evento del boton para borrar un producto (Pagina Admin)*/
 	if (e.target.id == "btnBorrarProductosAdmin") {
-		// borrarProducto(e.target.dataset.codigo);
+		borrarProducto(e.target.dataset.codigo);
 		console.log("Prueba boton Eliminar Producto");
+	}
+});
+
+const btnAltaProducto = document.querySelector("#contenedorAltaProductosAdmin");
+btnAltaProducto.addEventListener("click", (e) => {
+
+	/*Evento del boton para editar un producto (Pagina Admin)*/
+	if (e.target.id == "btnAgregarProductosAdmin") {
+		modificarAgregarDatosProductos(e.target.dataset.codigo);
+		// console.log("Prueba boton Modificar Producto");
 	}
 });
 
@@ -86,7 +97,25 @@ btnModificarProducto.addEventListener("click", (e) => {
 const modalModificaProductoAdmin = document.querySelector("#modalFooterProductos");
 modalModificaProductoAdmin.addEventListener("click", (e) => {
 	if (e.target.id == "btnGrabarProductoModifAdminPage") {
-		grabarModificacionProductoAdmin();
+		//grabarModificacionProductoAdmin();
+		grabarModificacionAltProductoAdmin(e.target.dataset.accion);
 		// console.log("Prueba boton GRABAR Producto");
 	}
 });
+
+
+
+
+
+
+
+/*Evento del boton para guardar los cambios de un Producto (Pagina Admin)*/
+const productosUsuarioAdmin = document.querySelector("#contenedorUsuariosAdmin");
+productosUsuarioAdmin.addEventListener("click", (e) => {
+	if (e.target.id == "btnProductosUsuariosAdminPage") {
+		//grabarModificacionProductoAdmin();
+		verProductosUsuariosAdmin(e.target.dataset.codigo);
+		// console.log("Prueba boton GRABAR Producto");
+	}
+});
+

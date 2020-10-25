@@ -11,7 +11,7 @@ export function cargaInicialDatos() {
 	agregarUsuario(admin);
 
 	//---------------[Creacion de usuarios (Ejemplo)]---------------//
-	let ale = new Usuario(1, "ALE", "CAROL","ale@ale.com", "12345", [], [], true, false);
+	let ale = new Usuario(1, "ALE", "CAROL","ale@ale.com", "12345", [1001, 1002, 1003], [], true, false);
 	let mary = new Usuario(2, "MARY","BOSCH" ,"mary@mary.com", "65546", [], [], true, true);
 	let silvia = new Usuario(3, "SILVIA", "SOSA", "silvia@silvia", "lalala", [], [], true, false);
 	let lucas = new Usuario(4, "LUCAS", "RAMUNNI","lucas@lucas.com", "20565", [], [], true, true);

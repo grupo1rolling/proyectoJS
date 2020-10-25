@@ -1,5 +1,6 @@
 import { Usuario } from "./clases.js";
 import { getCodigoGeneradoByKey } from "./funcionesAuxiliares.js";
+import { getProductos, mostrarProductosUsuario } from "./funcionesProductos.js";
 
 export function agregarUsuario(usuario) {
 	let usuariosArray = [];
@@ -15,15 +16,15 @@ export function agregarUsuario(usuario) {
 	}
 }
 
-export function getUsuario(codigo) {
-	let usuarioArray = getAllUsuarios();
+// export function getUsuario(codigo) {
+// 	let usuarioArray = getAllUsuarios();
 
-	let usuarioDatos = usuarioArray.find(item => {
-		return item._codigo === usuario.codigo ? item : "";
-	});
+// 	let usuarioDatos = usuarioArray.find(item => {
+// 		return item._codigo === usuario.codigo ? item : "";
+// 	});
 
-	return usuarioDatos;
-}
+// 	return usuarioDatos;
+// }
 
 export function getAllUsuarios() {
 	//-- Verifico si existe la key 'usuarios' en LocalStorage
@@ -45,6 +46,16 @@ function existeUsuario(usuario) {
 	});
 
 	return existeUsuario;
+}
+
+function getUsuarioByCodigo(codUsuario) {
+	let usuarioEncontrado = [];
+
+	usuarioEncontrado = getAllUsuarios().find(item => {
+		return item._codigo == codUsuario;
+	});
+
+	return usuarioEncontrado;
 }
 
 //FUNCION SE LA INVOCA ANTES DE AGREGAR UN USUARIO 
@@ -81,8 +92,6 @@ function getCodigoGeneradoAltaUsuario() {
 	usuariosArray = getAllUsuarios()
 	cantUsuarios = usuariosArray.length;
 
-
-	//debugger
 	if (cantUsuarios > 0) {
 		//console.log(`Cantidad de usuarios: ${cantUsuarios}`);
 		//cantUsuarios = cantUsuarios + 1;
@@ -161,23 +170,130 @@ export function mostrarUsuarios() {
 		}
 
 		let detalle = `
-        <tr>
-			<th scope="row" class="${usuarioInactivo} ${usuarioAdmin}">${item._codigo}</th>
-				<td class="${usuarioInactivo} ${usuarioAdmin}">${item._nombre}</td>
-				<td class="${usuarioInactivo} ${usuarioAdmin}">${item._apellido}</td>
-				<td class="${usuarioInactivo} ${usuarioAdmin}">${item._email}</td> 
-				<td class="${usuarioInactivo} ${usuarioAdmin} text-center"><button title="Ver Productos" type="button" class="btn btn-outline-light btn-sm"><i class="fas fa-shopping-cart"></i></button></td>
-				<td class="${usuarioInactivo} ${usuarioAdmin}">${item._password}</td>
-				<td class="text-center"><i style="${usuarioCheckActivoColor}" class="${usuarioCheckActivo}"></i></td>
-				<td class="text-center"><i style="${usuarioCheckAdminColor}" class="${usuarioCheckAdmin}"></i></td>
-		<td class="text-center">
-			<button id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" title="Modificar Usuario" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaUsuario"><i id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-edit"></i></button>
-			<button id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" title="Eliminar Usuario" type="button" class="btn btn-outline-danger btn-sm"><i id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-times"></i></button>
-		</td>
-		</tr>
-      `;
+					<tr>
+						<th scope="row" class="${usuarioInactivo} ${usuarioAdmin}">${item._codigo}</th>
+							<td class="${usuarioInactivo} ${usuarioAdmin}">${item._nombre}</td>
+							<td class="${usuarioInactivo} ${usuarioAdmin}">${item._apellido}</td>
+							<td class="${usuarioInactivo} ${usuarioAdmin}">${item._email}</td> 
+							<td class="${usuarioInactivo} ${usuarioAdmin} text-center">
+								<button id="btnProductosUsuariosAdminPage" data-codigo="${item._codigo}" title="Ver Productos" type="button" class="btn btn-outline-light btn-sm" data-toggle="modal" data-target="#modalProdUsuariosAdmin"><i id="btnProductosUsuariosAdminPage" data-codigo="${item._codigo}" class="fas fa-shopping-cart"></i></button>
+							</td>
+							<td class="${usuarioInactivo} ${usuarioAdmin}">${item._password}</td>
+							<td class="text-center"><i style="${usuarioCheckActivoColor}" class="${usuarioCheckActivo}"></i></td>
+							<td class="text-center"><i style="${usuarioCheckAdminColor}" class="${usuarioCheckAdmin}"></i></td>
+						<td class="text-center">
+							<button id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" title="Modificar Usuario" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaUsuario"><i id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-edit"></i></button>
+							<button id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" title="Eliminar Usuario" type="button" class="btn btn-outline-danger btn-sm"><i id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-times"></i></button>
+						</td>
+					</tr>
+				`;
 		contenedor.innerHTML += detalle;
 	});
+}
+
+export function verProductosUsuariosAdmin(codUsuario) {
+
+	console.log(`Ver Productos usuario. Código: ${codUsuario}`);
+	
+	let i = 0;
+
+	let contenedor = document.getElementById("detalleProductosUsuarioAdmin");
+	contenedor.innerHTML = "";
+
+	let usuarioDatos = [];
+	usuarioDatos = getUsuarioByCodigo(parseInt(codUsuario));
+
+	mostrarProductosUsuario(usuarioDatos);
+
+	console.log(usuarioDatos._codigosProductos);
+	let codProductos = usuarioDatos._codigosProductos;
+
+	//-- Capturo el listado de todos los productos almacenados en LocalStorage
+	let productosJSON = getProductos();
+
+	//-- Si existen productos en LocalStorage, realizo la busqueda de los codigos de productos del usuario
+	if (productosJSON) {
+		let productosFiltrados = [];
+		let sumaTotalPagar = 0;
+
+		codProductos.map(function (item) {
+			productosFiltrados = productosJSON.find(function (item2) {
+				return item2._codigo == item && item2;
+			});
+
+			sumaTotalPagar += productosFiltrados._precio;
+
+			if (productosFiltrados) {
+				console.log(productosFiltrados._nombre, `$${productosFiltrados._precio}`);
+
+				let detalle = ` 
+				<tr>
+					<td class="text-left" scope="row" id="fila">${i += 1}</td>
+					<td class="text-left">${productosFiltrados._nombre}</td>
+					<td class="text-center">${productosFiltrados._stock}</td>
+					<td class="text-right">${productosFiltrados._precio}</td>
+				</t>
+				`;
+		
+				contenedor.innerHTML += detalle;
+			}
+		});
+
+		let footerProdUsuarios = document.getElementById("footerProdUsuarios");
+
+		let contenido = `
+						<div class="mr-auto">
+							<th></th>
+							<th></th>
+							<th class="text-right">Total:</th>
+							<th class="text-right">$ ${sumaTotalPagar}</th>
+						</div>
+						`;
+
+		footerProdUsuarios.innerHTML = contenido;
+		console.log(`Total a pagar $${sumaTotalPagar}`);
+		//---------------------------------
+	}
+
+
+
+
+
+	// _________.map(function(item){
+		// let detalle = ` 
+		// <tr>
+		// 	<td scope="row" id="fila">${i + 1}</td>
+		// 	<td class="text-left">${item._nombre}</td>
+		// 	<td class="text-center">${item._stock}</td>
+		// 	<td class="text-rigth">${item.precio}</td>
+		// 	<td align="center">
+		// 		<button id="btnBorrarItem" 
+		// 			title="eliminar producto" 
+		// 			type="button" class="btn btn-outline-danger btn-sm">
+		// 			<i class="fa fa-window-close-o"></i>
+		// 		</button>
+		// </t>
+		// `;
+
+		// contenedor.innerHTML += detalle;
+	// })
+
+
+	// <tr>
+	// 	<td scope="row" id="fila">${i + 1}</td>
+	// 	<td class="text-left">${item._nombre}</td>
+	// 	<td class="text-center">${item._cantProd}</td>
+	// 	<td class="text-rigth">${item.precio.toFixed(2)}</td>
+	// 	<td align="center"><button id="btnBorrarItem" 
+	// 		title="eliminar producto" 
+	// 		type="button" class="btn btn-outline-danger btn-sm"
+	// 		onclick="borrarItem(${p._idProd},${i})">
+	// 		<i class="fa fa-window-close-o">
+	// 		</i>
+	// 		</button>
+	// </t>
+
+	
 }
 
 export function modificarDatosUsuario(codigoUsuario) {
