@@ -99,7 +99,7 @@ export function mostrarProductos() {
 					<td class="">${item._nombre}</td>
 					<td class="">${item._categoria}</td>
 					<td class="text-center">${item._talle}</td>
-					<td class="text-center">${item._foto}</td>
+					
 					<td class="text-center">$ ${item._precio}</td>
 					<td class="text-center ${stockIndicador}"> <b>${item._stock}</b></td>
 					<td class="text-center">
@@ -111,7 +111,7 @@ export function mostrarProductos() {
 
 		//   <button id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" title="Modificar Usuario" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaUsuario"><i id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-edit"></i></button>
 		// 	<button id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" title="Eliminar Usuario" type="button" class="btn btn-outline-danger btn-sm"><i id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-times"></i></button>
-
+{/* <td class="text-center">${item._foto}</td> */}
 		contenedor.innerHTML += detalle;
 	});
 }
@@ -247,8 +247,8 @@ export function modificarAgregarDatosProductos(codigoProducto) {
 		precioValue = productosDatos._precio;
 		descripcionValue = productosDatos._descripcion;
 
-		console.log(`Categoría: ${productosDatos._categoria}`);
-		console.log(`Talle: ${productosDatos._talle}`);
+		// console.log(`Categoría: ${productosDatos._categoria}`);
+		// console.log(`Talle: ${productosDatos._talle}`);
 		// console.log(`Categoría: ${productosDatos._categoria}`);
 		// console.log(`Categoría: ${productosDatos._categoria}`);
 
