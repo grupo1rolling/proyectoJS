@@ -120,7 +120,6 @@ btnModificarProducto.addEventListener("click", (e) => {
 
 const btnAltaProducto = document.querySelector("#contenedorAltaProductosAdmin");
 btnAltaProducto.addEventListener("click", (e) => {
-
 	/*Evento del boton para editar un producto (Pagina Admin)*/
 	if (e.target.id == "btnAgregarProductosAdmin") {
 		modificarAgregarDatosProductos(e.target.dataset.codigo);
