@@ -56,7 +56,8 @@ body {
 
 /* imagen de portada-------------------------- */
 #portada {
-    height: 720px;    
+    height: 720px; 
+    width: auto;   
     padding: 3rem 2rem;
     color: #ffffff;
     background: url(../img/portada5.jpg)no-repeat center center fixed;      
@@ -86,7 +87,7 @@ body {
      position:absolute; 
      left:0px;
      top:30px; 
-     transform:translateX(-120%);
+     /* transform:translateX(-120%); */
      transition:all .7s ease;
      color: var(--color-blanco);
      font-weight: bold;
@@ -94,18 +95,18 @@ body {
     .texto:hover:before{ 
      width: 90%;
       }
-    .texto:hover:after {
+    /* .texto:hover:after {
         width: 90%;
-      }
+      } */
      .texto:hover h1,.texto:hover p{
      transform:translateX(0%); 
-     transition:all .7s ease;
+     /* transition:all .7s ease; */
       }
-    .texto:hover{
+    /* .texto:hover{
      background-size: 110% 110%;
      transition:all .7s ease;
     
-    }
+    } */
     .text-shadow {
         text-shadow: 0 0 0.2em #ff5b00;
     }
@@ -124,10 +125,10 @@ body {
         }
 
     }
-
-    .navbar-ml{
-        margin-left: 150px;
-    }
+ 
+     /* .navbar-ml{
+        margin-left: px;
+    }  */
 
     .ulCarrito{
         display: inline-block;
