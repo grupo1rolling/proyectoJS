@@ -1,6 +1,5 @@
 import { ItemCarrito } from "./clases.js";
 import { cargaInicialDatos } from "./funcionesAuxiliares.js";
-import { mostrarProductos } from "./funcionesProductos.js";
 import { getAllUsuarios } from "./funcionesUsuarios.js";
 
 // --------------------- [inicialización de variables] --------------------- //
