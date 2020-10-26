@@ -1,9 +1,5 @@
 import { ItemCarrito } from "./clases.js";
 import { cargaInicialDatos } from "./funcionesAuxiliares.js";
-<<<<<<< HEAD
-
-=======
->>>>>>> sil
 
 // --------------------- [inicialización de variables] --------------------- //
 let total = document.getElementById("totalCarrito");
