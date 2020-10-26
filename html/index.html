@@ -89,8 +89,9 @@
     </div>
 
     <!--Navbar2-->
-    <!-- <div id="navbar2"class="container-fluid bg-green sticky-top-2"> -->
-      <nav
+    
+      <div class="sticky-top ancla">
+        <nav
         class="navbar navbar-expand-lg bg-green container-fluid "
       >
         <button
@@ -107,16 +108,16 @@
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav  mt-2 mt-lg-0 navbar-ml">
-            <li class="nav-item mr-5">
+            <li class="nav-item mr-4">
               <a class="nav-link text-orangeLight" id="todos" href="#" onclick="filtrarProductos('todos_los_dias')" >Para todos los dias</a>
             </li>
-            <li class="nav-item mr-5">
+            <li class="nav-item mr-4">
               <a class="nav-link text-orangeLight" id="calor" href="#" onclick="filtrarProductos('calor')">Para el calor</a>
             </li>
-            <li class="nav-item mr-5">
+            <li class="nav-item mr-4">
               <a class="nav-link text-orangeLight" id="frio" href="#" onclick="filtrarProductos('frio')">Para el frio</a>
             </li>
-            <li class="nav-item mr-5">
+            <li class="nav-item mr-4">
               <a class="nav-link text-orangeLight" id="viajar" href="#" onclick="filtrarProductos('viajar')">Para viajar</a>
             </li>
           </ul>
@@ -129,31 +130,32 @@
               aria-label="Search"
             />
             <button
-              class="btn btn-outline-success btn-buscar my-2 my-sm-0 mr-4"
+              class="btn btn-outline-success btn-buscar my-2 my-sm-0 mr-0"
               type="submit"
               onclick="buscarTexto()"
             >
               Buscar
             </button>
           </form>          
-        </div>
+        </div>       
+       
+ <!---------------------Boton que abre modal del carrito----------------------------->
+          <form class="form-inline">
+          <button type="button" class="btn btn-green mr-4" id="listarCarrito" data-toggle="modal" data-target="#verCarrito">
+            <i class="fas fa-shopping-cart"></i> 
+          </button>    
+    
+          <span id="contador" class="nav-text text-orange mr-2 "></span>
+  
+          <span id="totalCarrito"  class="nav-text text-orange">$</span>
         
-        <!-- ######################################################## -->
-        <!-- BOTON QUE ABRE EL MODAL DEL CARRTO -->
-        <!-- ######################################################## -->
-
-
-        <button type="button" class="btn btn-green" id="listarCarrito" data-toggle="modal" data-target="#verCarrito">
-          <i class="fas fa-shopping-cart"></i> 
-        </button>    
-           <ul class="navbar-brand ulCarrito" >
-              <li>
-                <a class="nav-link text-orange" href="#"> <span id="contador"></span> </a>
-                <a class="nav-link text-orange" href="#"> <span id="totalCarrito">$</span> </a>
-                </li>
-          </ul> 
+        </form> 
+       
       </nav>
-    <!-- </div> -->
+      </div>
+
+      
+    
     <!-- /Navbar2-->
 
     <!--Main layout-->
@@ -163,7 +165,7 @@
      
     <main> 
       <div id="deck" class="col-6 col-md-10 offset-md-1 pt-1">     
-        <span id="mensajes"></span>
+        <span id="mensajes" class="text-orange"></span>
         <div class="card-deck m-5" id="tarjetasProd">
           
             <!-- ---------- [se cargarán las cards dinámicamente] ---------- -->
