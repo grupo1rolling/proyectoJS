@@ -1,7 +1,6 @@
 import { cargaInicialDatos } from "./funcionesAuxiliares.js";
 import { mostrarProductos, modificarAgregarDatosProductos, /*modificarDatosProductos,*/ /*grabarModificacionProductoAdmin,*/ grabarModificacionAltProductoAdmin, borrarProducto, getProductos } from "./funcionesProductos.js";
-import {
-	mostrarUsuarios, modificarDatosUsuario, borrarUsuario, grabarModificacionUsuariosAdmin,
+import { mostrarUsuarios, modificarDatosUsuario, borrarUsuario, grabarModificacionUsuariosAdmin,
 	btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage, verProductosUsuariosAdmin, modalConfirmarBorrado, getAllUsuarios
 } from "./funcionesUsuarios.js";
 
