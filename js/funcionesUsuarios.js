@@ -1,5 +1,5 @@
 import { Usuario } from "./clases.js";
-import { getCodigoGeneradoByKey, getProvincias } from "./funcionesAuxiliares.js";
+import { getCodigoGeneradoByKey, getProvincias, validarPassword } from "./funcionesAuxiliares.js";
 import { getProductos, mostrarProductosUsuario, getProductoByCodigo } from "./funcionesProductos.js";
 
 
@@ -122,6 +122,7 @@ export function grabarAltaUsuarioAdminPage() {
 	let apellido = document.getElementById("apellidoAltaUsrAdmPage").value;
 	let email = document.getElementById("emailAltaUsrAdmPage").value;
 	let password = document.getElementById("contrasenaAltaUsrAdmPage").value;
+	let repPassword = document.getElementById("repContrasenaAltaUsrAdmPage").value;
 	let estado = document.getElementById("SwitchEstadoAltaUsrAdmPage").checked;
 	let esAdmin = document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked;
 	
@@ -131,19 +132,45 @@ export function grabarAltaUsuarioAdminPage() {
 	let provincia = document.getElementById("provincia").value;
 	let codPostal = document.getElementById("codPostal").value;
 
-	// let dir2 = usuarioDatos["_direccion"].dir2;
-	
-	// console.log(`Código: ${codigo}`)
-	// console.log(`Nombre: ${nombre}`)
-	// console.log(`Apellido: ${apellido}`)
-	// console.log(`Email: ${email}`)
-	// console.log(`Pass: ${password}`)
-	// console.log(`Estado: ${estado}`)
-	// console.log(`EsAdmin: ${esAdmin}`)
+	if(validarPassword(password) && validarPassword(repPassword)){
 
-	let nuevoUsuario = new Usuario(codigo, nombre, apellido, email, password, [], {dir1, dir2, ciudad, provincia, codPostal}, estado, esAdmin);
-	agregarUsuario(nuevoUsuario);
-	mostrarUsuarios();
+		if(password === repPassword){
+
+			// let dir2 = usuarioDatos["_direccion"].dir2;
+			
+			// console.log(`Código: ${codigo}`)
+			// console.log(`Nombre: ${nombre}`)
+			// console.log(`Apellido: ${apellido}`)
+			// console.log(`Email: ${email}`)
+			// console.log(`Pass: ${password}`)
+			// console.log(`Estado: ${estado}`)
+			// console.log(`EsAdmin: ${esAdmin}`)
+			
+			let nuevoUsuario = new Usuario(codigo, nombre, apellido, email, password, [], {dir1, dir2, ciudad, provincia, codPostal}, estado, esAdmin);
+			agregarUsuario(nuevoUsuario);
+			mostrarUsuarios();
+		}
+		else{
+			alert("Las constraseñas no coinciden. Por favor verifique sus datos");
+		}
+	}
+}
+
+function limpiarDatos(){
+	document.getCodigoGeneradoByKey("usuarios") = "";
+	document.getElementById("nombreAltaUsrAdmPage").value = "";
+	document.getElementById("apellidoAltaUsrAdmPage").value = "";
+	document.getElementById("emailAltaUsrAdmPage").value = "";
+	document.getElementById("contrasenaAltaUsrAdmPage").value = "";
+	document.getElementById("repContrasenaAltaUsrAdmPage").value = "";
+	document.getElementById("SwitchEstadoAltaUsrAdmPage").checked = true;
+	document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked = false;
+
+	document.getElementById("direccion").value = "";
+	document.getElementById("direccionAdc").value = "";
+	document.getElementById("ciudad").value = "";
+	document.getElementById("provincia").value = "";
+	document.getElementById("codPostal").value = "";
 }
 
 export function mostrarUsuarios() {
@@ -239,7 +266,7 @@ export function verProductosUsuariosAdmin(codUsuario) {
 				<tr>
 					<td class="text-left" scope="row" id="fila">${i += 1}</td>
 					<td class="text-left">${productosFiltrados._nombre}</td>
-					<td class="text-center">${productosFiltrados._stock}</td>
+					<td class="text-center">1</td>
 					<td class="text-right">${productosFiltrados._precio}</td>
 				</t>
 				`;
