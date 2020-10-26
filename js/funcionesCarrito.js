@@ -15,7 +15,7 @@ let carrito = [];
 let texto = "";
 let usuarioLog = {
     idUsuario: "",
-    autenticado: "false",
+    autenticado: "true",
 };
 
 
@@ -137,8 +137,8 @@ function verificaUsuarioLog() {
 
 // ----------------------- [funcion comprarProducto] ----------------------- //
 window.comprarProd = function (i) {
-    let logueado=verificaUsuarioLog();
-    console.warn(logueado);                                              //#### 4 TESTING PURPOSES ONLY ###
+    //let logueado=verificaUsuarioLog();
+    //console.warn(logueado);                                              //#### 4 TESTING PURPOSES ONLY ###
 
 	//buscamos el producto en la bdProductos por posicion
 	let prod = dbProductos[i];
@@ -247,7 +247,7 @@ window.buscarTexto = function() {
             alert ("no se encontraron productos con el texto buscado ");  
             mostrarTarjetas();
         }
-        //document.getElementById("texto").value="";
+        document.getElementById("texto").value=" ";
 } // fin buscarTexto
 
 
