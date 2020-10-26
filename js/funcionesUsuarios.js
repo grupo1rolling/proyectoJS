@@ -1,10 +1,14 @@
+import { Usuario } from "./clases.js";
+import { getCodigoGeneradoByKey } from "./funcionesAuxiliares.js";
+import { getProductos, mostrarProductosUsuario } from "./funcionesProductos.js";
+
 export function agregarUsuario(usuario) {
 	let usuariosArray = [];
 	let existeUs = false;
 	//-- Verifico si ya existe el nombre de Usuario ingresado
 	existeUs = existeUsuario(usuario);
 	if (existeUs) {
-		//console.log("Usuario existente");
+		alert("Usuario existente");
 	} else {
 		usuariosArray = getAllUsuarios();
 		usuariosArray.push(usuario);
@@ -12,15 +16,15 @@ export function agregarUsuario(usuario) {
 	}
 }
 
-export function getUsuario(codigo) {
-	let usuarioArray = getAllUsuarios();
+// export function getUsuario(codigo) {
+// 	let usuarioArray = getAllUsuarios();
 
-	let usuarioDatos = usuarioArray.find(item => {
-		return item._codigo === usuario.codigo ? item : "";
-	});
+// 	let usuarioDatos = usuarioArray.find(item => {
+// 		return item._codigo === usuario.codigo ? item : "";
+// 	});
 
-	return usuarioDatos;
-}
+// 	return usuarioDatos;
+// }
 
 export function getAllUsuarios() {
 	//-- Verifico si existe la key 'usuarios' en LocalStorage
@@ -38,10 +42,20 @@ function existeUsuario(usuario) {
 	let usuariosArray = getAllUsuarios();
 
 	let existeUsuario = usuariosArray.find(item => {
-		return item._nombre == usuario.nombre ? true : false;
+		return item._email == usuario._email ? true : false;
 	});
 
 	return existeUsuario;
+}
+
+function getUsuarioByCodigo(codUsuario) {
+	let usuarioEncontrado = [];
+
+	usuarioEncontrado = getAllUsuarios().find(item => {
+		return item._codigo == codUsuario;
+	});
+
+	return usuarioEncontrado;
 }
 
 //FUNCION SE LA INVOCA ANTES DE AGREGAR UN USUARIO 
@@ -56,6 +70,72 @@ function existeUsuario(usuario) {
 // tbody.getElementById("usuariosDetalle");
 // tbody.innerHTML = "";
 
+export function btnModalAltaUsuarioAdminPage() {
+	let modalAdminUsuarios = document.getElementById("containerBtnAltaUsuarioAdmin");
+
+	let contenido = `
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+					<button id="btnGrabarUsuarioPagAdmin" type="button" class="btn btn-primary" data-dismiss="modal">Grabar</button>
+					`;
+
+	modalAdminUsuarios.innerHTML = contenido;
+}
+
+
+function getCodigoGeneradoAltaUsuario() {
+	let cantUsuarios = 0;
+	let usuariosArray = [];
+	let codigosUsuariosArray = [];
+	let maxCodUsuario = 0;
+
+
+	usuariosArray = getAllUsuarios()
+	cantUsuarios = usuariosArray.length;
+
+	if (cantUsuarios > 0) {
+		//console.log(`Cantidad de usuarios: ${cantUsuarios}`);
+		//cantUsuarios = cantUsuarios + 1;
+
+		codigosUsuariosArray = usuariosArray.map((item) => {
+			return item._codigo;
+		});
+
+		// console.log(codigosUsuariosArray);
+
+		maxCodUsuario = Math.max.apply(null, codigosUsuariosArray);
+		maxCodUsuario += 1;
+		// console.log(`Max cod Usuario: ${maxCodUsuario}`);
+		// maxCodUsuario 
+	}
+	else {
+		//console.log("No hay usuarios");
+		maxCodUsuario = 1;
+	}
+
+	return maxCodUsuario;
+}
+
+export function grabarAltaUsuarioAdminPage() {
+	let codigo = getCodigoGeneradoByKey("usuarios");
+	let nombre = document.getElementById("nombreAltaUsrAdmPage").value;
+	let apellido = document.getElementById("apellidoAltaUsrAdmPage").value;
+	let email = document.getElementById("emailAltaUsrAdmPage").value;
+	let password = document.getElementById("contrasenaAltaUsrAdmPage").value;
+	let estado = document.getElementById("SwitchEstadoAltaUsrAdmPage").checked;
+	let esAdmin = document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked;
+
+	console.log(`Código: ${codigo}`)
+	console.log(`Nombre: ${nombre}`)
+	console.log(`Apellido: ${apellido}`)
+	console.log(`Email: ${email}`)
+	console.log(`Pass: ${password}`)
+	console.log(`Estado: ${estado}`)
+	console.log(`EsAdmin: ${esAdmin}`)
+
+	let nuevoUsuario = new Usuario(codigo, nombre, apellido, email, password, [], [], estado, esAdmin);
+	agregarUsuario(nuevoUsuario);
+	mostrarUsuarios();
+}
 
 export function mostrarUsuarios() {
 	let contenedor = document.getElementById("usuariosDetalle");
@@ -90,23 +170,130 @@ export function mostrarUsuarios() {
 		}
 
 		let detalle = `
-        <tr>
-			<th scope="row" class="${usuarioInactivo} ${usuarioAdmin}">${item._codigo}</th>
-				<td class="${usuarioInactivo} ${usuarioAdmin}">${item._nombre}</td>
-				<td class="${usuarioInactivo} ${usuarioAdmin}">${item._apellido}</td>
-				<td class="${usuarioInactivo} ${usuarioAdmin}">${item._email}</td> 
-				<td class="${usuarioInactivo} ${usuarioAdmin} text-center"><button title="Ver Productos" type="button" class="btn btn-outline-light btn-sm"><i class="fas fa-shopping-cart"></i></button></td>
-				<td class="${usuarioInactivo} ${usuarioAdmin}">${item._password}</td>
-				<td class="text-center"><i style="${usuarioCheckActivoColor}" class="${usuarioCheckActivo}"></i></td>
-				<td class="text-center"><i style="${usuarioCheckAdminColor}" class="${usuarioCheckAdmin}"></i></td>
-		<td class="text-center">
-			<button id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" title="Modificar Usuario" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaUsuario"><i id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-edit"></i></button>
-			<button id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" title="Eliminar Usuario" type="button" class="btn btn-outline-danger btn-sm"><i id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-times"></i></button>
-		</td>
-		</tr>
-      `;
+					<tr>
+						<th scope="row" class="${usuarioInactivo} ${usuarioAdmin}">${item._codigo}</th>
+							<td class="${usuarioInactivo} ${usuarioAdmin}">${item._nombre}</td>
+							<td class="${usuarioInactivo} ${usuarioAdmin}">${item._apellido}</td>
+							<td class="${usuarioInactivo} ${usuarioAdmin}">${item._email}</td> 
+							<td class="${usuarioInactivo} ${usuarioAdmin} text-center">
+								<button id="btnProductosUsuariosAdminPage" data-codigo="${item._codigo}" title="Ver Productos" type="button" class="btn btn-outline-light btn-sm" data-toggle="modal" data-target="#modalProdUsuariosAdmin"><i id="btnProductosUsuariosAdminPage" data-codigo="${item._codigo}" class="fas fa-shopping-cart"></i></button>
+							</td>
+							<td class="${usuarioInactivo} ${usuarioAdmin}">${item._password}</td>
+							<td class="text-center"><i style="${usuarioCheckActivoColor}" class="${usuarioCheckActivo}"></i></td>
+							<td class="text-center"><i style="${usuarioCheckAdminColor}" class="${usuarioCheckAdmin}"></i></td>
+						<td class="text-center">
+							<button id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" title="Modificar Usuario" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaUsuario"><i id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-edit"></i></button>
+							<button id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" title="Eliminar Usuario" type="button" class="btn btn-outline-danger btn-sm"><i id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-times"></i></button>
+						</td>
+					</tr>
+				`;
 		contenedor.innerHTML += detalle;
 	});
+}
+
+export function verProductosUsuariosAdmin(codUsuario) {
+
+	console.log(`Ver Productos usuario. Código: ${codUsuario}`);
+	
+	let i = 0;
+
+	let contenedor = document.getElementById("detalleProductosUsuarioAdmin");
+	contenedor.innerHTML = "";
+
+	let usuarioDatos = [];
+	usuarioDatos = getUsuarioByCodigo(parseInt(codUsuario));
+
+	mostrarProductosUsuario(usuarioDatos);
+
+	console.log(usuarioDatos._codigosProductos);
+	let codProductos = usuarioDatos._codigosProductos;
+
+	//-- Capturo el listado de todos los productos almacenados en LocalStorage
+	let productosJSON = getProductos();
+
+	//-- Si existen productos en LocalStorage, realizo la busqueda de los codigos de productos del usuario
+	if (productosJSON) {
+		let productosFiltrados = [];
+		let sumaTotalPagar = 0;
+
+		codProductos.map(function (item) {
+			productosFiltrados = productosJSON.find(function (item2) {
+				return item2._codigo == item && item2;
+			});
+
+			sumaTotalPagar += productosFiltrados._precio;
+
+			if (productosFiltrados) {
+				console.log(productosFiltrados._nombre, `$${productosFiltrados._precio}`);
+
+				let detalle = ` 
+				<tr>
+					<td class="text-left" scope="row" id="fila">${i += 1}</td>
+					<td class="text-left">${productosFiltrados._nombre}</td>
+					<td class="text-center">${productosFiltrados._stock}</td>
+					<td class="text-right">${productosFiltrados._precio}</td>
+				</t>
+				`;
+		
+				contenedor.innerHTML += detalle;
+			}
+		});
+
+		let footerProdUsuarios = document.getElementById("footerProdUsuarios");
+
+		let contenido = `
+						<div class="mr-auto">
+							<th></th>
+							<th></th>
+							<th class="text-right">Total:</th>
+							<th class="text-right">$ ${sumaTotalPagar}</th>
+						</div>
+						`;
+
+		footerProdUsuarios.innerHTML = contenido;
+		console.log(`Total a pagar $${sumaTotalPagar}`);
+		//---------------------------------
+	}
+
+
+
+
+
+	// _________.map(function(item){
+		// let detalle = ` 
+		// <tr>
+		// 	<td scope="row" id="fila">${i + 1}</td>
+		// 	<td class="text-left">${item._nombre}</td>
+		// 	<td class="text-center">${item._stock}</td>
+		// 	<td class="text-rigth">${item.precio}</td>
+		// 	<td align="center">
+		// 		<button id="btnBorrarItem" 
+		// 			title="eliminar producto" 
+		// 			type="button" class="btn btn-outline-danger btn-sm">
+		// 			<i class="fa fa-window-close-o"></i>
+		// 		</button>
+		// </t>
+		// `;
+
+		// contenedor.innerHTML += detalle;
+	// })
+
+
+	// <tr>
+	// 	<td scope="row" id="fila">${i + 1}</td>
+	// 	<td class="text-left">${item._nombre}</td>
+	// 	<td class="text-center">${item._cantProd}</td>
+	// 	<td class="text-rigth">${item.precio.toFixed(2)}</td>
+	// 	<td align="center"><button id="btnBorrarItem" 
+	// 		title="eliminar producto" 
+	// 		type="button" class="btn btn-outline-danger btn-sm"
+	// 		onclick="borrarItem(${p._idProd},${i})">
+	// 		<i class="fa fa-window-close-o">
+	// 		</i>
+	// 		</button>
+	// </t>
+
+	
 }
 
 export function modificarDatosUsuario(codigoUsuario) {
@@ -114,12 +301,10 @@ export function modificarDatosUsuario(codigoUsuario) {
 		return item._codigo == codigoUsuario ? item : "";
 	});
 
-
 	let usuarioEstado = (usuarioDatos._estado) ? "checked" : "unchecked"
 	let usuarioEsAdmin = (usuarioDatos._esAdmin) ? "checked" : "unchecked"
 
-
-	let modalAdminUsuarios = document.getElementById("modalBody");
+	let modalAdminUsuarios = document.getElementById("modalBodyUsuarios");
 
 	let contenido = `
 		<!-- Inicio Formulario -->
@@ -153,8 +338,8 @@ export function modificarDatosUsuario(codigoUsuario) {
 							<div class="form-group">
 								<!-- Default checked -->
 								<div class="custom-control custom-switch">
-									<input type="checkbox" class="custom-control-input" id="customSwitchEstadoAdm" ${usuarioEstado}>
-									<label class="custom-control-label" for="customSwitchEstadoAdm">Estado de Usuario</label>
+									<input type="checkbox" class="custom-control-input" id="SwitchModifEstadoAdmPage" ${usuarioEstado}>
+									<label class="custom-control-label" for="SwitchModifEstadoAdmPage">Estado de Usuario</label>
 								</div>
 							</div>
 						</div>
@@ -162,8 +347,8 @@ export function modificarDatosUsuario(codigoUsuario) {
 							<div class="form-group">								
 								<!-- Default checked -->
 								<div class="custom-control custom-switch">
-									<input type="checkbox" class="custom-control-input" id="customSwitchEsAdm" ${usuarioEsAdmin}>
-									<label class="custom-control-label" for="customSwitchEsAdm">Administrador</label>
+									<input type="checkbox" class="custom-control-input" id="SwitchModifEsAdmPage" ${usuarioEsAdmin}>
+									<label class="custom-control-label" for="SwitchModifEsAdmPage">Administrador</label>
 								</div>
 							</div>
 						</div>
@@ -224,15 +409,24 @@ export function modificarDatosUsuario(codigoUsuario) {
 							</div>
 						</div>
 					</div>
-					<div class="modal-footer" id="modalFooter">
-						<button onclick="" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-						<button id="btnGrabarUsuariosAdmin" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-					</div>
 				</form>
+				<div class="modal-footer" id="modalFooter">
+					
+				</div>
 				<!-- Fin seccion Formulario -->
 	`;
 
 	modalAdminUsuarios.innerHTML = contenido;
+
+	//--- Footer del Model de modificacion de Productos ---//
+	modalAdminUsuarios = document.getElementById("modalFooterModifUsuarioAdminPage");
+	contenido = `
+				<button onclick="" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				<button id="btnGrabarUsuarioModifAdminPage" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+				`;
+
+	modalAdminUsuarios.innerHTML = contenido;
+
 }
 
 export function borrarUsuario(codigo) {
@@ -244,14 +438,14 @@ export function borrarUsuario(codigo) {
 	mostrarUsuarios();
 }
 
-export function grabarDatosUsuariosAdmin() {
-	let codigo   = document.getElementById("codigoUsrAdm").value;
-	let nombre 	 = document.getElementById("nombreUsrAdm").value;
+export function grabarModificacionUsuariosAdmin() {
+	let codigo = parseInt(document.getElementById("codigoUsrAdm").value);
+	let nombre = document.getElementById("nombreUsrAdm").value;
 	let apellido = document.getElementById("apellidoUsrAdm").value;
-	let email    = document.getElementById("emailUsrAdm").value;
+	let email = document.getElementById("emailUsrAdm").value;
 	let password = document.getElementById("contrasenaUsrAdm").value;
-	let estado   = document.getElementById("customSwitchEstadoAdm").checked;
-	let esAdmin  = document.getElementById("customSwitchEsAdm").checked;
+	let estado = document.getElementById("SwitchModifEstadoAdmPage").checked;
+	let esAdmin = document.getElementById("SwitchModifEsAdmPage").checked;
 
 	let usuariosArray = getAllUsuarios();
 
@@ -281,27 +475,22 @@ export function grabarDatosUsuariosAdmin() {
 // ####################################################
 function obtenerDatosUsuarios() {
 
-	//nombre
 	let nombre = document.getElementById("nombre").value.toUpperCase();
-	//apellido
 	let apellido = document.getElementById("apellido").value.toUpperCase();
-	//email
 	let email = document.getElementById("email").value.toLowerCase();
-	//contraseña
 	let pass = document.getElementById("contrasena").value;
 	let repPass = document.getElementById("repContrasena").value;
 	password = checkPass(pass, repPass);
-	//direccion
 	let dir = document.getElementById("direccion").value;
 	let dirAdc = document.getElementById("direccionAdc").value;
 	let ciudad = document.getElementById("ciudad").value;
 	let pcia = document.getElementById("provincia");
 	let pciaSeleccionada = pcia.options[pcia.selectedIndex].value;
 	let zip = document.getElementById("zip").value;
-	//ponemos la direccion en un array 
+
 	let direccion = [];
 	direccion.push(dir, dirAdc, ciudad, pciaSeleccionada, zip);
-	//boletin
+
 	let boletin = document.getElementById("boletin").checked;
 	//creamos INSTANCIA DE LA CLASE USUARIO
 	let estado, admin, codigosProductos;

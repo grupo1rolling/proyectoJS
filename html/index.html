@@ -108,7 +108,7 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav  mt-2 mt-lg-0 navbar-ml">
             <li class="nav-item mr-5">
-              <a class="nav-link text-orangeLight" id="todos_los_dias" href="#" onclick="filtrarProductos('todos_los_dias')">Para todos los dias</a>
+              <a class="nav-link text-orangeLight" id="todos" href="#" onclick="filtrarProductos('todos_los_dias')" >Para todos los dias</a>
             </li>
             <li class="nav-item mr-5">
               <a class="nav-link text-orangeLight" id="calor" href="#" onclick="filtrarProductos('calor')">Para el calor</a>
@@ -123,6 +123,7 @@
           <form class="form-inline my-2 my-lg-0">
             <input
               class="form-control mr-sm-2"
+              id="texto"
               type="search"
               placeholder="Search"
               aria-label="Search"
@@ -130,6 +131,7 @@
             <button
               class="btn btn-outline-success btn-buscar my-2 my-sm-0 mr-4"
               type="submit"
+              onclick="buscarTexto()"
             >
               Buscar
             </button>
@@ -155,6 +157,7 @@
     <!-- /Navbar2-->
 
     <!--Main layout-->
+<<<<<<< HEAD
     <main>
 
       <div class="card-deck m-5" id="tarjetasProd">
@@ -167,6 +170,16 @@
 =======
       
 >>>>>>> mary
+=======
+    <main> 
+      <div id="deck" class="col-6 col-md-10 offset-md-1 pt-1">     
+        <span id="mensajes"></span>
+        <div class="card-deck m-5" id="tarjetasProd">
+          
+            <!-- ---------- [se cargarán las cards dinámicamente] ---------- -->
+        </div>
+    </div>
+>>>>>>> 6d4184d0a3e0f4a8a116d63b1e68ce4e4cd12fa0
     </main>
     <!--Main layout-->
 
@@ -221,12 +234,12 @@
   </div>
   <!--Fín de Footer-->
 
-  <!-- ------------------------- [Modal verCarrito] ------------------------- -->
+ <!-- ------------------------- [Modal verCarrito] ------------------------- -->
 <div class="modal fade" id="verCarrito" tabindex="-1" role="dialog" aria-labelledby="verCarritoTitulo" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title" id="verCarritoTitulo">Tu carrito: </h6>
+        <h5 class="modal-title" id="verCarritoTitulo">Tu carrito: </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -246,8 +259,14 @@
             <tbody id="items">
               
                  <!-- ---------- [se cargará el carrito dinámicamente] ---------- -->
-                            
+            
             </tbody>
+            <tfoot>
+              <tr text-align="rigth">
+                  <th scope="row">Total $</th>
+                  <td id="totales"> </td>
+              </tr>
+          </tfoot>
           </table>
         <!-- </div> -->
       </div>
@@ -281,5 +300,7 @@
     crossorigin="anonymous"
     ></script>
 
+
+    
   </body>
 </html>

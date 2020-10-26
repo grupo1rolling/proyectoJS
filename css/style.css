@@ -212,22 +212,22 @@ label {
 .card-deck {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: .5rem;
+    grid-gap: .2rem;
+}
+
+.popover {
+    font-size: x-small;
 }
 
 
 
-.sticky-top-2 {
-    position: -webkit-sticky !important;
-    position: sticky !important;
-    top: 76px !important;
-    /* z-index: 1020; */
-  } 
-
+/* position: -webkit-sticky !important;
+position: sticky !important;
+top: 76px !important;
+/* z-index: 1020; }  */
 
 /* #mainBg{
     background-image: url(../img/portada5.jpg); 
-
 }*/
 /* 
 .border{
