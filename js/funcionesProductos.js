@@ -104,7 +104,7 @@ export function mostrarProductos() {
 					<td class="text-center ${stockIndicador}"> <b>${item._stock}</b></td>
 					<td class="text-center">
 						<button id="btnModificarProductosAdmin" data-codigo="${item._codigo}" title="Modificar Producto" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaProducto"><i id="btnModificarProductosAdmin" data-codigo="${item._codigo}" class="far fa-edit"></i></button>
-						<button id="btnBorrarProductosAdmin" data-codigo="${item._codigo}" title="Eliminar Producto" type="button" id="btnBaja" class="btn btn-outline-danger btn-sm"><i id="btnBorrarProductosAdmin" data-codigo="${item._codigo}" class="fas fa-trash-alt"></i></button>
+						<button id="btnConfirmarBorradoProd" data-codigo="${item._codigo}" data-tabla="productos" title="Eliminar Producto" type="button" id="btnBaja" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalConfirmaBorrado"><i id="btnConfirmarBorradoProd" data-codigo="${item._codigo}" data-tabla="productos" class="fas fa-trash-alt" data-toggle="modal" data-target="#modalConfirmaBorrado"></i></button>
 					</td>
 			</tr>
 		  `;
@@ -204,6 +204,16 @@ export function mostrarProductos() {
 
 // 	modalAdminProductos.innerHTML = contenido;
 // }
+
+export function getProductoByCodigo(codProducto) {
+	let productoEncontrado = [];
+
+	productoEncontrado = getProductos().find(item => {
+		return item._codigo == codProducto;
+	});
+
+	return productoEncontrado;
+}
 
 export function modificarAgregarDatosProductos(codigoProducto) {
 

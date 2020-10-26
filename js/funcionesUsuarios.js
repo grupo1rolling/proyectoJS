@@ -1,6 +1,6 @@
 import { Usuario } from "./clases.js";
 import { getCodigoGeneradoByKey } from "./funcionesAuxiliares.js";
-import { getProductos, mostrarProductosUsuario } from "./funcionesProductos.js";
+import { getProductos, mostrarProductosUsuario, getProductoByCodigo } from "./funcionesProductos.js";
 
 export function agregarUsuario(usuario) {
 	let usuariosArray = [];
@@ -183,7 +183,7 @@ export function mostrarUsuarios() {
 							<td class="text-center"><i style="${usuarioCheckAdminColor}" class="${usuarioCheckAdmin}"></i></td>
 						<td class="text-center">
 							<button id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" title="Modificar Usuario" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaUsuario"><i id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-edit"></i></button>
-							<button id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" title="Eliminar Usuario" type="button" class="btn btn-outline-danger btn-sm"><i id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-times"></i></button>
+							<button id="btnConfirmarBorrado" data-codigo="${item._codigo}" data-tabla="usuarios" title="Eliminar Usuario" type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalConfirmaBorrado"><i id="btnConfirmarBorrado" data-codigo="${item._codigo}" data-tabla="usuarios" class="fas fa-user-times"></i></button>
 						</td>
 					</tr>
 				`;
@@ -194,7 +194,7 @@ export function mostrarUsuarios() {
 export function verProductosUsuariosAdmin(codUsuario) {
 
 	console.log(`Ver Productos usuario. Código: ${codUsuario}`);
-	
+
 	let i = 0;
 
 	let contenedor = document.getElementById("detalleProductosUsuarioAdmin");
@@ -234,7 +234,7 @@ export function verProductosUsuariosAdmin(codUsuario) {
 					<td class="text-right">${productosFiltrados._precio}</td>
 				</t>
 				`;
-		
+
 				contenedor.innerHTML += detalle;
 			}
 		});
@@ -258,24 +258,23 @@ export function verProductosUsuariosAdmin(codUsuario) {
 
 
 
-
 	// _________.map(function(item){
-		// let detalle = ` 
-		// <tr>
-		// 	<td scope="row" id="fila">${i + 1}</td>
-		// 	<td class="text-left">${item._nombre}</td>
-		// 	<td class="text-center">${item._stock}</td>
-		// 	<td class="text-rigth">${item.precio}</td>
-		// 	<td align="center">
-		// 		<button id="btnBorrarItem" 
-		// 			title="eliminar producto" 
-		// 			type="button" class="btn btn-outline-danger btn-sm">
-		// 			<i class="fa fa-window-close-o"></i>
-		// 		</button>
-		// </t>
-		// `;
+	// let detalle = ` 
+	// <tr>
+	// 	<td scope="row" id="fila">${i + 1}</td>
+	// 	<td class="text-left">${item._nombre}</td>
+	// 	<td class="text-center">${item._stock}</td>
+	// 	<td class="text-rigth">${item.precio}</td>
+	// 	<td align="center">
+	// 		<button id="btnBorrarItem" 
+	// 			title="eliminar producto" 
+	// 			type="button" class="btn btn-outline-danger btn-sm">
+	// 			<i class="fa fa-window-close-o"></i>
+	// 		</button>
+	// </t>
+	// `;
 
-		// contenedor.innerHTML += detalle;
+	// contenedor.innerHTML += detalle;
 	// })
 
 
@@ -293,7 +292,7 @@ export function verProductosUsuariosAdmin(codUsuario) {
 	// 		</button>
 	// </t>
 
-	
+
 }
 
 export function modificarDatosUsuario(codigoUsuario) {
@@ -429,7 +428,55 @@ export function modificarDatosUsuario(codigoUsuario) {
 
 }
 
+export function modalConfirmarBorrado(codigo, tabla) {
+
+	let mensaje = "";
+
+	switch (tabla) {
+		case "usuarios":
+			let usuarioDatos = getUsuarioByCodigo(codigo);
+			mensaje = `¿Está seguro que desea eliminar a ${usuarioDatos._nombre} ${usuarioDatos._apellido}?`;
+			break;
+	
+		case "productos":
+			let productoDatos = getProductoByCodigo(codigo);
+			mensaje = `¿Está seguro que desea eliminar el producto: ${productoDatos._nombre}?`;
+			break;
+	
+		default:
+			break;
+	}
+
+	console.log(mensaje)
+
+	let modalConfirmarBorrado = document.getElementById("modalConfirmaBorrado");
+	
+	let contenido = `
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="verCarritoTitulo">Atención!</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body" text-align="right">
+								<h5>${mensaje}</h5>
+							</div>
+							<div class="modal-footer">
+								<button type="button" id="btnBorrarConfirmado" data-codigo="${codigo}" data-tabla="${tabla}" class="btn btn-green" data-dismiss="modal">Aceptar</button>
+								<button type="button" id="" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+							</div>
+						</div>
+					</div>
+	`;
+
+	modalConfirmarBorrado.innerHTML = contenido;
+}
+
 export function borrarUsuario(codigo) {
+	// modalConfirmacionBorrado();
+
 	let usuariosFiltrados = getAllUsuarios().filter(function (item) {
 		return item._codigo != codigo
 	});
