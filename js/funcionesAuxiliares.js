@@ -34,11 +34,11 @@ export function cargaInicialDatos() {
 
 	// -------- [Agregamos Productos a la BD (por instancias de objetos)] -------- //
     agregarProducto(prod1);
-    agregarProducto(prod6);
 	agregarProducto(prod2);
 	agregarProducto(prod3);
 	agregarProducto(prod4);
 	agregarProducto(prod5);
+    agregarProducto(prod6);
 	
 } // FIN [carga inicial de datos PRODUCTOS Y USUARIOS]
 
