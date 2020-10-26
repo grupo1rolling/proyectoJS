@@ -15,7 +15,7 @@ export function cargaInicialDatos() {
 	let mary = new Usuario(2, "MARY", "BOSCH", "mary@mary.com", "65546", [1001, 1002, 1003, 1005, 1006], { dir1: "Marcos Paz 2500", dir2: "", ciudad: "Carlos Paz", provincia: "Córdoba", codPostal: 4000 }, true, false);
 	let silvia = new Usuario(3, "SILVIA", "SOSA", "silvia@silvia.com", "lalala", [], { dir1: "San Juan 650", dir2: "", ciudad: "San Salvador de Jujuy", provincia: "Jujuy", codPostal: 4000 }, true, true);
 	let lucas = new Usuario(4, "LUCAS", "RAMUNNI", "lucas@lucas.com", "20565", [], { dir1: "Av. Roca 1100", dir2: "", ciudad: "La Plata", provincia: "Buenos Aires", codPostal: 4000 }, true, false);
-	let franco = new Usuario(5, "FRANCO", "LEIRO", "franco@franco.com", "59842", [1002, 1006, 1003], { dir1: "Av. Mate de Luna 750", dir2: "", ciudad: "Metam", provincia: "Salta", codPostal: 4000 }, true, false);
+	let franco = new Usuario(5, "FRANCO", "LEIRO", "franco@franco.com", "232323", [1002, 1006, 1003], { dir1: "Av. Mate de Luna 750", dir2: "", ciudad: "Metam", provincia: "Salta", codPostal: 4000 }, false, false);
 
 	// -------- [Agregamos usuarios (por instancias de objetos)] -------- //
 	agregarUsuario(ale);
