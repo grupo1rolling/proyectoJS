@@ -14,7 +14,7 @@ export function agregarProducto(producto) {
 	});
 
 	if (existeProducto) {
-		alert("El código del producto que desea ingresar ya existe.");
+		//alert("El código del producto que desea ingresar ya existe.");
 	} else {
 		productosArray.push(producto);
 		localStorage.setItem("productos", JSON.stringify(productosArray));

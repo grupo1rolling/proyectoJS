@@ -92,7 +92,7 @@ function olvidoPass() {
     if (usuarioOK != null) {
         alert('revisa tu correo');
     } else {
-        alert("usuario inexistente");
+        //alert("usuario inexistente");
     }
 } // fin olvidoPass
 
