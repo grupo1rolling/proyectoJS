@@ -1,12 +1,15 @@
 export class Usuario {
-	constructor(codigo, nombre, apellido, email, password, codigosProductos = [], direccion = [],
-		// direccion = {
-		// 	dir1,
-		// 	dir2,
-		// 	provincia,
-		// 	localidad,
-		// 	cp
-		// },
+	constructor(codigo, nombre, apellido, email, password, codigosProductos = [],
+		direccion = 
+			{
+				dir1: "",
+				dir2: "",
+				ciudad: "",
+				provincia: "",
+				codPostal
+			},
+		
+
 		estado, esAdmin
 	) {
 		this._codigo = codigo;
@@ -155,7 +158,7 @@ export class Producto {
 	}
 
 	set descripcion(descripcion) {
-		this.decripcion=descripcion;
+		this._decripcion = descripcion;
 	}
 
 	set talle(talle) {
@@ -175,12 +178,12 @@ export class Producto {
 	}
 
 	set categoria(categoria) {
-		this.categorias=categoria;
+		this._categoria = categoria;
 	}
 }
 
 export class ItemCarrito {
-	constructor (idProd, nomProd, cantProd, precioProd)  {
+	constructor(idProd, nomProd, cantProd, precioProd) {
 		this._idProd = idProd;
 		this._nomProd = nomProd;
 		this._cantProd = cantProd;

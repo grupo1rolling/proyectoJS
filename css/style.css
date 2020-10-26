@@ -10,15 +10,14 @@
 }
 
 html,
-body
- {
-    height: 100%;
+body { 
     padding:0px;
-    
+    margin-bottom: 0px;    
+    font-family: Arial, Helvetica, sans-serif;    
 }
 
-/* backgrounds y botones  */
 
+/* backgrounds y botones---------------  */
 .bg-green{
     background-color: #17300C;
     
@@ -54,22 +53,20 @@ body
     
 }
 
-/* imagen de portada */
+/* imagen de portada-------------------------- */
 #portada {
-    height: 720px;
-    /* margin-top: 30px; */
+    height: 720px; 
+    width: auto;   
     padding: 3rem 2rem;
     color: #ffffff;
     background: url(../img/portada5.jpg)no-repeat center center fixed;      
-    position: relative;
-    /* overflow: hidden; */
+    position: relative;    
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover; 
     
 }
-
 
 /* animacion del texto de portada */
 .texto {
@@ -80,52 +77,72 @@ body
     position:relative; 
     top:170px; 
     width: 700px; 
-    height:350px;  
-    
-     /* opacity: 0.6; */
-     /* font-family:""; */
-     }  
-    
-    
+    height:350px;    
+  
+     }       
+        
     .texto h1{
      margin: 100px 0px 0px 40px;
      position:absolute; 
      left:0px;
      top:30px; 
-     transform:translateX(-120%);
+     /* transform:translateX(-120%); */
      transition:all .7s ease;
      color: var(--color-blanco);
      font-weight: bold;
-    } 
-    
+    }     
     .texto:hover:before{ 
      width: 90%;
       }
-    .texto:hover:after {
+    /* .texto:hover:after {
         width: 90%;
-      }
+      } */
      .texto:hover h1,.texto:hover p{
      transform:translateX(0%); 
-     transition:all .7s ease;
+     /* transition:all .7s ease; */
       }
-    .texto:hover{
+    /* .texto:hover{
      background-size: 110% 110%;
      transition:all .7s ease;
     
-    }
-
+    } */
     .text-shadow {
         text-shadow: 0 0 0.2em #ff5b00;
     }
 
+    /*responsive portada-----------------*/
+    @media (max-width: 800px){
+        #portada{
+            width: 100%;
+            height: 500px;
+        }
+        .texto h1{
+            font-size: 20px;
+            margin: 0px 0px 0px 0px;
+            top: 0px;
 
-    .navbar-ml{
-        margin-left: 150px;
+        
+        }
+
+    }
+ 
+    /* Navbar2------------------- */
+    .ulCarrito{
+        display: inline-block;
+        margin: 0px;
+        padding: opx;
     }
 
+    .ancla:before {
+        display: block;
+        content: " ";
+        margin-top: -75px;
+        height: 75px;
+      }
 
 
-    /* footer */
+
+    /* footer -----------*/
 .footer {
     background: var(--color-verdeOscuro);
     color: var(--color-naranjaFuerteApagado);
@@ -152,35 +169,95 @@ body
     text-align: center;
     height: 170px;
   }
-  /* FIN FOOTER */
-  
-  
-/*   
-    .icono {
-        /* width: 40px;
-        height: auto; */
-    /* } */ 
+  /* fin del footer */
 
-        /* .sticky-top-2 {
-          position: -webkit-sticky;
-          position: sticky;
-          top: 76px;
-          z-index: 1020;
-        } */
-      
+ 
+  /* Formulario de registro*-----------------------------*/
 
-        /* @supports ((position: -webkit-sticky) or (position: sticky)) {
-            .sticky-top-2 {
-              position: -webkit-sticky !important;
-              position: sticky;
-              top: 100px;
-              z-index: 1030;
-            }
-          } */
+#registro{
+    padding-top: 80px; 
+   
+}
 
-/* IMPORTANT PARA LAS TARJETAS */
-    .card-deck {
+  /* controles de formulario--------- */
+.form-control-style {
+    background-color:  var(--color-blanco);    
+    border: 2px solid  var(--color-verdeOscuro);
+    border-radius: .2rem;   
+    color: var(--color-light);
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background-clip: padding-box;    
+    
+}
+.form-control-style:focus {
+    background-color: var(--color-blanco);
+    border: 2px solid var(--color-verdeOscuro);
+    box-shadow: var(--color-naranjaChillon) ;
+  }
+
+  .custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color:var(--color-naranjaFuerteApagado);
+    background-color: var(--color-naranjaFuerteApagado);
+}
+
+label {
+    color: var(--color-verdeOscuro);
+    font-weight: bold;
+
+}
+
+/* IMPORTANT PARA LAS TARJETAS--------------- */
+.card-deck {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: .5rem;
+    grid-gap: .2rem;   
+    margin-bottom: 15px;
 }
+
+
+
+.popover {
+    font-size: x-small;
+}
+
+/* mensajes dinamicos------ */
+#mensajes{
+    font-size: 1.5rem;
+    font-weight: bold;
+    /* margin-top: 10px; */
+}
+
+/* responsive texto admin */
+.texto-admin{    
+    margin-top: 30px;
+    padding-top: 40px;
+    left:0px;
+    top:10px;    
+    font-weight: bold;
+   }  
+
+@media (max-width: 800px){
+   
+    .texto-admin h1{
+        font-size: 20px;
+        margin: 0px 0px 0px 0px;
+        top: 0px;
+
+    
+    }
+
+}
+
+
+
+
+
+
+

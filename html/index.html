@@ -31,7 +31,7 @@
     <!--Main Navigation-->
 
     <!--Navbar1-->
-        <!-- <div id="navbar1" class="container-fluid bg-green "> -->
+        
       <nav class="navbar navbar-expand-lg  bg-green container-fluid fixed-top">
         <button
           class="navbar-toggler btn-buscar"
@@ -44,13 +44,13 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand ml-3" href="#">
+        <a class="navbar-brand ml-3" href="index.html">
           <img
             src="../img/natureLogo.png"
             width="120px"
             height="50px"
             class="d-inline-block align-top"
-            alt=""
+            alt="logo nature colection"
             loading="lazy"
           />
         </a>
@@ -58,14 +58,12 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item">
-              <a class="nav-link text-orangeLight" href="#">¿Eres nuevo aqui?</a>
+              <a class="nav-link text-orangeLight" href="registro.html">¿Eres nuevo aqui?</a>
             </li>
             <li class="nav-item">
               <a
                 class="nav-link text-orange"
-                href="#"
-                data-toggle="modal"
-                data-target="#modal"
+                href="login.html"                
                 >Iniciar sesión</a
               >
             </li>
@@ -91,8 +89,9 @@
     </div>
 
     <!--Navbar2-->
-    <!-- <div id="navbar2"class="container-fluid bg-green "> -->
-      <nav
+    
+      <div class="sticky-top ancla">
+        <nav
         class="navbar navbar-expand-lg bg-green container-fluid "
       >
         <button
@@ -109,59 +108,69 @@
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav  mt-2 mt-lg-0 navbar-ml">
-            <li class="nav-item mr-5">
-              <a class="nav-link text-orangeLight" href="#">Para todos los dias</a>
+            <li class="nav-item mr-4">
+              <a class="nav-link text-orangeLight" id="todos"  onclick="filtrarProductos('Todos los días')" >Para todos los días</a>
             </li>
-            <li class="nav-item mr-5">
-              <a class="nav-link text-orangeLight" href="#">Para el calor</a>
+            <li class="nav-item mr-4">
+              <a class="nav-link text-orangeLight" id="calor" onclick="filtrarProductos('Calor')">Para el calor</a>
             </li>
-            <li class="nav-item mr-5">
-              <a class="nav-link text-orangeLight" href="#">Para el frio</a>
+            <li class="nav-item mr-4">
+              <a class="nav-link text-orangeLight" id="frio" onclick="filtrarProductos('Frío')">Para el frío</a>
             </li>
-            <li class="nav-item mr-5">
-              <a class="nav-link text-orangeLight" href="#">Para viajar</a>
+            <li class="nav-item mr-4">
+              <a class="nav-link text-orangeLight" id="viajar" onclick="filtrarProductos('Viajar')">Para viajar</a>
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
             <input
               class="form-control mr-sm-2"
+              id="texto"
               type="search"
               placeholder="Search"
               aria-label="Search"
             />
             <button
-              class="btn btn-outline-success btn-buscar my-2 my-sm-0 mr-4"
+              class="btn btn-outline-success btn-buscar my-2 my-sm-0 mr-0"
               type="submit"
+              onclick="buscarTexto()"
             >
               Buscar
             </button>
           </form>          
-        </div>
+        </div>       
+       
+ <!---------------------Boton que abre modal del carrito----------------------------->
+          <form class="form-inline">
+          <button type="button" class="btn btn-green mr-4" id="listarCarrito" data-toggle="modal" data-target="#verCarrito">
+            <i class="fas fa-shopping-cart"></i> 
+          </button>    
+    
+          <span id="contador" class="nav-text text-orange mr-2 "></span>
+  
+          <span id="totalCarrito"  class="nav-text text-orange">$</span>
         
-        <!-- ######################################################## -->
-        <!-- BOTON QUE ABRE EL MODAL DEL CARRTO  ARREGLAR LA ESTETICA-->
-        <!-- ######################################################## -->
-           <ul class="navbar-brand mr-5 mt-0 mb-0">
-              <li>
-                <a class="nav-link text-orange" href="#"> <span id="contador"></span> </a>
-              
-                <button type="button" class="btn btn-green" id="listarCarrito" data-toggle="modal" data-target="#verCarrito">
-                  <i class="fas fa-shopping-cart"></i> 
-                </button>
-        
-                <a class="nav-link text-orange" href="#"> <span id="totalCarrito">$</span> </a>
-              </li>
-          </ul> 
+        </form> 
+       
       </nav>
-    <!-- </div> -->
+      </div>
+
+      
+    
     <!-- /Navbar2-->
 
     <!--Main layout-->
+
     <main>
 
-      <div class="card-deck m-5" id="tarjetasProd">
-          <!-- ---------- [se cargarán las cards dinámicamente] ---------- -->
-      </div>
+     
+    <main> 
+      <div id="deck" class="col-6 col-md-10 offset-md-1 pt-3">     
+        <span id="mensajes" class="text-orange"></span>
+        <div class="card-deck m-5" id="tarjetasProd">
+          
+            <!-- ---------- [se cargarán las cards dinámicamente] ---------- -->
+        </div>
+    </div>
 
     </main>
     <!--Main layout-->
@@ -170,44 +179,6 @@
 
  
 
-<!-- ------------------------- [Modal verCarrito] ------------------------- -->
-<div class="modal fade" id="verCarrito" tabindex="-1" role="dialog" aria-labelledby="verCarritoTitulo" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h6 class="modal-title" id="verCarritoTitulo">Tu carrito: </h6>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- <div class="container" id="contenedorListaCarrito"> -->
-          <table class="table table-hover" id="factura">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Cant</th>
-                <th scope="col">Producto</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Eliminar</th>
-              </tr>
-            </thead>
-            <tbody id="items">
-              
-                 <!-- ---------- [se cargará el carrito dinámicamente] ---------- -->
-                            
-            </tbody>
-          </table>
-        <!-- </div> -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="botonVaciar" class="btn btn-danger" data-dismiss="modal">Vaciar</button>
-        <button type="button" id="botonFinalizar" class="btn btn-green" data-dismiss="modal">Finalizar Compra</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- / Modal VER CARRITO-->
 
 
   <!-- FOOTER -->
@@ -254,6 +225,52 @@
     </div>
   </div>
   <!--Fín de Footer-->
+
+ <!-- ------------------------- [Modal verCarrito] ------------------------- -->
+<div class="modal fade" id="verCarrito" tabindex="-1" role="dialog" aria-labelledby="verCarritoTitulo" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="verCarritoTitulo">Tu carrito: </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <div class="container" id="contenedorListaCarrito"> -->
+          <table class="table table-hover" id="factura">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Cant</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody id="items">
+              
+                 <!-- ---------- [se cargará el carrito dinámicamente] ---------- -->
+            
+            </tbody>
+            <tfoot>
+              <tr text-align="rigth">
+                  <th scope="row">Total $</th>
+                  <td id="totales"> </td>
+              </tr>
+          </tfoot>
+          </table>
+        <!-- </div> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="botonVaciar" class="btn btn-danger" data-dismiss="modal">Vaciar</button>
+        <button type="button" id="botonFinalizar" class="btn btn-green" data-dismiss="modal">Finalizar Compra</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- / Modal VER CARRITO-->
+
    
     <!-- Optional JavaScript -->
     <script src="../js/funcionesCarrito.js" type="module"></script>
@@ -275,5 +292,7 @@
     crossorigin="anonymous"
     ></script>
 
+
+    
   </body>
 </html>
