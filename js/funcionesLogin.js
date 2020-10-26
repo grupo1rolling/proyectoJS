@@ -50,11 +50,13 @@ document
         
     } else {
         alert("usuario o contraseña incorrectos");
-        // if (usuarioOK._estado === false) {
-        //     alert("usuario inactivo");
-        // } else {
-        //     alert("usuario o contraseña incorrectos");
-        // }
+        /*
+         elseif (usuarioOK._estado === false) {
+             alert("usuario inactivo");
+         } else {
+             alert("usuario o contraseña incorrectos");
+         }
+        */
         }
    
     fLoginLimpiar();

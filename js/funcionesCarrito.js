@@ -81,7 +81,7 @@ function mostrarTarjetas() {
                 <img id="fotoProducto" src=${prod._foto} class="card-img-top" alt="top-estampa-cactus">
                 <div class="card-body">
                   <h5 id="nombreProducto" class="card-title">${prod._nombre}</h5>
-                  <p id="precioProducto">${prod._precio}</p>
+                  <p id="precioProducto">$ ${prod._precio}</p>
                   <p id="descripcionProducto"class="card-text">
                   ${prod._descripcion}
                   </p>
@@ -275,7 +275,7 @@ window.filtrarProductos = function (cat) {
                 <img id="fotoProducto" src=${pc._foto} class="card-img-top" alt="top-estampa-cactus">
                 <div class="card-body">
                   <h5 id="nombreProducto" class="card-title">${pc._nombre}</h5>
-                  <p id="precioProducto">${pc._precio}</p>
+                  <p id="precioProducto">$ ${pc._precio}</p>
                   <p id="descripcionProducto"class="card-text">
                   ${pc._descripcion}
                   </p>
@@ -309,7 +309,7 @@ function listarCarrito() {
             <td scope="row" id="fila">${i + 1}</td>
             <td class="text-center">${p._cantProd}</td>
             <td class="text-left">${p._nomProd}</td>
-            <td class="text-rigth">${p._precioProd.toFixed(2)}</td>
+            <td class="text-rigth">$ ${p._precioProd.toFixed(2)}</td>
             <td align="center"><button id="btnBorrarItem" 
                 title="eliminar producto" 
                 type="button" class="btn btn-outline-danger btn-sm"
