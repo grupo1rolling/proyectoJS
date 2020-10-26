@@ -18,14 +18,6 @@ getProductos();
 actualizarTotalesCarrito();
 mostrarTarjetas();
 
-// ----------- [usuarioAutenticado (true/false) en localStorage] ----------- //
-//localStorage.setItem("usuarioAutenticado", false);
-//lo ponemos en true para que entre siempre                          #### 4 TESTING PURPOSES ONLY ###
-localStorage.setItem("usuarioAutenticado", true);
-let autenticado = localStorage.getItem("usuarioAutenticado");          // ### OJO QUE ES STRING ### //
-console.log(`valor autenticado ${autenticado} indica si un usuario esta logueado `);
-mensajes.innerHTML = "bienvenido"
-
 
 // --- ###################### [F U N C I O N E S] ###################### --- //
 // ------------- [carga inicial de datos PRODUCTOS Y USUARIOS] ------------- //
@@ -37,7 +29,7 @@ function cargaInicialDatos() {
 	//---------------[Creacion de usuarios (Ejemplo)]---------------//
 	let ale = new Usuario(1, "ALE", "CAROL","ale@ale.com", "12345", [], [], true, false);
 	let mary = new Usuario(2, "MARY","BOSCH" ,"mary@mary.com", "65546", [], [], true, true);
-	let silvia = new Usuario(3, "SILVIA", "SOSA", "silvia@silvia", "lalala", [], [], true, false);
+	let silvia = new Usuario(3, "SILVIA", "SOSA", "silvia@silvia.com", "lalala", [], [], true, false);
 	let lucas = new Usuario(4, "LUCAS", "RAMUNNI","lucas@lucas.com", "20565", [], [], true, true);
     let franco = new Usuario(5, "FRANCO", "LEIRO","franco@franco.com", "59842", [], [], true, false);
     // -------- [Agregamos usuarios (por instancias de objetos)] -------- //
@@ -191,29 +183,37 @@ window.comprarProd = function (i) {
 
 // -------------------------- [finalizar compra] --------------------------- //
 let botonFinalizar = document.querySelector('#botonFinalizar');
-botonFinalizar.addEventListener('click', finalizarCompra);
-function finalizarCompra() {
-	actualizarTotalesCarrito();
-	//alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`);
-	if (autenticado == "true") {
-		alert("usuario autenticado");
-	} else {
-		alert("usuario NO autenticado");
-	}
+botonFinalizar.addEventListener('click', finalizarCompra);   
+ function finalizarCompra() {
+    actualizarTotalesCarrito();
+    //alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`);
+    if (autenticado=="true") {
+        alert("usuario autenticado");
+    } else {
+        alert ("usuario NO autenticado");
+    }
+    
+    // -- actualizar usuarios.codigosProductos[]  con arrayProdComprados --/
 
-	// -- actualizar usuarios.odigosProductos[]  con arrayProdComprados --/
-	// llamar a getUsuario(cod) 
+    //quitamos duplicados del arrayProdComprados
+    localStorage.setItem('autenticado', 'false')
+    let productosUsuarios=[];
+    arrayProductosComprados.forEach ();
+
 } // FIN [finalizar compra]
 
 
 // ------------------- [buscar texto en dbProductos] ------------------- //
-texto=document.getElementById("texto").value
+texto=document.getElementById("texto").value;
+
+console.log(texto);
+
 window.buscarTexto = function() {
     getProductos();
     mensajes.innerHTML= `buscando ${texto}....`;
     
-    let productosTexto = dbProductos.filter (p => {
-        return ((p._categoria.includes(texto) || p._nombre.includes(texto)) || p._descripcion.includes(texto))
+    let productosTexto = dbProductos.filter (pp => {
+        return ((pp._categoria.includes(texto) || pp._nombre.includes(texto)) || pp._descripcion.includes(texto))
     });
     console.log(productosTexto);                                          //#### 4 TESTING PURPOSES ONLY ###
     
@@ -244,7 +244,7 @@ window.buscarTexto = function() {
         } else {
             mensajes.innerHTML= "no se encontraron productos con el texto buscado ";  
         }
-    document.getElementById("texto").value="";    
+   // document.getElementById("texto").value="";    
 } // FIN [buscar texto en dbProductos]
 
 
@@ -323,36 +323,39 @@ function listarCarrito() {
 
 
 // ------------------------ [borra item del carrito] ------------------------ //
-window.borrarItem = function (idP, i) {
-	let fila = document.getElementById("fila").childElementCount;
+ window.borrarItem = function (idP,i) {
+    let fila=document.getElementById("fila").childElementCount;
+    
+    // borramos la fila con el producto que quitamos
+    let elemTabla = document.getElementById('items');
+    let tablaFila = elemTabla.getElementsByTagName('tr');
+    elemTabla.removeChild(tablaFila[fila]);
+    //
+    getCarrito();
+    //
+    let prodBorrar = carrito.find(itemC => {
+       return itemC._idProd === idP
+    });
+    console.log(`"voy a borrar:"   ${prodBorrar._idProd}`)
 
-	// borramos la fila con el producto que quitamos
-	let elemTabla = document.getElementById('items');
-	let tablaFila = elemTabla.getElementsByTagName('tr');
-	elemTabla.removeChild(tablaFila[fila]);
-	//
-	getCarrito();
-	//
-	let prodBorrar = carrito.find(itemC => {
-		return itemC._idProd === idP
-	});
-	console.log(`"voy a borrar:"   ${prodBorrar._idProd}`)
+    
+    // -- [actualizamos los totales del Carrito] --/
+    totalARSCarrito-=prodBorrar._precioProd;
+    contadorProdCarrito-=1;
+    actualizarTotalesCarrito();
+    // -- [lo quitamos del arreglo de productos comprados y del carrito] --/
+    arrayProdComprados.splice(i,1);
+    carrito.splice(i,1);   
+    setCarrito();
 
+    // -- [actualizamos dbProductos] --/
+    getProductos();
+    let indice = dbProductos.findIndex (itemP => {
+        return itemP._codigo === idP
+    });
+    dbProductos[indice]._stock +=1;
+    setProductos();
 
-	// -- [actualizamos los totales del Carrito] --/
-	totalARSCarrito -= prodBorrar._precioProd;
-	contadorProdCarrito -= 1;
-	actualizarTotalesCarrito();
-	// -- [lo quitamos del arreglo de productos comprados y del carrito] --/
-	arrayProdComprados.splice(i, 1);
-	carrito.splice(i, 1);
-	setCarrito();
-
-	// -- [actualizamos dbProductos] --/
-	getProductos();
-	let indice = dbProductos.findIndex(itemP => {
-		return itemP._codigo === idP
-	});
-	dbProductos[indice]._stock += 1;
-	setProductos();
+    let t=document.getElementById("totales");
+        t.innerHTML=totalARSCarrito.toFixed(2);
 } // FIN [borra item del carrito]
