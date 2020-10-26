@@ -44,10 +44,17 @@ document
         if (usuarioOK._esAdmin) {
             alert("el usuario es admin");
             location = "./indexAdmin.html";
+        } else {
+            location = "./index.html";
         }
         
     } else {
         alert("usuario o contraseña incorrectos");
+        // if (usuarioOK._estado === false) {
+        //     alert("usuario inactivo");
+        // } else {
+        //     alert("usuario o contraseña incorrectos");
+        // }
         }
    
     fLoginLimpiar();
@@ -61,20 +68,20 @@ function fLoginLimpiar() {
 } // fin fLoginLimpiar
 
 // -------- función que chequea el mail y password de usuariosArray -------- //
-
+/*
 function checkLogin(mailL, passL) {
     usuarioOK = dbUsuarios.find(item => {
         return ((item._email === mailL) && (item._password === passL)) ;
     })
 } // fin checkLogin
 //si chequeamos que tambien esté activo
-/*
+/* */
 function checkLogin(mailL, passL) {
     usuarioOK = dbUsuarios.find(item => {
-        return (((item._email === mailL) && (item._password === passL)) && item._esAdmin==true);
+        return (((item._email === mailL) && (item._password === passL)) && item._estado==true);
     })
 }
-*/
+//*/
 
 // -------------------- [olvidaste contraseña] --------------------- //
 function olvidoPass() {
