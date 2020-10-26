@@ -181,10 +181,10 @@ function finalizarCompra() {
     actualizarTotalesCarrito();
     alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`);
     // -- quitamos duplicados del arrayProdComprados
-    console.log(arrayProdComprados);
+    console.warn(arrayProdComprados);
     let sinRepes = new Set(arrayProdComprados);
     let codigosProductos= [...sinRepes];
-    console.log(codigosProductos);
+    console.warn(codigosProductos);
     /*
     // -- actualizar usuarios.codigosProductos[]  
     usuario = buscarUsuario(usuarioLog.idUsuario);
