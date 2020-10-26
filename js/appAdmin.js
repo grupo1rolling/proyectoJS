@@ -99,7 +99,6 @@ modalModificaUsuarioAdmin.addEventListener("click", (e) => {
 
 
 //-----[Eventos de botones escuchando - PRODUCTOS]-----//
-
 const btnModificarProducto = document.querySelector("#contenedorProductosAdmin");
 btnModificarProducto.addEventListener("click", (e) => {
 
