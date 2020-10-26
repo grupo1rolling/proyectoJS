@@ -41,6 +41,11 @@ document
         usuarioLog.idUsuario=usuarioOK._codigo;
         usuarioLog.autenticado='true';
         localStorage.setItem("log", JSON.stringify(usuarioLog));
+        if (usuarioOK._esAdmin) {
+            alert("el usuario es admin");
+            location = "./indexAdmin.html";
+        }
+        
     } else {
         alert("usuario o contraseña incorrectos");
         }
@@ -56,6 +61,7 @@ function fLoginLimpiar() {
 } // fin fLoginLimpiar
 
 // -------- función que chequea el mail y password de usuariosArray -------- //
+
 function checkLogin(mailL, passL) {
     usuarioOK = dbUsuarios.find(item => {
         return ((item._email === mailL) && (item._password === passL)) ;
@@ -65,7 +71,7 @@ function checkLogin(mailL, passL) {
 /*
 function checkLogin(mailL, passL) {
     usuarioOK = dbUsuarios.find(item => {
-        return (((item._email === mailL) && (item._password === passL)) && item._estado==true);
+        return (((item._email === mailL) && (item._password === passL)) && item._esAdmin==true);
     })
 }
 */
