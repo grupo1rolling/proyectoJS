@@ -6,7 +6,6 @@ import {
 } from "./funcionesUsuarios.js";
 
 
-localStorage.clear();
 cargaInicialDatos();
 
 //actualizarTotalesCarrito(); //actualiza cantidad de productos y total compra en la barra 
@@ -59,7 +58,6 @@ btnCofirmarBorrado.addEventListener("click", (e) => {
 	// 	//console.log("Prueba boton Eliminar Producto");
 	// }
 });
-
 
 //-- ALTA USUARIO --//
 const btnAltaUsuarioAdminPage = document.querySelector("#containerBtnAltaUsuarioAdmin");
