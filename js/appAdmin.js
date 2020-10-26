@@ -1,12 +1,19 @@
 import { cargaInicialDatos } from "./funcionesAuxiliares.js";
-import { mostrarProductos, modificarAgregarDatosProductos, /*modificarDatosProductos,*/ /*grabarModificacionProductoAdmin,*/ grabarModificacionAltProductoAdmin, borrarProducto } from "./funcionesProductos.js";
+import { mostrarProductos, modificarAgregarDatosProductos, /*modificarDatosProductos,*/ /*grabarModificacionProductoAdmin,*/ grabarModificacionAltProductoAdmin, borrarProducto, getProductos } from "./funcionesProductos.js";
 import {
 	mostrarUsuarios, modificarDatosUsuario, borrarUsuario, grabarModificacionUsuariosAdmin,
-	btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage, verProductosUsuariosAdmin, modalConfirmarBorrado
+	btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage, verProductosUsuariosAdmin, modalConfirmarBorrado, getAllUsuarios
 } from "./funcionesUsuarios.js";
 
+let usuariosDatos = getAllUsuarios();
+let productosDatos = getProductos();
 
-//cargaInicialDatos();
+console.log(usuariosDatos.length);
+console.log(productosDatos.length);
+
+if(!usuariosDatos.length > 0 || !productosDatos.length > 0){
+	cargaInicialDatos();
+}
 
 //actualizarTotalesCarrito(); //actualiza cantidad de productos y total compra en la barra 
 //mostrarTarjetas();

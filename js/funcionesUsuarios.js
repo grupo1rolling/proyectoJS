@@ -266,7 +266,7 @@ export function verProductosUsuariosAdmin(codUsuario) {
 				<tr>
 					<td class="text-left" scope="row" id="fila">${i += 1}</td>
 					<td class="text-left">${productosFiltrados._nombre}</td>
-					<td class="text-center">${productosFiltrados._stock}</td>
+					<td class="text-center">1</td>
 					<td class="text-right">${productosFiltrados._precio}</td>
 				</t>
 				`;
