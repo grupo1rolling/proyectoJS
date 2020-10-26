@@ -15,7 +15,7 @@ let carrito = [];
 let texto = "";
 let usuarioLog = {
     idUsuario: "",
-    autenticado: "false",
+    autenticado: "true",
 };
 
 
@@ -137,8 +137,8 @@ function verificaUsuarioLog() {
 
 // ----------------------- [funcion comprarProducto] ----------------------- //
 window.comprarProd = function (i) {
-    let logueado=verificaUsuarioLog();
-    console.warn(logueado);                                              //#### 4 TESTING PURPOSES ONLY ###
+    //let logueado=verificaUsuarioLog();
+    //console.warn(logueado);                                              //#### 4 TESTING PURPOSES ONLY ###
 
 	//buscamos el producto en la bdProductos por posicion
 	let prod = dbProductos[i];
@@ -181,10 +181,10 @@ function finalizarCompra() {
     actualizarTotalesCarrito();
     alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`);
     // -- quitamos duplicados del arrayProdComprados
-    console.log(arrayProdComprados);
+    console.warn(arrayProdComprados);
     let sinRepes = new Set(arrayProdComprados);
     let codigosProductos= [...sinRepes];
-    console.log(codigosProductos);
+    console.warn(codigosProductos);
     /*
     // -- actualizar usuarios.codigosProductos[]  
     usuario = buscarUsuario(usuarioLog.idUsuario);
@@ -247,7 +247,7 @@ window.buscarTexto = function() {
             alert ("no se encontraron productos con el texto buscado ");  
             mostrarTarjetas();
         }
-        document.getElementById("texto").value="";
+        document.getElementById("texto").value=" ";
 } // fin buscarTexto
 
 
