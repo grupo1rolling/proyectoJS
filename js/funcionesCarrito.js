@@ -1,5 +1,6 @@
 import { ItemCarrito } from "./clases.js";
 import { cargaInicialDatos } from "./funcionesAuxiliares.js";
+import { mostrarProductos } from "./funcionesProductos.js";
 import { getAllUsuarios } from "./funcionesUsuarios.js";
 
 // --------------------- [inicialización de variables] --------------------- //
@@ -43,9 +44,9 @@ function vaciarCarrito() {
 		arrayProdComprados = [];
 		carrito = [];
 		actualizarTotalesCarrito();
-		alert("carrito vacío");                                         //#### 4 TESTING PURPOSES ONLY ###
+		alert("carrito vacío");                                          //#### 4 TESTING PURPOSES ONLY ###
 	} else {
-		alert ("sigue comprando");                                      //#### 4 TESTING PURPOSES ONLY ###
+		alert ("sigue comprando");                                       //#### 4 TESTING PURPOSES ONLY ###
 	}
 }; // fin vaciarCarrito
 
@@ -123,21 +124,21 @@ function setCarrito() {
 function verificaUsuarioLog() {
     // -- vemos si hay un usuario logueado
     usuarioLog = JSON.parse(localStorage.getItem("log")) || [];
-    console.warn(usuarioLog.autenticado);
+    console.warn(usuarioLog.autenticado);                                //#### 4 TESTING PURPOSES ONLY ###
 
     if (usuarioLog.autenticado ==="true") {
     alert ("usuario autenticado");
     return true;
     } else {
         alert ("usuario NO autenticado");
-        //location = "http://127.0.0.1:5500/html/login.html";
+        //location = "";
     } 
 } // fin verificaUsuarioLog
 
 // ----------------------- [funcion comprarProducto] ----------------------- //
 window.comprarProd = function (i) {
     let logueado=verificaUsuarioLog();
-    console.warn(logueado);                                             //#### 4 TESTING PURPOSES ONLY ###
+    console.warn(logueado);                                              //#### 4 TESTING PURPOSES ONLY ###
 
 	//buscamos el producto en la bdProductos por posicion
 	let prod = dbProductos[i];
@@ -162,7 +163,7 @@ window.comprarProd = function (i) {
         //agregamos el item al carrito
 		agregarCarrito(itemCompra);
 		getCarrito();
-		alert(`Se ha añadido un producto al carrito`)                   //#### 4 TESTING PURPOSES ONLY ###
+		alert(`Se ha añadido un producto al carrito`)                    //#### 4 TESTING PURPOSES ONLY ###
 		//actualizamos cantidad de producto y total compra 
 		totalARSCarrito += prod._precio;
 		contadorProdCarrito += 1;
@@ -198,20 +199,27 @@ function finalizarCompra() {
 
 
 // --------------------- [buscar texto en dbProductos] --------------------- //
-texto=document.getElementById("texto").value;
-console.log(texto);
+texto = document.getElementById("texto").value;
+console.warn(texto);
 
 window.buscarTexto = function() {
+    //traemos los productos
     getProductos();
-        
+    //filtramos aquello que contengan el texto buscado
     const productosTexto = dbProductos.filter (pT => {
         return ((pT._categoria.includes(texto) || pT._nombre.includes(texto)) || pT._descripcion.includes(texto));
     });
-    console.log(productosTexto);                                          //#### 4 TESTING PURPOSES ONLY ###
+    console.warn(productosTexto);                                        //#### 4 TESTING PURPOSES ONLY ###
     
-    //let tarjetasTex = document.getElementById("tarjetasProd");
-    let tarjetasTex=document.getElementById("tarjetasProd");
-    
+    let tarjetasTex = document.getElementById("tarjetasProd");
+    //--borrar contenido en el card-deck
+    let viejo=document.getElementById("tarjetasProd");                    
+    if(viejo !== null){
+        while (viejo.hasChildNodes()){
+            viejo.removeChild(viejo.lastChild);
+        }}
+    //--fin borrar contenido en el card-deck
+
     if (productosTexto != []) {
         productosTexto.map(function (pt, indt) {
             let tarjetaTex = `
@@ -232,26 +240,35 @@ window.buscarTexto = function() {
               </div>       
             `;
             tarjetasTex.innerHTML += tarjetaTex;
+
             });
-            console.log("se encontraron los productos ");
+            console.warn("se encontraron los productos ");
         } else {
-            console.warn ("no se encontraron productos con el texto buscado ");  
+            alert ("no se encontraron productos con el texto buscado ");  
+            mostrarTarjetas();
         }
+        document.getElementById("texto").value="";
 } // fin buscarTexto
 
 
 // ------------------- [filtrar productos por categoria] ------------------- //
 window.filtrarProductos = function (cat) {
-	getProductos();
-    console.log(dbProductos);
+	getProductos();                                                      //#### 4 TESTING PURPOSES ONLY ###
+    console.warn(dbProductos);
 	const productosPorCat = dbProductos.filter(pC => {
 		return (pC._categoria === cat);
 	});
-	console.log(productosPorCat);                                          //#### 4 TESTING PURPOSES ONLY ###
+	console.warn(productosPorCat);                                       //#### 4 TESTING PURPOSES ONLY ###
 
-	let tarjetasCat = document.getElementById("tarjetasProd");
+    let tarjetasCat = document.getElementById("tarjetasProd");
+    //--borrar contenido en el card-deck
+    let viejo=document.getElementById("tarjetasProd");                    
+    if(viejo !== null){
+        while (viejo.hasChildNodes()){
+            viejo.removeChild(viejo.lastChild);
+        }}
+    //--fin borrar contenido en el card-deck
 	if (productosPorCat.length > 0) {
-
 		productosPorCat.map(function (pc, ic) {
 			let tarjetaCat = `
                 <div class="card">
@@ -272,9 +289,10 @@ window.filtrarProductos = function (cat) {
             `;
 			tarjetasCat.innerHTML += tarjetaCat;
 		});
-		console.log = "se encontraron los siguientes productos para la categoría ";
+		console.warn("se encontraron los siguientes productos para la categoría ");
 	} else {
-		console.warn = "no se encontraron productos para la categoría ";
+        alert("no se encontraron productos para la categoría ") ;
+        mostrarTarjetas();
 	}
 } // fin filtrarProd
 
@@ -282,7 +300,6 @@ window.filtrarProductos = function (cat) {
 // --------------------------- [listar carrito] ---------------------------- //
 const btnListarCarrito = document.querySelector('#listarCarrito');
 btnListarCarrito.addEventListener('click', listarCarrito);
-
 function listarCarrito() {
 	if (carrito.length > 0) {
 		let items = document.getElementById("items");
@@ -314,9 +331,8 @@ function listarCarrito() {
 
 // ------------------------ [borra item del carrito] ------------------------ //
  window.borrarItem = function (idP,i) {
-    let fila=document.getElementById("fila").childElementCount;
-    
     // borramos la fila con el producto que quitamos
+    let fila=document.getElementById("fila").childElementCount;
     let elemTabla = document.getElementById('items');
     let tablaFila = elemTabla.getElementsByTagName('tr');
     elemTabla.removeChild(tablaFila[fila]);
@@ -324,28 +340,27 @@ function listarCarrito() {
     getCarrito();
     //
     let prodBorrar = carrito.find(itemC => {
-       return itemC._idProd === idP
+       return (itemC._idProd === idP);
     });
-    console.log(`"voy a borrar:"   ${prodBorrar._idProd}`)
+    console.warn(`voy a borrar:   ${prodBorrar._idProd}`);               //#### 4 TESTING PURPOSES ONLY ###
 
-    
-    // -- [actualizamos los totales del Carrito] --/
+    // --actualizamos los totales del Carrito
     totalARSCarrito-=prodBorrar._precioProd;
     contadorProdCarrito-=1;
     actualizarTotalesCarrito();
-    // -- [lo quitamos del arreglo de productos comprados y del carrito] --/
+    // --lo quitamos del arreglo de productos comprados y del carrito
     arrayProdComprados.splice(i,1);
     carrito.splice(i,1);   
     setCarrito();
 
-    // -- [actualizamos dbProductos] --/
+    // --actualizamos dbProductos
     getProductos();
     let indice = dbProductos.findIndex (itemP => {
         return itemP._codigo === idP
     });
     dbProductos[indice]._stock +=1;
     setProductos();
-
+    //
     let t=document.getElementById("totales");
         t.innerHTML=totalARSCarrito.toFixed(2);
 } // fin borrarItem
