@@ -247,7 +247,7 @@ window.buscarTexto = function() {
             alert ("no se encontraron productos con el texto buscado ");  
             mostrarTarjetas();
         }
-        document.getElementById("texto").value="";
+        //document.getElementById("texto").value="";
 } // fin buscarTexto
 
 
