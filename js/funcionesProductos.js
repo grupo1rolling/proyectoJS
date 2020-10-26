@@ -109,101 +109,9 @@ export function mostrarProductos() {
 			</tr>
 		  `;
 
-		//   <button id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" title="Modificar Usuario" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaUsuario"><i id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-edit"></i></button>
-		// 	<button id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" title="Eliminar Usuario" type="button" class="btn btn-outline-danger btn-sm"><i id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-times"></i></button>
-{/* <td class="text-center">${item._foto}</td> */}
 		contenedor.innerHTML += detalle;
 	});
 }
-
-
-// export function altaDatosProductos() {
-
-// 	let contenidoTalles = "";
-// 	let contenidoCategorias = "";
-// 	let modalAdminProductos;
-// 	let contenido = "";
-
-// 	//----- Captura de Talles -----//
-// 	getTalles().map(item => {
-// 		contenidoTalles += `<option value="${item}">${item}</option>`
-// 	});
-
-// 	//----- Captura de Categorias -----//		
-// 	getCategorias().map(item => {
-// 		contenidoCategorias += `<option value="${item}">${item}</option>`
-// 	});
-
-// 	modalAdminProductos = document.getElementById("modalBodyProductos");
-
-// 	//--- Body del Model de modificacion de Productos ---//
-// 	contenido = `
-// 				<!-- Inicio Formulario -->
-// 					<form id="formModProd">
-// 						<div class="form-row">
-// 							<div class="col-md-4 mb-3">
-// 								<label for="codigo">Código</label>
-// 								<input type="text" class="form-control" id="codigoProdAdm" value="" disabled>
-// 							</div>
-
-// 							<div class="col-md-5 mb-3">
-// 								<label for="nombreProd">Producto</label>
-// 								<input type="text" class="form-control" id="nombreProdAdm" value="" required>
-// 							</div>
-
-// 							<div class="col-md-3 mb-3">
-// 								<label for="talle">Talle</label>
-// 								<select id="talleProdAdm" name="talle" class="form-control" required>
-// 									${contenidoTalles}
-// 								</select>
-// 							</div>
-// 						</div>
-
-// 						<div class="form-row">
-// 							<div class="col-md-6 mb-3">
-// 								<label for="categoria">Categoría</label>
-// 								<select id="categoriaProdAdm" name="categoria" class="form-control" required>
-// 									${contenidoCategorias}
-// 								</select>
-// 							</div>
-// 							<div class="col-md-3 mb-3">
-// 								<label for="stock">Stock</label>
-// 								<input type="text" class="form-control" id="stockProdAdm" value="" required>
-// 							</div>
-
-// 							<div class="col-md-3 mb-3">
-// 								<label for="precio">Precio $</label>
-// 								<input type="text" class="form-control" id="precioProdAdm" value="" required>
-// 							</div>
-// 						</div>
-
-// 						<div class="form-row">					
-// 							<div class="col-md-6 mb-3">
-// 								<label for="file-upload">Imagen del producto</label>
-// 								<input id="file-upload" type="file" accept="image/*" />
-// 							</div>
-
-// 							<div class="col-md-6 mb-3">
-// 								<label for="descripcion">Descripción</label>
-// 								<textarea class="form-control" id="descripcionProdAdm" rows="1"></textarea>
-// 							</div>
-// 						</div>
-// 					</form>
-// 				<!-- Fin seccion Formulario -->
-// 			`;
-
-// 	modalAdminProductos.innerHTML = contenido;
-// 	document.getElementById("descripcionProdAdm").value = productosDatos._descripcion;
-
-// 	//--- Footer del Model de modificacion de Productos ---//
-// 	modalAdminProductos = document.getElementById("modalFooterProductos");
-// 	contenido = `
-// 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-// 				<button id="btnGrabarProductoModifAdminPage" type="button" class="btn btn-primary" data-dismiss="modal">Grabar</button>
-// 				`;
-
-// 	modalAdminProductos.innerHTML = contenido;
-// }
 
 export function getProductoByCodigo(codProducto) {
 	let productoEncontrado = [];
@@ -370,111 +278,6 @@ export function modificarAgregarDatosProductos(codigoProducto) {
 	modalAdminProductos.innerHTML = contenido;
 }
 
-// export function modificarDatosProductos(codigoProducto) {
-// 	let productosDatos = getProductos().find(item => {
-// 		return item._codigo == codigoProducto ? item : "";
-// 	});
-
-// 	console.log(`Categoría: ${productosDatos._categoria}`);
-// 	console.log(`Talle: ${productosDatos._talle}`);
-// 	// console.log(`Categoría: ${productosDatos._categoria}`);
-// 	// console.log(`Categoría: ${productosDatos._categoria}`);
-
-// 	//----- Captura de Talles -----//
-// 	let arrayTalles = getTalles();
-// 	let posicionTalle = arrayTalles.indexOf(productosDatos._talle);
-// 	arrayTalles.splice(posicionTalle, 1);
-// 	arrayTalles.unshift(productosDatos._talle);
-
-// 	let contenidoTalles;
-// 	arrayTalles.map(item => {
-// 		contenidoTalles += `<option value="${item}">${item}</option>`
-// 	});
-
-// 	//----- Captura de Categorias -----//
-// 	let arrayCategorias = getCategorias();
-// 	let posicionCategoria = arrayCategorias.indexOf(productosDatos._categoria);
-// 	arrayCategorias.splice(posicionCategoria, 1);
-// 	arrayCategorias.unshift(productosDatos._categoria);
-
-// 	let contenidoCategorias;
-// 	arrayCategorias.map(item => {
-// 		contenidoCategorias += `<option value="${item}">${item}</option>`
-// 	});
-
-
-// 	let modalAdminProductos = document.getElementById("modalBodyProductos");
-
-// 	//--- Body del Model de modificacion de Productos ---//
-// 	let contenido = `
-// 					<!-- Inicio Formulario -->
-// 						<form id="formModProd">
-// 							<div class="form-row">
-// 								<div class="col-md-4 mb-3">
-// 									<label for="codigo">Código</label>
-// 									<input type="text" class="form-control" id="codigoProdAdm" value="${productosDatos._codigo}" disabled>
-// 								</div>
-
-// 								<div class="col-md-5 mb-3">
-// 									<label for="nombreProd">Producto</label>
-// 									<input type="text" class="form-control" id="nombreProdAdm" value="${productosDatos._nombre}" required>
-// 								</div>
-
-// 								<div class="col-md-3 mb-3">
-// 									<label for="talle">Talle</label>
-// 									<select id="talleProdAdm" name="talle" class="form-control" required>
-// 										${contenidoTalles}
-// 									</select>
-// 								</div>
-// 							</div>
-
-// 							<div class="form-row">
-// 								<div class="col-md-6 mb-3">
-// 									<label for="categoria">Categoría</label>
-// 									<select id="categoriaProdAdm" name="categoria" class="form-control" required>
-// 										${contenidoCategorias}
-// 									</select>
-// 								</div>
-// 								<div class="col-md-3 mb-3">
-// 									<label for="stock">Stock</label>
-// 									<input type="text" class="form-control" id="stockProdAdm" value="${productosDatos._stock}" required>
-// 								</div>
-
-// 								<div class="col-md-3 mb-3">
-// 									<label for="precio">Precio $</label>
-// 									<input type="text" class="form-control" id="precioProdAdm" value="${productosDatos._precio}" required>
-// 								</div>
-// 							</div>
-
-// 							<div class="form-row">					
-// 								<div class="col-md-6 mb-3">
-// 									<label for="file-upload">Imagen del producto</label>
-// 									<input id="file-upload" type="file" accept="image/*" />
-// 								</div>
-
-// 								<div class="col-md-6 mb-3">
-// 									<label for="descripcion">Descripción</label>
-// 									<textarea class="form-control" id="descripcionProdAdm" rows="1"></textarea>
-// 								</div>
-// 							</div>
-// 						</form>
-
-// 				<!-- Fin seccion Formulario -->
-// 				`;
-
-// 	modalAdminProductos.innerHTML = contenido;
-// 	document.getElementById("descripcionProdAdm").value = productosDatos._descripcion;
-
-// 	//--- Footer del Model de modificacion de Productos ---//
-// 	modalAdminProductos = document.getElementById("modalFooterProductos");
-// 	contenido = `
-// 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-// 				<button id="btnGrabarProductoModifAdminPage" type="button" class="btn btn-primary" data-dismiss="modal">Grabar</button>
-// 				`;
-
-// 	modalAdminProductos.innerHTML = contenido;
-// }
-
 export function grabarModificacionAltProductoAdmin(accion) {
 
 	// console.log("Prueba boton GRABAR Producto\n");
@@ -528,43 +331,6 @@ export function grabarModificacionAltProductoAdmin(accion) {
 	mostrarProductos();
 }
 
-// export function grabarModificacionProductoAdmin() {
-
-// 	// console.log("Prueba boton GRABAR Producto\n");
-// 	let codigo = parseInt(document.getElementById("codigoProdAdm").value);
-// 	let nombre = document.getElementById("nombreProdAdm").value;
-// 	let talle = document.getElementById("talleProdAdm").value;
-// 	let categoria = document.getElementById("categoriaProdAdm").value;
-// 	let stock = parseInt(document.getElementById("stockProdAdm").value);
-// 	let precio = parseFloat(document.getElementById("precioProdAdm").value);
-// 	let descripcion = document.getElementById("descripcionProdAdm").value;
-
-// 	console.log(`código: ${codigo}`);
-// 	console.log(`nombre: ${nombre}`);
-// 	console.log(`talle: ${talle}`);
-// 	console.log(`categoria: ${categoria}`);
-// 	console.log(`stock: ${stock}`);
-// 	console.log(`precio: ${precio}`); 	
-// 	console.log(`descripcion: ${descripcion}`);
-
-// 	let productosusuariosArray = getProductos();
-
-// 	productosusuariosArray.map(item => {
-// 		if (item._codigo == codigo) {
-// 			item._codigo = codigo;
-// 			item._nombre = nombre;
-// 			item._talle = talle;
-// 			item._categoria = categoria;
-// 			item._stock = stock;
-// 			item._precio = precio;
-// 			item._descripcion = descripcion;
-// 		}
-// 	});
-
-// 	localStorage.setItem("productos", JSON.stringify(productosusuariosArray))
-// 	mostrarProductos();
-// }
-
 export function borrarProducto(codigo) {
 	let productosFiltrados = getProductos().filter(function (item) {
 		return item._codigo != codigo
@@ -574,53 +340,6 @@ export function borrarProducto(codigo) {
 	mostrarProductos();
 }
 
-
-
-// ################################################################################# //
-// ---------- [Obtenemos los datos del Formulario de ALTA de Productos ] ---------- //
-/*
-let dbProductos = [];
-document.getElementById("formAltaProd");
-
-document.addEventListener("submit", function (event) {
-	event.preventDefault();
-	console.log("Hizo submit");
-	dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
-
-	let codigo = document.getElementById("codigo").value.toUpperCase();
-	let nombreProd = document.getElementById("nombreProd").value.toUpperCase();
-	let talle = document.getElementById("talle");
-	let talleSeleccionado = talle.options[talle.selectedIndex].value;
-	//foto del producto
-	//Llamamos a la funcion (VIF) cuando se hace clic en seleccionar archivo y este cambia
-	// NO SE SI AQUI O AFUERA
-	let fileUpload = document.getElementById("file-upload");
-	fileUpload.onchange = function (e) {
-		readFile(e.srcElement);
-	};
-
-	let stock = parseInt(document.getElementById("stock").value);
-	let precio = parseFloat(document.getElementById("precio").value);
-
-	let categoria = document.getElementById("categoria");
-	let catSeleccionada = categoria.options[categoria.selectedIndex].value;
-	//creamos INSTANCIA DEL PRODUCTO
-	producto = new Producto(codigo, nombre, descripcion, talle, foto, stock, precio, categoria);
-	//inicializamos INSTANCIA PRODUCTO
-	producto.codigo = codigo;
-	producto.nombre = nombreProd;
-	producto.descripcion = descripcion;
-	producto.talle = talleSeleccionado;
-	producto.foto = fotoData;
-	producto.stock = stock;
-	producto.precio = precio;
-	producto.categoria = catSeleccionada;
-	//agregarProducto(producto);
-	dbProductos.push({ producto });
-	localStorage.setItem("productos", JSON.stringify(dbProductos));
-	limpiarFormAltaProd();
-});
-*/
 // ---------- [Limpiamos el Formulario de Alta de Productos ] ---------- //
 // funcion flecha equivalete function limpiarFormAltaProd() {}
 const limpiarFormAltaProd = () => {
@@ -635,50 +354,6 @@ const limpiarFormAltaProd = () => {
 	document.getElementById("categoria").value = "";
 };
 
-
-// ################################################################################# //
-// ---------- [Obtenemos los datos del Formulario de MODIFICACION de Productos ] ---------- //
-/*
-let dbProductos=[];
-	document.getElementById("formModiProd");
-	document.addEventListener("submit", function (event) {
-		event.preventDefault();
-		console.log("Hizo submit");
-		dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
-		
-		let nombreProd = document.getElementById("nombreProd").value.toUpperCase();
-		let talle = document.getElementById("talle");
-		let talleSeleccionado = talle.options[talle.selectedIndex].value;
-		//foto del producto
-		//Llamamos a la funcion (VIF) cuando se hace clic en seleccionar archivo y este cambia
-		// NO SE SI AQUI O AFUERA
-		let fileUpload = document.getElementById("file-upload");
-		fileUpload.onchange = function (e) {
-		readFile(e.srcElement);
-		};
-
-		let stock = parseInt(document.getElementById("stock").value);
-		let precio = parseFloat(document.getElementById("precio").value);
-
-		let categoria = document.getElementById("categoria");
-		let catSeleccionada = categoria.options[categoria.selectedIndex].value;
-		//creamos INSTANCIA DEL PRODUCTO
-		producto = new Producto(codigo, nombre, descripcion, talle, foto, stock, precio, categoria);
-		//inicializamos INSTANCIA PRODUCTO
-		producto.codigo = codigo;
-		producto.nombre = nombreProd;
-		producto.descripcion= descripcion;
-		producto.talle = talleSeleccionado;
-		producto.foto = fotoData;
-		producto.stock = stock;
-		producto.precio = precio;
-		producto.categoria = catSeleccionada;
-		//agregarProducto(producto);
-		dbProductos.push({producto});
-		localStorage.setItem("productos", JSON.stringify(dbProductos));
-		limpiarFormAltaProd();
-	}); */
-
 // ---------- [Limpiamos el Formulario de Modificacion de Productos ] ---------- //
 // funcion flecha equivalente function limpiarFormAltaProd() {}
 const limpiarFormModProd = () => {
@@ -692,14 +367,6 @@ const limpiarFormModProd = () => {
 	document.getElementById("precio").value = "";
 	document.getElementById("categoria").value = "";
 };
-
-
-
-
-
-
-
-// ############## VIF Very Important Function ##################
 
 let fotoData = ""; //Variable donde se guardará la foto del producto
 

@@ -59,17 +59,55 @@ function getUsuarioByCodigo(codUsuario) {
 	return usuarioEncontrado;
 }
 
-//FUNCION SE LA INVOCA ANTES DE AGREGAR UN USUARIO 
-//SERIA MEJOR VER SI EXISTE EL EMAIL EN LUGAR DEL NOMBRE
-// function existeUsuario(usuario) {
-//   existe=usuarios.find(item=> {
-//       return (item.email===usuario.email)
-//   })
-// }
 
-// let tbody;
-// tbody.getElementById("usuariosDetalle");
-// tbody.innerHTML = "";
+export function mostrarBtnAceptarReg() {
+	let btnAceptarReg = document.getElementById("contenedorBtnRegistrar");
+	let contenido = `
+				<button class="btn btn-green mt-2 float-right" id="btnAceptarReg">Aceptar</button>
+	`;
+
+	btnAceptarReg.innerHTML = contenido;
+}
+
+export function registroUsuario() {
+
+	let codigo = getCodigoGeneradoByKey("usuarios");
+	let nombre = document.getElementById("nombre").value;
+	let apellido = document.getElementById("apellido").value;
+	let email = document.getElementById("email").value;
+	let password = document.getElementById("contrasena").value;
+	let repPassword = document.getElementById("repContrasena").value;
+	let dir1 = document.getElementById("direccion").value;
+	let dir2 = document.getElementById("direccionAdc").value;
+	let ciudad = document.getElementById("ciudad").value;
+	let provincia = document.getElementById("provincia").value;
+	let codPostal = document.getElementById("zip").value;
+	let termCondiciones = document.getElementById("acepto").checked;
+	let estado = true;
+	let esAdmin = false;
+
+	if (nombre == "" || apellido == "" || email == "" || password == "" || repPassword == "") {
+		alert("Datos incompletos. Por favor verifique sus datos");
+	}
+	else{
+		if (termCondiciones) {
+			if (validarPassword(password) && validarPassword(repPassword)) {
+	
+				if (password === repPassword) {
+					let nuevoUsuario = new Usuario(codigo, nombre, apellido, email, password, [], { dir1, dir2, ciudad, provincia, codPostal }, estado, esAdmin);
+					agregarUsuario(nuevoUsuario);
+					// mostrarUsuarios();
+				}
+				else {
+					alert("Las constraseñas no coinciden. Por favor verifique sus datos");
+				}
+			}
+		}
+		else {
+			alert("Debe aceptar los términos y condiciones para continuar.")
+		}
+	}
+}
 
 export function btnModalAltaUsuarioAdminPage() {
 	let modalAdminUsuarios = document.getElementById("containerBtnAltaUsuarioAdmin");
@@ -125,53 +163,42 @@ export function grabarAltaUsuarioAdminPage() {
 	let repPassword = document.getElementById("repContrasenaAltaUsrAdmPage").value;
 	let estado = document.getElementById("SwitchEstadoAltaUsrAdmPage").checked;
 	let esAdmin = document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked;
-	
+
 	let dir1 = document.getElementById("direccion").value;
 	let dir2 = document.getElementById("direccionAdc").value;
 	let ciudad = document.getElementById("ciudad").value;
 	let provincia = document.getElementById("provincia").value;
 	let codPostal = document.getElementById("codPostal").value;
 
-	if(validarPassword(password) && validarPassword(repPassword)){
+	if (validarPassword(password) && validarPassword(repPassword)) {
 
-		if(password === repPassword){
-
-			// let dir2 = usuarioDatos["_direccion"].dir2;
-			
-			// console.log(`Código: ${codigo}`)
-			// console.log(`Nombre: ${nombre}`)
-			// console.log(`Apellido: ${apellido}`)
-			// console.log(`Email: ${email}`)
-			// console.log(`Pass: ${password}`)
-			// console.log(`Estado: ${estado}`)
-			// console.log(`EsAdmin: ${esAdmin}`)
-			
-			let nuevoUsuario = new Usuario(codigo, nombre, apellido, email, password, [], {dir1, dir2, ciudad, provincia, codPostal}, estado, esAdmin);
+		if (password === repPassword) {
+			let nuevoUsuario = new Usuario(codigo, nombre, apellido, email, password, [], { dir1, dir2, ciudad, provincia, codPostal }, estado, esAdmin);
 			agregarUsuario(nuevoUsuario);
 			mostrarUsuarios();
 		}
-		else{
+		else {
 			alert("Las constraseñas no coinciden. Por favor verifique sus datos");
 		}
 	}
 }
 
-function limpiarDatos(){
-	document.getCodigoGeneradoByKey("usuarios") = "";
-	document.getElementById("nombreAltaUsrAdmPage").value = "";
-	document.getElementById("apellidoAltaUsrAdmPage").value = "";
-	document.getElementById("emailAltaUsrAdmPage").value = "";
-	document.getElementById("contrasenaAltaUsrAdmPage").value = "";
-	document.getElementById("repContrasenaAltaUsrAdmPage").value = "";
-	document.getElementById("SwitchEstadoAltaUsrAdmPage").checked = true;
-	document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked = false;
+// function limpiarDatos() {
+// 	document.getCodigoGeneradoByKey("usuarios") = "";
+// 	document.getElementById("nombreAltaUsrAdmPage").value = "";
+// 	document.getElementById("apellidoAltaUsrAdmPage").value = "";
+// 	document.getElementById("emailAltaUsrAdmPage").value = "";
+// 	document.getElementById("contrasenaAltaUsrAdmPage").value = "";
+// 	document.getElementById("repContrasenaAltaUsrAdmPage").value = "";
+// 	document.getElementById("SwitchEstadoAltaUsrAdmPage").checked = true;
+// 	document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked = false;
 
-	document.getElementById("direccion").value = "";
-	document.getElementById("direccionAdc").value = "";
-	document.getElementById("ciudad").value = "";
-	document.getElementById("provincia").value = "";
-	document.getElementById("codPostal").value = "";
-}
+// 	document.getElementById("direccion").value = "";
+// 	document.getElementById("direccionAdc").value = "";
+// 	document.getElementById("ciudad").value = "";
+// 	document.getElementById("provincia").value = "";
+// 	document.getElementById("codPostal").value = "";
+// }
 
 export function mostrarUsuarios() {
 	let contenedor = document.getElementById("usuariosDetalle");
@@ -293,42 +320,6 @@ export function verProductosUsuariosAdmin(codUsuario) {
 
 
 
-
-	// _________.map(function(item){
-	// let detalle = ` 
-	// <tr>
-	// 	<td scope="row" id="fila">${i + 1}</td>
-	// 	<td class="text-left">${item._nombre}</td>
-	// 	<td class="text-center">${item._stock}</td>
-	// 	<td class="text-rigth">${item.precio}</td>
-	// 	<td align="center">
-	// 		<button id="btnBorrarItem" 
-	// 			title="eliminar producto" 
-	// 			type="button" class="btn btn-outline-danger btn-sm">
-	// 			<i class="fa fa-window-close-o"></i>
-	// 		</button>
-	// </t>
-	// `;
-
-	// contenedor.innerHTML += detalle;
-	// })
-
-
-	// <tr>
-	// 	<td scope="row" id="fila">${i + 1}</td>
-	// 	<td class="text-left">${item._nombre}</td>
-	// 	<td class="text-center">${item._cantProd}</td>
-	// 	<td class="text-rigth">${item.precio.toFixed(2)}</td>
-	// 	<td align="center"><button id="btnBorrarItem" 
-	// 		title="eliminar producto" 
-	// 		type="button" class="btn btn-outline-danger btn-sm"
-	// 		onclick="borrarItem(${p._idProd},${i})">
-	// 		<i class="fa fa-window-close-o">
-	// 		</i>
-	// 		</button>
-	// </t>
-
-
 }
 
 export function modificarDatosUsuario(codigoUsuario) {
@@ -343,13 +334,6 @@ export function modificarDatosUsuario(codigoUsuario) {
 	let provincia = usuarioDatos["_direccion"].provincia;
 	let codPostal = usuarioDatos["_direccion"].codPostal;
 
-	// <option selected>Seleccione una provincia...</option>
-	// <option value="bue">Buenos Aires</option>
-	// <option value="cat">Catamarca</option>
-	// <option value="ciu">Ciudad Autónoma de Buenos Aires</option>
-	// <option value="cor">Córdoba</option>
-	// <option value="tuc">Tucumán</option>
-	
 	//----- Captura de Provincias -----//
 	let arrayProvincias = getProvincias();
 	let posicionProvincia = arrayProvincias.indexOf(provincia);
@@ -495,12 +479,12 @@ export function modalConfirmarBorrado(codigo, tabla) {
 			let usuarioDatos = getUsuarioByCodigo(codigo);
 			mensaje = `¿Está seguro que desea eliminar a ${usuarioDatos._nombre} ${usuarioDatos._apellido}?`;
 			break;
-	
+
 		case "productos":
 			let productoDatos = getProductoByCodigo(codigo);
 			mensaje = `¿Está seguro que desea eliminar el producto: ${productoDatos._nombre}?`;
 			break;
-	
+
 		default:
 			break;
 	}
@@ -508,7 +492,7 @@ export function modalConfirmarBorrado(codigo, tabla) {
 	console.log(mensaje)
 
 	let modalConfirmarBorrado = document.getElementById("modalConfirmaBorrado");
-	
+
 	let contenido = `
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
@@ -551,7 +535,7 @@ export function grabarModificacionUsuariosAdmin() {
 	let password = document.getElementById("contrasenaUsrAdm").value;
 	let estado = document.getElementById("SwitchModifEstadoAdmPage").checked;
 	let esAdmin = document.getElementById("SwitchModifEsAdmPage").checked;
-	
+
 	let dir1 = document.getElementById("direccionAdm").value;
 	let dir2 = document.getElementById("direccionAdcAdm").value;
 	let ciudad = document.getElementById("ciudadAdm").value;
@@ -583,11 +567,6 @@ export function grabarModificacionUsuariosAdmin() {
 	localStorage.setItem("usuarios", JSON.stringify(usuariosArray))
 	mostrarUsuarios();
 }
-
-
-// <td class="text-center"><button onclick="fnselect()" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#contacto">Modificar</button></td>
-// <td class="text-center"><button onclick="modalEliminarUsuario()" type="button" class="btn btn-danger btn-sm">X</button></td>
-
 
 // ####################################################
 // FUNCION QUE OBTIENE DATOS DEL FORMULARIO DE REGISTRO

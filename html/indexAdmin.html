@@ -335,9 +335,7 @@
                           <option value="Santa Cruz">Santa Cruz</option>
                           <option value="Santa Fe">Santa Fe</option>
                           <option value="Santiago">Santiago</option>
-                          <option value="Tierra del Fuego">
-                            Tierra del Fuego
-                          </option>
+                          <option value="Tierra del Fuego">Tierra del Fuego</option>
                           <option value="Tucumán">Tucumán</option>
                         </select>
                       </div>
@@ -390,61 +388,6 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- switch para recibir boletin y checkbox para aceptar politica privacidad (informada en popover) -->
-                <!-- creo que no es necesario estamos en la pantalla de administrador -->
-                <!-- <div class="row">
-							<div class="col-12 col-md-6">
-							  <div class="form-group">
-								<div class="custom-control custom-switch">
-								  <input
-									type="checkbox"
-									class="custom-control-input"
-									id="boletin"
-									checked
-								  />
-								  <label class="custom-control-label" for="boletin"
-									>Quiero recibir el boletín</label
-								  >
-								</div>
-							  </div>
-							</div>
-							<div class="col-12 col-md-6">
-								<div class="form-group">
-								  <div class="custom-control custom-checkbox">
-									<input
-									  type="checkbox"
-									  class="custom-control-input"
-									  id="acepto"
-									  required
-									/>
-									<label class="custom-control-label" for="acepto">
-									  Acepto
-									  <abbr
-										title=" <small> Política de Privacidad </small>"
-										data-content="
-										  ESTE SITIO Y SU CONTENIDO SON DE PROPIEDAD EXCLUSIVA
-										  DE NATURE COLLECTION. TODOS LOS DERECHOS RESERVADOS.
-										  AL ACCEDER A ESTE SITIO USTED AUTOMÁTICAMENTE CONCUERDA 
-										  CON SUS TÉRMINOS DE USO Y CON NUESTRA POLÍTICA DE 
-										  PRIVACIDAD DE FORMA INTEGRAL E IRRESTRICTA, SIENDO RESPONSABLE 
-										  INTEGRALMENTE POR TODOS Y CUALQUIER ACTO PRACTICADO EN EL SITIO 
-										  O EN LO RELACIONADO A ÉL.
-										  EN EL CASO QUE USTED NO CONCUERDE CON ESTOS TÉRMINOS, 
-										  O PARTE DE ELLOS, USTED NO DEBE 
-										  ACCEDER A ESTE SITIO NI CONSUMIR SUS CONTENIDOS."
-										data-toggle="popover"
-										data-trigger="hover"
-										data-placement="right"
-										animation="true"
-									  >
-										Política de Privacidad</abbr
-									  >
-									</label>
-								  </div>
-								</div>
-							  </div>
-						  </div> -->
               </form>
               <!-- Fin seccion Formulario -->
             </div>
@@ -620,67 +563,8 @@
             </div>
 
             <div class="modal-body" id="modalBodyProductos">
-              <!-- Inicio Formulario -->
-              <!-- <form id="formModProd">
-							<div class="form-row">
-								<div class="col-md-4 mb-3">
-									<label for="codigo">Código</label>
-									<input type="text" class="form-control" id="codigo" disabled>
-								</div>
-
-								<div class="col-md-5 mb-3">
-									<label for="nombreProd">Producto</label>
-									<input type="text" class="form-control" id="nombreProd" required>
-								</div>
-
-								<div class="col-md-3 mb-3">
-									<label for="talle">Talle</label>
-									<select id="talle" name="talle" class="form-control" required>
-										<option value="XS">XS</option>
-										<option value="S">S</option>
-										<option value="M">M</option>
-										<option value="L">L</option>
-										<option value="XL">XL</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="form-row">
-								<div class="col-md-6 mb-3">
-									<label for="categoria">Categoría</label>
-									<select id="categoria" name="categoria" class="form-control" required>
-										<option value="frio">Para el frío</option>
-										<option value="calor">Para el calor</option>
-										<option value="viajar">Para viajar</option>
-										<option value="todos_los_dias">Para todos los dias</option>	
-									</select>
-								</div>
-								<div class="col-md-3 mb-3">
-									<label for="stock">Stock</label>
-									<input type="text" class="form-control" id="stock" required>
-
-								</div>
-
-								<div class="col-md-3 mb-3">
-									<label for="precio">Precio</label>
-									<input type="text" class="form-control" id="precio" required>
-								</div>
-							</div>
-
-							<div class="form-row">					
-								<div class="col-md-6 mb-3">
-									<label for="file-upload">Imagen del producto</label>
-									<input id="file-upload" type="file" accept="image/*" />
-								</div>
-
-								<div class="col-md-6 mb-3">
-									<label for="descripcion">Descripción</label>
-									<textarea class="form-control" id="descripcion" rows="1"></textarea>
-								</div>
-							</div>
-
-							<button class="btn btn-success">Enviar</button>
-						</form> -->
+			  <!-- Inicio Formulario -->
+			  	<!-- CARGA DINAMICA -->
               <!-- Fin seccion Formulario -->
             </div>
             <div class="modal-footer" id="modalFooterProductos">
@@ -766,23 +650,7 @@
         aria-labelledby="verCarritoTitulo"
         aria-hidden="true"
       >
-        <!-- <div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="verCarritoTitulo">Atención!</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" text-align="right">
-							<h5>¿Está seguro que desea eliminar a ...?</h5>
-					</div>
-					<div class="modal-footer">
-						<button type="button" id="" class="btn btn-green" data-dismiss="modal">Aceptar</button>
-						<button type="button" id="" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-					</div>
-				</div>
-			</div> -->
+       
       </div>
       <!-- FIN - Modal para ver los Productos de un Usuario -->
 
