@@ -10,13 +10,11 @@
 }
 
 html,
-body
- {
-    height: 100%;
+body { 
+    /* height: 100%; */
+    margin-bottom: 0px;
     padding:0px;
-    font-family: Arial, Helvetica, sans-serif;
-
-    
+    font-family: Arial, Helvetica, sans-serif;    
 }
 
 /* backgrounds y botones---------------  */
@@ -112,6 +110,20 @@ body
         text-shadow: 0 0 0.2em #ff5b00;
     }
 
+    @media (max-width: 800px){
+        #portada{
+            width: 100%;
+            height: 500px;
+        }
+        .texto h1{
+            font-size: 20px;
+            margin: 0px 0px 0px 0px;
+            top: 0px;
+
+        
+        }
+
+    }
 
     .navbar-ml{
         margin-left: 150px;
@@ -203,15 +215,19 @@ label {
     grid-gap: .2rem;
 }
 
-
-
 .popover {
-    text-align: justify;
     font-size: x-small;
 }
+
+
+
+/* position: -webkit-sticky !important;
+position: sticky !important;
+top: 76px !important;
+/* z-index: 1020; }  */
+
 /* #mainBg{
     background-image: url(../img/portada5.jpg); 
-
 }*/
 /* 
 .border{
@@ -229,13 +245,9 @@ label {
         /* width: 40px;
         height: auto; */
     /* } */ 
+/* 
 
-        /* .sticky-top-2 {
-          position: -webkit-sticky;
-          position: sticky;
-          top: 76px;
-          z-index: 1020;
-        } */
+
       
 
         /* @supports ((position: -webkit-sticky) or (position: sticky)) {
@@ -243,7 +255,7 @@ label {
               position: -webkit-sticky !important;
               position: sticky;
               top: 100px;
-              z-index: 1030;
-            }
-          } */
-
+              /* z-index: 1030; */
+            /* }
+          }
+ */ 

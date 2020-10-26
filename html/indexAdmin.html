@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="../css/style.css">
 	<title>Nature Collection\Admin</title>
 </head>
+
 <body>
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -110,7 +111,7 @@
 			<hr>
 		</div>
 
-		<div class="container">
+		<div class="container" id="contenedorAltaProductosAdmin">
 			<div class="row">
 				<div class="col">
 					<h7 class="m-1">Referencias de Stock:</h7>
@@ -121,7 +122,9 @@
 				</div>
 
 				<div class="col">
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#altaProducto">
+					<button id="btnAgregarProductosAdmin" data-codigo="0" type="button" class="btn btn-primary"
+						data-toggle="modal" data-target="#modificaProducto">
+						<!-- class="btn btn-primary" data-toggle="modal" data-target="#altaProducto"> -->
 						Alta Producto
 					</button>
 				</div>
@@ -444,12 +447,14 @@
 
 							<!-- pongo aqui el boton pero hay que chequear -->
 							<button class="btn btn-success">Enviar</button>
+							<button class="btn btn-primary">Guardar</button>
+
 						</form>
 						<!-- Fin seccion Formulario -->
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-						<button type="button" class="btn btn-primary">Guardar</button>
+						<button class="btn btn-primary">Guardar</button>
 					</div>
 				</div>
 			</div>
@@ -537,6 +542,55 @@
 			</div>
 		</div>
 		<!-- fin modal formulario MODIFICACION PRODUCTO -->
+
+		<!-- ------------------------- [Modal para ver los Productos de un Usuario] ------------------------- -->
+		<div class="modal fade" id="modalProdUsuariosAdmin" tabindex="-1" role="dialog"
+			aria-labelledby="verCarritoTitulo" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="verCarritoTitulo">Tu carrito: </h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<!-- <div class="container" id="contenedorListaCarrito"> -->
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Producto</th>
+									<th scope="col">Cantidad</th>
+									<th scope="col">Precio</th>
+									<!-- <th scope="col">Eliminar</th> -->
+								</tr>
+							</thead>
+							<tbody id="detalleProductosUsuarioAdmin">
+								<!-- ---------- [Carga dinamica de los Productos del Usuario] ---------- -->
+							</tbody>
+							<tfoot id="footerProdUsuarios">
+								<!-- <div class="mr-auto">
+								<th></th>
+								<th></th>
+								<th>Total</th>
+								<th text-align="rigth">$ 6654</th>
+							</div> -->
+							</tfoot>
+						</table>
+						<!-- </div> -->
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="botonVaciar" class="btn btn-danger"
+							data-dismiss="modal">Vaciar</button>
+						<button type="button" id="botonFinalizar" class="btn btn-green" data-dismiss="modal">Finalizar
+							Compra</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- / Modal Productos del Usuario -->
+
 	</main>
 
 	<!-- Optional JavaScript -->
