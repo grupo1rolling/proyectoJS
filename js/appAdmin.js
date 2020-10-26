@@ -6,7 +6,7 @@ import {
 } from "./funcionesUsuarios.js";
 
 
-cargaInicialDatos();
+//cargaInicialDatos();
 
 //actualizarTotalesCarrito(); //actualiza cantidad de productos y total compra en la barra 
 //mostrarTarjetas();
