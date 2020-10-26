@@ -1,6 +1,9 @@
 import { ItemCarrito } from "./clases.js";
 import { cargaInicialDatos } from "./funcionesAuxiliares.js";
+<<<<<<< HEAD
 
+=======
+>>>>>>> sil
 
 // --------------------- [inicialización de variables] --------------------- //
 let total = document.getElementById("totalCarrito");
@@ -9,8 +12,13 @@ let totalARSCarrito = 0, contadorProdCarrito = 0;
 let dbProductos = [];
 let arrayProdComprados = [];
 let carrito = [];
-let mensajes = document.getElementById("mensajes");
 let texto = "";
+let usuarioLog = {
+    idUsuario: "",
+    autenticado: "false",
+};
+//
+let mensajes = document.getElementById("mensajes");
 
 // ------------------------ [llamada a funciones] -------------------------- //
 cargaInicialDatos();
@@ -18,16 +26,15 @@ getProductos();
 actualizarTotalesCarrito();
 mostrarTarjetas();
 
-
 // --- ###################### [F U N C I O N E S] ###################### --- //
 
 // -------------------- [actualiza totales del Carrito] -------------------- //
 function actualizarTotalesCarrito() {
 	total.innerHTML = totalARSCarrito.toFixed(2);
 	conta.innerHTML = contadorProdCarrito;
-} // FIN [actualiza totales del Carrito]
+} // fin actualizarTotalesCarrito
 
-// ----------------------- [funcion vaciarCarrito] ----------------------- //
+// ------------------------ [funcion vaciarCarrito] ------------------------ //
 let botonVaciar = document.querySelector('#botonVaciar');
 botonVaciar.addEventListener('click', vaciarCarrito);
 function vaciarCarrito() {
@@ -37,24 +44,22 @@ function vaciarCarrito() {
 		arrayProdComprados = [];
 		carrito = [];
 		actualizarTotalesCarrito();
-		mensajes.innerHTML = "carrito vacío"                 //#### 4 TESTING PURPOSES ONLY ###
+		alert("carrito vacío");                                         //#### 4 TESTING PURPOSES ONLY ###
 	} else {
-		mensajes.innerHTML = "sigue comprando"                 //#### 4 TESTING PURPOSES ONLY ###
+		alert ("sigue comprando");                                      //#### 4 TESTING PURPOSES ONLY ###
 	}
-}; // FIN [funcion vaciarCarrito]
+}; // fin vaciarCarrito
 
 
-// ----------------- [traemos dbProductos del localStorage] ----------------- //          
+// ----------------- [traemos dbProductos de localStorage] ----------------- //          
 function getProductos() {
-	console.log("dbProductos ACTUALIZADA");                             //#### 4 TESTING PURPOSES ONLY ###
 	dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
-} // FIN [traemos dbProductos del localStorage]
+} // fin getProductos
 
 // ----------------- [guardamos productos del localStorage] ---------------- //
 function setProductos() {
-	console.log("localStorage productos ACTUALIZADOS");                 //#### 4 TESTING PURPOSES ONLY ###
 	localStorage.setItem('productos', JSON.stringify(dbProductos));
-} // FIN [guardamos productos del localStorage]
+} // fin setProductos
 
 
 // -------------------- [mostrar tarjetas dinámicamente] ------------------- //
@@ -80,94 +85,92 @@ function mostrarTarjetas() {
             `;
 		tarjProd.innerHTML += tarjeta;
 	});
-} // FIN [mostrar tarjetas dinámicamente]
+} // fin mostrarTarjetas
 
-// -------------------------- [agregarCarrito] -------------------------- // 
+// --------------------- [agrega productos al Carrito] --------------------- //
 function agregarCarrito(producto) {
 	let productosAgregados = [];
 	//-- Verificamos si existe key='productosCarrito' en localStorage --//
 	productosAgregados = JSON.parse(localStorage.getItem("productosCarrito")) || [];
 	productosAgregados.push(producto);
 	localStorage.setItem("productosCarrito", JSON.stringify(productosAgregados));
-} // FIN [agregarCarrito]
+} // sin agregarCarrito
 
-// ----------------- [traemos Carrito del localStorage] ----------------- //          
+// ------------------- [traemos Carrito de localStorage] ------------------- //          
 function getCarrito() {
 	carrito = JSON.parse(localStorage.getItem("productosCarrito")) || [];
-	console.log("paso por getCarrito");                                 //#### 4 TESTING PURPOSES ONLY ###
-	console.log(carrito);                                               //#### 4 TESTING PURPOSES ONLY ###
-} // FIN [traemos Carrito del localStorage] 
+} // getCarrito
 
-// ---------------- [guardamos Carrito al localStorage] ---------------- //
+// ------------------ [guardamos Carrito al localStorage] ------------------ //
 function setCarrito() {
 	localStorage.setItem('productosCarrito', JSON.stringify(carrito));
-} // FIN [guardamos Carrito al localStorage]
+} // fin setCarrito
 
-// -------------------- [funcion comprarProducto] -------------------- //
+// ----------------------- [funcion comprarProducto] ----------------------- //
 window.comprarProd = function (i) {
-
-	//busco el prod en la bdProductos por posicion
+	//buscamos el producto en la bdProductos por posicion
 	let prod = dbProductos[i];
-
 	//si hay al menos un producto en stock, se puede vender 
 	if (prod._stock >= 1) {
 		//actualizamos stock, dbProductos y localStorage
 		dbProductos[i]._stock -= 1;
 		setProductos();
 		getProductos();
-		//
+		//guardamos en un array los productos comprados 
 		arrayProdComprados.push(prod._codigo);
-		console.log(`arrayProdComprados ---> ${arrayProdComprados}`); //#### 4 TESTING PURPOSES ONLY ###
-		//
+		//armamos el objeto itemCarrito para carrito[]
 		let idProd = prod._codigo;
 		let nomProd = prod._nombre;
 		let cantProd = 1;
 		let precioProd = prod._precio;
 		let itemCompra = new ItemCarrito(idProd, nomProd, cantProd, precioProd);
-
 		itemCompra._idProd = idProd;
 		itemCompra._nomProd = nomProd;
 		itemCompra._cantProd = cantProd;
 		itemCompra._precioProd = precioProd;
-
+        //agregamos el item al carrito
 		agregarCarrito(itemCompra);
 		getCarrito();
-		alert(`Se ha añadido un producto al carrito`)   //#### 4 TESTING PURPOSES ONLY ###
-
-		// -- suma de precios y cantidad de productos comprados --/
+		alert(`Se ha añadido un producto al carrito`)                   //#### 4 TESTING PURPOSES ONLY ###
+		//actualizamos cantidad de producto y total compra 
 		totalARSCarrito += prod._precio;
 		contadorProdCarrito += 1;
 		actualizarTotalesCarrito();
-
 	} else {
 		alert(`ooops nos quedamos sin ${prod._nombre}`);
 	}
-} // FIN [funcion comprarProducto]
+} // fin comprarProducto
 
 
 // -------------------------- [finalizar compra] --------------------------- //
 let botonFinalizar = document.querySelector('#botonFinalizar');
 botonFinalizar.addEventListener('click', finalizarCompra);   
- function finalizarCompra() {
-    actualizarTotalesCarrito();
-    //alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`);
-    if (autenticado=="true") {
-        alert("usuario autenticado");
-    } else {
-        alert ("usuario NO autenticado");
-    }
+function finalizarCompra() {
     
+    actualizarTotalesCarrito();
+    //vemos si hay un usuario logueado
+    usuarioLog = JSON.parse(localStorage.getItem("log"));
+    console.warn(usuarioLog);
+    /*
+    if (usuarioLog.autenticado =='true') {
+        alert (`Usuario autenticado. Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`);
+        } else {
+            alert ("usuario NO autenticado");
+            location = "../index.html";
+        }
+    //location = "index.html"; "./clases.js"
     // -- actualizar usuarios.codigosProductos[]  con arrayProdComprados --/
-
+        */
     //quitamos duplicados del arrayProdComprados
-    localStorage.setItem('autenticado', 'false')
-    let productosUsuarios=[];
-    arrayProductosComprados.forEach ();
+    console.log(arrayProdComprados);
+    let sinRepes = new Set(arrayProdComprados);
+    let productosUsuario= [...sinRepes];
+    console.log(productosUsuario);
 
 } // FIN [finalizar compra]
 
 
-// ------------------- [buscar texto en dbProductos] ------------------- //
+// --------------------- [buscar texto en dbProductos] --------------------- //
 texto=document.getElementById("texto").value;
 
 console.log(texto);
