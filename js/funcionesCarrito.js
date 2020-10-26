@@ -1,16 +1,22 @@
 import { ItemCarrito } from "./clases.js";
 import { cargaInicialDatos } from "./funcionesAuxiliares.js";
-
+import { getAllUsuarios } from "./funcionesUsuarios.js";
 
 // --------------------- [inicialización de variables] --------------------- //
 let total = document.getElementById("totalCarrito");
 let conta = document.getElementById("contador");
 let totalARSCarrito = 0, contadorProdCarrito = 0;
 let dbProductos = [];
+let dbUsuarios;
+let usuario;
 let arrayProdComprados = [];
 let carrito = [];
-let mensajes = document.getElementById("mensajes");
 let texto = "";
+let usuarioLog = {
+    idUsuario: "",
+    autenticado: "false",
+};
+
 
 // ------------------------ [llamada a funciones] -------------------------- //
 cargaInicialDatos();
@@ -18,16 +24,16 @@ getProductos();
 actualizarTotalesCarrito();
 mostrarTarjetas();
 
-
 // --- ###################### [F U N C I O N E S] ###################### --- //
 
 // -------------------- [actualiza totales del Carrito] -------------------- //
 function actualizarTotalesCarrito() {
 	total.innerHTML = totalARSCarrito.toFixed(2);
 	conta.innerHTML = contadorProdCarrito;
-} // FIN [actualiza totales del Carrito]
+} // fin actualizarTotalesCarrito
 
-// ----------------------- [funcion vaciarCarrito] ----------------------- //
+
+// ------------------------ [funcion vaciarCarrito] ------------------------ //
 let botonVaciar = document.querySelector('#botonVaciar');
 botonVaciar.addEventListener('click', vaciarCarrito);
 function vaciarCarrito() {
@@ -37,24 +43,32 @@ function vaciarCarrito() {
 		arrayProdComprados = [];
 		carrito = [];
 		actualizarTotalesCarrito();
-		mensajes.innerHTML = "carrito vacío"                 //#### 4 TESTING PURPOSES ONLY ###
+		alert("carrito vacío");                                         //#### 4 TESTING PURPOSES ONLY ###
 	} else {
-		mensajes.innerHTML = "sigue comprando"                 //#### 4 TESTING PURPOSES ONLY ###
+		alert ("sigue comprando");                                      //#### 4 TESTING PURPOSES ONLY ###
 	}
-}; // FIN [funcion vaciarCarrito]
+}; // fin vaciarCarrito
 
 
-// ----------------- [traemos dbProductos del localStorage] ----------------- //          
+// ----------------- [traemos dbProductos de localStorage] ----------------- //          
 function getProductos() {
-	console.log("dbProductos ACTUALIZADA");                             //#### 4 TESTING PURPOSES ONLY ###
-	dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
-} // FIN [traemos dbProductos del localStorage]
+    dbProductos = JSON.parse(localStorage.getItem("productos")) || [];
+} // fin getProductos
+
 
 // ----------------- [guardamos productos del localStorage] ---------------- //
 function setProductos() {
-	console.log("localStorage productos ACTUALIZADOS");                 //#### 4 TESTING PURPOSES ONLY ###
 	localStorage.setItem('productos', JSON.stringify(dbProductos));
-} // FIN [guardamos productos del localStorage]
+} // fin setProductos
+
+
+// ----------------- [buscamoos el usuario en dbUsuarios] ------------------ //
+function buscarUsuario(idUser) {
+    dbUsuarios = getAllUsuarios();
+    dbUsuarios.find(item => {
+		return (item._codigo == idUser) ;
+	});
+} // fin buscarUsuario
 
 
 // -------------------- [mostrar tarjetas dinámicamente] ------------------- //
@@ -80,176 +94,189 @@ function mostrarTarjetas() {
             `;
 		tarjProd.innerHTML += tarjeta;
 	});
-} // FIN [mostrar tarjetas dinámicamente]
+} // fin mostrarTarjetas
 
-// -------------------------- [agregarCarrito] -------------------------- // 
+
+// --------------------- [agrega productos al Carrito] --------------------- //
 function agregarCarrito(producto) {
 	let productosAgregados = [];
 	//-- Verificamos si existe key='productosCarrito' en localStorage --//
 	productosAgregados = JSON.parse(localStorage.getItem("productosCarrito")) || [];
 	productosAgregados.push(producto);
 	localStorage.setItem("productosCarrito", JSON.stringify(productosAgregados));
-} // FIN [agregarCarrito]
+} // fin agregarCarrito
 
-// ----------------- [traemos Carrito del localStorage] ----------------- //          
+
+// ------------------- [traemos Carrito de localStorage] ------------------- //          
 function getCarrito() {
 	carrito = JSON.parse(localStorage.getItem("productosCarrito")) || [];
-	console.log("paso por getCarrito");                                 //#### 4 TESTING PURPOSES ONLY ###
-	console.log(carrito);                                               //#### 4 TESTING PURPOSES ONLY ###
-} // FIN [traemos Carrito del localStorage] 
+} // getCarrito
 
-// ---------------- [guardamos Carrito al localStorage] ---------------- //
+
+// ------------------ [guardamos Carrito al localStorage] ------------------ //
 function setCarrito() {
 	localStorage.setItem('productosCarrito', JSON.stringify(carrito));
-} // FIN [guardamos Carrito al localStorage]
+} // fin setCarrito
 
-// -------------------- [funcion comprarProducto] -------------------- //
+
+// ----------------- [verificamos si hay usuario logueado] ----------------- //
+function verificaUsuarioLog() {
+    // -- vemos si hay un usuario logueado
+    usuarioLog = JSON.parse(localStorage.getItem("log")) || [];
+    console.warn(usuarioLog.autenticado);
+
+    if (usuarioLog.autenticado ==="true") {
+    alert ("usuario autenticado");
+    return true;
+    } else {
+        alert ("usuario NO autenticado");
+        //location = "http://127.0.0.1:5500/html/login.html";
+    } 
+} // fin verificaUsuarioLog
+
+// ----------------------- [funcion comprarProducto] ----------------------- //
 window.comprarProd = function (i) {
+    let logueado=verificaUsuarioLog();
+    console.warn(logueado);                                             //#### 4 TESTING PURPOSES ONLY ###
 
-	//busco el prod en la bdProductos por posicion
+	//buscamos el producto en la bdProductos por posicion
 	let prod = dbProductos[i];
-
 	//si hay al menos un producto en stock, se puede vender 
 	if (prod._stock >= 1) {
 		//actualizamos stock, dbProductos y localStorage
 		dbProductos[i]._stock -= 1;
 		setProductos();
 		getProductos();
-		//
+		//guardamos en un array los productos comprados 
 		arrayProdComprados.push(prod._codigo);
-		console.log(`arrayProdComprados ---> ${arrayProdComprados}`); //#### 4 TESTING PURPOSES ONLY ###
-		//
+		//armamos el objeto itemCarrito para carrito[]
 		let idProd = prod._codigo;
 		let nomProd = prod._nombre;
 		let cantProd = 1;
 		let precioProd = prod._precio;
 		let itemCompra = new ItemCarrito(idProd, nomProd, cantProd, precioProd);
-
 		itemCompra._idProd = idProd;
 		itemCompra._nomProd = nomProd;
 		itemCompra._cantProd = cantProd;
 		itemCompra._precioProd = precioProd;
-
+        //agregamos el item al carrito
 		agregarCarrito(itemCompra);
 		getCarrito();
-		alert(`Se ha añadido un producto al carrito`)   //#### 4 TESTING PURPOSES ONLY ###
-
-		// -- suma de precios y cantidad de productos comprados --/
+		alert(`Se ha añadido un producto al carrito`)                   //#### 4 TESTING PURPOSES ONLY ###
+		//actualizamos cantidad de producto y total compra 
 		totalARSCarrito += prod._precio;
 		contadorProdCarrito += 1;
 		actualizarTotalesCarrito();
-
 	} else {
 		alert(`ooops nos quedamos sin ${prod._nombre}`);
 	}
-} // FIN [funcion comprarProducto]
+} // fin comprarProd
 
 
 // -------------------------- [finalizar compra] --------------------------- //
 let botonFinalizar = document.querySelector('#botonFinalizar');
 botonFinalizar.addEventListener('click', finalizarCompra);   
- function finalizarCompra() {
+function finalizarCompra() {
     actualizarTotalesCarrito();
-    //alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`);
-    if (autenticado=="true") {
-        alert("usuario autenticado");
-    } else {
-        alert ("usuario NO autenticado");
-    }
-    
-    // -- actualizar usuarios.codigosProductos[]  con arrayProdComprados --/
+    alert (`Compra finalizada. ${contadorProdCarrito} prendas. Total a pagar $ ${totalARSCarrito}`);
+    // -- quitamos duplicados del arrayProdComprados
+    console.log(arrayProdComprados);
+    let sinRepes = new Set(arrayProdComprados);
+    let codigosProductos= [...sinRepes];
+    console.log(codigosProductos);
+    /*
+    // -- actualizar usuarios.codigosProductos[]  
+    usuario = buscarUsuario(usuarioLog.idUsuario);
+    codigosProductos.forEach(elem => {
+        usuarios._codigosProductos.push(elem);
+    });
+    // -- actualizamos el localStorage
+    localStorage.setItem("usuarios", JSON.stringify(usuariosArray));
+    */
 
-    //quitamos duplicados del arrayProdComprados
-    localStorage.setItem('autenticado', 'false')
-    let productosUsuarios=[];
-    arrayProductosComprados.forEach ();
-
-} // FIN [finalizar compra]
+} // fin finalizarCompra
 
 
-// ------------------- [buscar texto en dbProductos] ------------------- //
+// --------------------- [buscar texto en dbProductos] --------------------- //
 texto=document.getElementById("texto").value;
-
 console.log(texto);
 
 window.buscarTexto = function() {
     getProductos();
-    mensajes.innerHTML= `buscando ${texto}....`;
-    
-    let productosTexto = dbProductos.filter (pp => {
-        return ((pp._categoria.includes(texto) || pp._nombre.includes(texto)) || pp._descripcion.includes(texto))
+        
+    const productosTexto = dbProductos.filter (pT => {
+        return ((pT._categoria.includes(texto) || pT._nombre.includes(texto)) || pT._descripcion.includes(texto));
     });
     console.log(productosTexto);                                          //#### 4 TESTING PURPOSES ONLY ###
     
-    let tarjetasProd = document.getElementById("tarjetasProd");
+    //let tarjetasTex = document.getElementById("tarjetasProd");
+    let tarjetasTex=document.getElementById("tarjetasProd");
     
     if (productosTexto != []) {
-        productosTexto.map(function (prod, index) {
-            let tarjeta = `
+        productosTexto.map(function (pt, indt) {
+            let tarjetaTex = `
                 <div class="card">
-                <img id="fotoProducto" src=${prod._foto} class="card-img-top" alt="top-estampa-cactus">
+                <img id="fotoProducto" src=${pt._foto} class="card-img-top" alt="top-estampa-cactus">
                 <div class="card-body">
-                  <h5 id="nombreProducto" class="card-title">${prod._nombre}</h5>
-                  <p id="precioProducto">${prod._precio}</p>
+                  <h5 id="nombreProducto" class="card-title">${pt._nombre}</h5>
+                  <p id="precioProducto">${pt._precio}</p>
                   <p id="descripcionProducto"class="card-text">
-                  ${prod._descripcion}
+                  ${pt._descripcion}
                   </p>
-                  <p id="talleProducto">${prod._talle}</p>
-                  <p id="categoriaProducto">${prod._categoria}</p>
+                  <p id="talleProducto">${pt._talle}</p>
+                  <p id="categoriaProducto">${pt._categoria}</p>
                 </div>
                 <div class="card-footer">
-                <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
+                <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${indt})">Añadir al carro</a>
                 </div>
               </div>       
             `;
-            tarjetasProd.innerHTML += tarjeta;
+            tarjetasTex.innerHTML += tarjetaTex;
             });
-        mensajes.innerHTML= "se encontraron los siguientes productos ";
+            console.log("se encontraron los productos ");
         } else {
-            mensajes.innerHTML= "no se encontraron productos con el texto buscado ";  
+            console.warn ("no se encontraron productos con el texto buscado ");  
         }
-   // document.getElementById("texto").value="";    
-} // FIN [buscar texto en dbProductos]
+} // fin buscarTexto
 
 
 // ------------------- [filtrar productos por categoria] ------------------- //
 window.filtrarProductos = function (cat) {
 	getProductos();
-	mensajes.innerHTML = `buscando ${cat}....`;
-
-	let productosXcat = dbProductos.filter(p => {
-		return p._categoria === cat
+    console.log(dbProductos);
+	const productosPorCat = dbProductos.filter(pC => {
+		return (pC._categoria === cat);
 	});
-	console.log(productosXcat);                                          //#### 4 TESTING PURPOSES ONLY ###
+	console.log(productosPorCat);                                          //#### 4 TESTING PURPOSES ONLY ###
 
-	let tarjetasProd = document.getElementById("tarjetasProd");
-	if (productosXcat.length > 0) {
+	let tarjetasCat = document.getElementById("tarjetasProd");
+	if (productosPorCat.length > 0) {
 
-		productosXcat.map(function (prod, index) {
-			let tarjeta = `
+		productosPorCat.map(function (pc, ic) {
+			let tarjetaCat = `
                 <div class="card">
-                <img id="fotoProducto" src=${prod._foto} class="card-img-top" alt="top-estampa-cactus">
+                <img id="fotoProducto" src=${pc._foto} class="card-img-top" alt="top-estampa-cactus">
                 <div class="card-body">
-                  <h5 id="nombreProducto" class="card-title">${prod._nombre}</h5>
-                  <p id="precioProducto">${prod._precio}</p>
+                  <h5 id="nombreProducto" class="card-title">${pc._nombre}</h5>
+                  <p id="precioProducto">${pc._precio}</p>
                   <p id="descripcionProducto"class="card-text">
-                  ${prod._descripcion}
+                  ${pc._descripcion}
                   </p>
-                  <p id="talleProducto">${prod._talle}</p>
-                  <p id="categoriaProducto">${prod._categoria}</p>
+                  <p id="talleProducto">${pc._talle}</p>
+                  <p id="categoriaProducto">${pc._categoria}</p>
                 </div>
                 <div class="card-footer">
-                <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${index})">Añadir al carro</a>
+                <a href="#" class="btn btn-green mt-3" id="botonComprar" onclick="comprarProd(${ic})">Añadir al carro</a>
                 </div>
               </div>       
             `;
-			tarjetasProd.innerHTML += tarjeta;
+			tarjetasCat.innerHTML += tarjetaCat;
 		});
-		mensajes.innerHTML = "se encontraron los siguientes productos para la categoría ";
+		console.log = "se encontraron los siguientes productos para la categoría ";
 	} else {
-		mensajes.innerHTML = "no se encontraron productos para la categoría ";
+		console.warn = "no se encontraron productos para la categoría ";
 	}
-} // FIN [filtrar productos por categoria]
+} // fin filtrarProd
 
 
 // --------------------------- [listar carrito] ---------------------------- //
@@ -282,8 +309,7 @@ function listarCarrito() {
 	} else {
 		alert("carrito vacio");
 	}
-} // FIN [listar carrito] 
-
+} // fin listarCarrito 
 
 
 // ------------------------ [borra item del carrito] ------------------------ //
@@ -322,4 +348,4 @@ function listarCarrito() {
 
     let t=document.getElementById("totales");
         t.innerHTML=totalARSCarrito.toFixed(2);
-} // FIN [borra item del carrito]
+} // fin borrarItem
