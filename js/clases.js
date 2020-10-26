@@ -1,12 +1,15 @@
 export class Usuario {
-	constructor(codigo, nombre, apellido, email, password, codigosProductos = [], direccion = [],
-		// direccion = {
-		// 	dir1,
-		// 	dir2,
-		// 	provincia,
-		// 	localidad,
-		// 	cp
-		// },
+	constructor(codigo, nombre, apellido, email, password, codigosProductos = [],
+		direccion = 
+			{
+				dir1: "",
+				dir2: "",
+				ciudad: "",
+				provincia: "",
+				codPostal
+			},
+		
+
 		estado, esAdmin
 	) {
 		this._codigo = codigo;

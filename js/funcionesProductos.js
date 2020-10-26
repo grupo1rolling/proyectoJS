@@ -99,19 +99,19 @@ export function mostrarProductos() {
 					<td class="">${item._nombre}</td>
 					<td class="">${item._categoria}</td>
 					<td class="text-center">${item._talle}</td>
-					<td class="text-center">${item._foto}</td>
+					
 					<td class="text-center">$ ${item._precio}</td>
 					<td class="text-center ${stockIndicador}"> <b>${item._stock}</b></td>
 					<td class="text-center">
 						<button id="btnModificarProductosAdmin" data-codigo="${item._codigo}" title="Modificar Producto" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaProducto"><i id="btnModificarProductosAdmin" data-codigo="${item._codigo}" class="far fa-edit"></i></button>
-						<button id="btnBorrarProductosAdmin" data-codigo="${item._codigo}" title="Eliminar Producto" type="button" id="btnBaja" class="btn btn-outline-danger btn-sm"><i id="btnBorrarProductosAdmin" data-codigo="${item._codigo}" class="fas fa-trash-alt"></i></button>
+						<button id="btnConfirmarBorradoProd" data-codigo="${item._codigo}" data-tabla="productos" title="Eliminar Producto" type="button" id="btnBaja" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalConfirmaBorrado"><i id="btnConfirmarBorradoProd" data-codigo="${item._codigo}" data-tabla="productos" class="fas fa-trash-alt" data-toggle="modal" data-target="#modalConfirmaBorrado"></i></button>
 					</td>
 			</tr>
 		  `;
 
 		//   <button id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" title="Modificar Usuario" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaUsuario"><i id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-edit"></i></button>
 		// 	<button id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" title="Eliminar Usuario" type="button" class="btn btn-outline-danger btn-sm"><i id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-times"></i></button>
-
+{/* <td class="text-center">${item._foto}</td> */}
 		contenedor.innerHTML += detalle;
 	});
 }
@@ -205,6 +205,16 @@ export function mostrarProductos() {
 // 	modalAdminProductos.innerHTML = contenido;
 // }
 
+export function getProductoByCodigo(codProducto) {
+	let productoEncontrado = [];
+
+	productoEncontrado = getProductos().find(item => {
+		return item._codigo == codProducto;
+	});
+
+	return productoEncontrado;
+}
+
 export function modificarAgregarDatosProductos(codigoProducto) {
 
 	let contenidoTalles = "";
@@ -237,8 +247,8 @@ export function modificarAgregarDatosProductos(codigoProducto) {
 		precioValue = productosDatos._precio;
 		descripcionValue = productosDatos._descripcion;
 
-		console.log(`Categoría: ${productosDatos._categoria}`);
-		console.log(`Talle: ${productosDatos._talle}`);
+		// console.log(`Categoría: ${productosDatos._categoria}`);
+		// console.log(`Talle: ${productosDatos._talle}`);
 		// console.log(`Categoría: ${productosDatos._categoria}`);
 		// console.log(`Categoría: ${productosDatos._categoria}`);
 

@@ -2,7 +2,7 @@ import { cargaInicialDatos } from "./funcionesAuxiliares.js";
 import { mostrarProductos, modificarAgregarDatosProductos, /*modificarDatosProductos,*/ /*grabarModificacionProductoAdmin,*/ grabarModificacionAltProductoAdmin, borrarProducto } from "./funcionesProductos.js";
 import {
 	mostrarUsuarios, modificarDatosUsuario, borrarUsuario, grabarModificacionUsuariosAdmin,
-	btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage, verProductosUsuariosAdmin
+	btnModalAltaUsuarioAdminPage, grabarAltaUsuarioAdminPage, verProductosUsuariosAdmin, modalConfirmarBorrado
 } from "./funcionesUsuarios.js";
 
 
@@ -26,10 +26,40 @@ btnModificarUsuario.addEventListener("click", (e) => {
 	}
 
 	/*Evento del boton para borrar un usuario (Pagina Admin)*/
-	if (e.target.id == "btnBorrarUsuariosAdmin") {
-		borrarUsuario(e.target.dataset.codigo);
+	if (e.target.id == "btnConfirmarBorrado") {
+		modalConfirmarBorrado(e.target.dataset.codigo, e.target.dataset.tabla);
 	}
+
 });
+
+const btnCofirmarBorrado = document.querySelector("#modalConfirmaBorrado");
+btnCofirmarBorrado.addEventListener("click", (e) => {
+
+	/*Evento del boton para borrar un usuario (Pagina Admin)*/
+	if (e.target.id == "btnBorrarConfirmado") {
+		
+		switch (e.target.dataset.tabla) {
+			case "usuarios":
+				borrarUsuario(e.target.dataset.codigo);
+				break;
+		
+			case "productos":
+				borrarProducto(e.target.dataset.codigo);
+				break;
+		
+			default:
+				break;
+		}
+		
+	}
+
+	/*Evento del boton para borrar un producto (Pagina Admin)*/
+	// if (e.target.id == "btnBorrarProductosAdmin") {
+	// 	borrarProducto(e.target.dataset.codigo);
+	// 	//console.log("Prueba boton Eliminar Producto");
+	// }
+});
+
 
 //-- ALTA USUARIO --//
 const btnAltaUsuarioAdminPage = document.querySelector("#containerBtnAltaUsuarioAdmin");
@@ -76,10 +106,11 @@ btnModificarProducto.addEventListener("click", (e) => {
 	}
 
 	/*Evento del boton para borrar un producto (Pagina Admin)*/
-	if (e.target.id == "btnBorrarProductosAdmin") {
-		borrarProducto(e.target.dataset.codigo);
-		console.log("Prueba boton Eliminar Producto");
+	if (e.target.id == "btnConfirmarBorradoProd") {
+		modalConfirmarBorrado(e.target.dataset.codigo, e.target.dataset.tabla);
+		//console.log("Prueba boton Eliminar Producto");
 	}
+
 });
 
 const btnAltaProducto = document.querySelector("#contenedorAltaProductosAdmin");
@@ -92,7 +123,6 @@ btnAltaProducto.addEventListener("click", (e) => {
 	}
 });
 
-
 /*Evento del boton para guardar los cambios de un Producto (Pagina Admin)*/
 const modalModificaProductoAdmin = document.querySelector("#modalFooterProductos");
 modalModificaProductoAdmin.addEventListener("click", (e) => {
@@ -102,12 +132,6 @@ modalModificaProductoAdmin.addEventListener("click", (e) => {
 		// console.log("Prueba boton GRABAR Producto");
 	}
 });
-
-
-
-
-
-
 
 /*Evento del boton para guardar los cambios de un Producto (Pagina Admin)*/
 const productosUsuarioAdmin = document.querySelector("#contenedorUsuariosAdmin");

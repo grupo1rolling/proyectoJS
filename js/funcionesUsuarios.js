@@ -1,6 +1,7 @@
 import { Usuario } from "./clases.js";
-import { getCodigoGeneradoByKey } from "./funcionesAuxiliares.js";
-import { getProductos, mostrarProductosUsuario } from "./funcionesProductos.js";
+import { getCodigoGeneradoByKey, getProvincias } from "./funcionesAuxiliares.js";
+import { getProductos, mostrarProductosUsuario, getProductoByCodigo } from "./funcionesProductos.js";
+
 
 export function agregarUsuario(usuario) {
 	let usuariosArray = [];
@@ -123,16 +124,24 @@ export function grabarAltaUsuarioAdminPage() {
 	let password = document.getElementById("contrasenaAltaUsrAdmPage").value;
 	let estado = document.getElementById("SwitchEstadoAltaUsrAdmPage").checked;
 	let esAdmin = document.getElementById("SwitchEsAdmAltaUsrAdmPage").checked;
+	
+	let dir1 = document.getElementById("direccion").value;
+	let dir2 = document.getElementById("direccionAdc").value;
+	let ciudad = document.getElementById("ciudad").value;
+	let provincia = document.getElementById("provincia").value;
+	let codPostal = document.getElementById("codPostal").value;
 
-	console.log(`Código: ${codigo}`)
-	console.log(`Nombre: ${nombre}`)
-	console.log(`Apellido: ${apellido}`)
-	console.log(`Email: ${email}`)
-	console.log(`Pass: ${password}`)
-	console.log(`Estado: ${estado}`)
-	console.log(`EsAdmin: ${esAdmin}`)
+	// let dir2 = usuarioDatos["_direccion"].dir2;
+	
+	// console.log(`Código: ${codigo}`)
+	// console.log(`Nombre: ${nombre}`)
+	// console.log(`Apellido: ${apellido}`)
+	// console.log(`Email: ${email}`)
+	// console.log(`Pass: ${password}`)
+	// console.log(`Estado: ${estado}`)
+	// console.log(`EsAdmin: ${esAdmin}`)
 
-	let nuevoUsuario = new Usuario(codigo, nombre, apellido, email, password, [], [], estado, esAdmin);
+	let nuevoUsuario = new Usuario(codigo, nombre, apellido, email, password, [], {dir1, dir2, ciudad, provincia, codPostal}, estado, esAdmin);
 	agregarUsuario(nuevoUsuario);
 	mostrarUsuarios();
 }
@@ -183,7 +192,7 @@ export function mostrarUsuarios() {
 							<td class="text-center"><i style="${usuarioCheckAdminColor}" class="${usuarioCheckAdmin}"></i></td>
 						<td class="text-center">
 							<button id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" title="Modificar Usuario" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modificaUsuario"><i id="btnModificarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-edit"></i></button>
-							<button id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" title="Eliminar Usuario" type="button" class="btn btn-outline-danger btn-sm"><i id="btnBorrarUsuariosAdmin" data-codigo="${item._codigo}" class="fas fa-user-times"></i></button>
+							<button id="btnConfirmarBorrado" data-codigo="${item._codigo}" data-tabla="usuarios" title="Eliminar Usuario" type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalConfirmaBorrado"><i id="btnConfirmarBorrado" data-codigo="${item._codigo}" data-tabla="usuarios" class="fas fa-user-times"></i></button>
 						</td>
 					</tr>
 				`;
@@ -194,7 +203,7 @@ export function mostrarUsuarios() {
 export function verProductosUsuariosAdmin(codUsuario) {
 
 	console.log(`Ver Productos usuario. Código: ${codUsuario}`);
-	
+
 	let i = 0;
 
 	let contenedor = document.getElementById("detalleProductosUsuarioAdmin");
@@ -234,7 +243,7 @@ export function verProductosUsuariosAdmin(codUsuario) {
 					<td class="text-right">${productosFiltrados._precio}</td>
 				</t>
 				`;
-		
+
 				contenedor.innerHTML += detalle;
 			}
 		});
@@ -258,24 +267,23 @@ export function verProductosUsuariosAdmin(codUsuario) {
 
 
 
-
 	// _________.map(function(item){
-		// let detalle = ` 
-		// <tr>
-		// 	<td scope="row" id="fila">${i + 1}</td>
-		// 	<td class="text-left">${item._nombre}</td>
-		// 	<td class="text-center">${item._stock}</td>
-		// 	<td class="text-rigth">${item.precio}</td>
-		// 	<td align="center">
-		// 		<button id="btnBorrarItem" 
-		// 			title="eliminar producto" 
-		// 			type="button" class="btn btn-outline-danger btn-sm">
-		// 			<i class="fa fa-window-close-o"></i>
-		// 		</button>
-		// </t>
-		// `;
+	// let detalle = ` 
+	// <tr>
+	// 	<td scope="row" id="fila">${i + 1}</td>
+	// 	<td class="text-left">${item._nombre}</td>
+	// 	<td class="text-center">${item._stock}</td>
+	// 	<td class="text-rigth">${item.precio}</td>
+	// 	<td align="center">
+	// 		<button id="btnBorrarItem" 
+	// 			title="eliminar producto" 
+	// 			type="button" class="btn btn-outline-danger btn-sm">
+	// 			<i class="fa fa-window-close-o"></i>
+	// 		</button>
+	// </t>
+	// `;
 
-		// contenedor.innerHTML += detalle;
+	// contenedor.innerHTML += detalle;
 	// })
 
 
@@ -293,13 +301,38 @@ export function verProductosUsuariosAdmin(codUsuario) {
 	// 		</button>
 	// </t>
 
-	
+
 }
 
 export function modificarDatosUsuario(codigoUsuario) {
 	let usuarioDatos = getAllUsuarios().find(item => {
 		return item._codigo == codigoUsuario ? item : "";
 	});
+
+	let contenidoProvincias = "";
+	let dir1 = usuarioDatos["_direccion"].dir1;
+	let dir2 = usuarioDatos["_direccion"].dir2;
+	let ciudad = usuarioDatos["_direccion"].ciudad;
+	let provincia = usuarioDatos["_direccion"].provincia;
+	let codPostal = usuarioDatos["_direccion"].codPostal;
+
+	// <option selected>Seleccione una provincia...</option>
+	// <option value="bue">Buenos Aires</option>
+	// <option value="cat">Catamarca</option>
+	// <option value="ciu">Ciudad Autónoma de Buenos Aires</option>
+	// <option value="cor">Córdoba</option>
+	// <option value="tuc">Tucumán</option>
+	
+	//----- Captura de Provincias -----//
+	let arrayProvincias = getProvincias();
+	let posicionProvincia = arrayProvincias.indexOf(provincia);
+	arrayProvincias.splice(posicionProvincia, 1);
+	arrayProvincias.unshift(provincia);
+
+	arrayProvincias.map(item => {
+		contenidoProvincias += `<option value="${item}">${item}</option>`
+	});
+
 
 	let usuarioEstado = (usuarioDatos._estado) ? "checked" : "unchecked"
 	let usuarioEsAdmin = (usuarioDatos._esAdmin) ? "checked" : "unchecked"
@@ -378,33 +411,30 @@ export function modificarDatosUsuario(codigoUsuario) {
 					<div class="row">
 						<div class="col-12 col-md-12">
 							<div class="form-group">
-								<label for="direccion">Dirección</label>
-								<input type="text" class="form-control" id="direccion" placeholder="calle y número">
+								<label for="direccionAdm">Dirección</label>
+								<input type="text" class="form-control" id="direccionAdm" placeholder="calle y número" value="${dir1}">
 							</div>
 							<div class="form-group">
-								<label for="direccionAdc">Dirección (datos adicionales)</label>
-								<input type="text" class="form-control" id="direccionAdc"
-									placeholder="piso, departamento">
+								<label for="direccionAdcAdm">Dirección (datos adicionales)</label>
+								<input type="text" class="form-control" id="direccionAdcAdm"
+									placeholder="piso, departamento" value="${dir2}">
 							</div>
 							<div class="form-row">
 								<div class="form-group col-md-5">
-									<label for="ciudad">Ciudad</label>
-									<input type="text" class="form-control" id="ciudad">
+									<label for="ciudadAdm">Ciudad</label>
+									<input type="text" class="form-control" id="ciudadAdm" value="${ciudad}">
 								</div>
 								<div class="form-group col-md-4">
-									<label for="provincia">Provincia</label>
-									<select id="provincia" class="form-control">
-										<option selected>Seleccione una provincia...</option>
-										<option value="bue">Buenos Aires</option>
-										<option value="cat">Catamarca</option>
-										<option value="ciu">Ciudad Autónoma de Buenos Aires</option>
-										<option value="cor">Córdoba</option>
-										<option value="tuc">Tucumán</option>
+									<label for="provinciaAdm">Provincia</label>
+									<select id="provinciaAdm" class="form-control">
+									
+										${contenidoProvincias}
+										
 									</select>
 								</div>
 								<div class="form-group col-md-3">
 									<label for="zip">Código Postal</label>
-									<input type="text" class="form-control" id="zip" placeholder="código postal">
+									<input type="text" class="form-control" id="zip" placeholder="código postal" value="${codPostal}">
 								</div>
 							</div>
 						</div>
@@ -429,7 +459,55 @@ export function modificarDatosUsuario(codigoUsuario) {
 
 }
 
+export function modalConfirmarBorrado(codigo, tabla) {
+
+	let mensaje = "";
+
+	switch (tabla) {
+		case "usuarios":
+			let usuarioDatos = getUsuarioByCodigo(codigo);
+			mensaje = `¿Está seguro que desea eliminar a ${usuarioDatos._nombre} ${usuarioDatos._apellido}?`;
+			break;
+	
+		case "productos":
+			let productoDatos = getProductoByCodigo(codigo);
+			mensaje = `¿Está seguro que desea eliminar el producto: ${productoDatos._nombre}?`;
+			break;
+	
+		default:
+			break;
+	}
+
+	console.log(mensaje)
+
+	let modalConfirmarBorrado = document.getElementById("modalConfirmaBorrado");
+	
+	let contenido = `
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="verCarritoTitulo">Atención!</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body" text-align="right">
+								<h5>${mensaje}</h5>
+							</div>
+							<div class="modal-footer">
+								<button type="button" id="btnBorrarConfirmado" data-codigo="${codigo}" data-tabla="${tabla}" class="btn btn-green" data-dismiss="modal">Aceptar</button>
+								<button type="button" id="" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+							</div>
+						</div>
+					</div>
+	`;
+
+	modalConfirmarBorrado.innerHTML = contenido;
+}
+
 export function borrarUsuario(codigo) {
+	// modalConfirmacionBorrado();
+
 	let usuariosFiltrados = getAllUsuarios().filter(function (item) {
 		return item._codigo != codigo
 	});
@@ -446,6 +524,13 @@ export function grabarModificacionUsuariosAdmin() {
 	let password = document.getElementById("contrasenaUsrAdm").value;
 	let estado = document.getElementById("SwitchModifEstadoAdmPage").checked;
 	let esAdmin = document.getElementById("SwitchModifEsAdmPage").checked;
+	
+	let dir1 = document.getElementById("direccionAdm").value;
+	let dir2 = document.getElementById("direccionAdcAdm").value;
+	let ciudad = document.getElementById("ciudadAdm").value;
+	let provincia = document.getElementById("provinciaAdm").value;
+	let codPostal = document.getElementById("zip").value;
+
 
 	let usuariosArray = getAllUsuarios();
 
@@ -456,6 +541,13 @@ export function grabarModificacionUsuariosAdmin() {
 			item._apellido = apellido;
 			item._email = email;
 			item._password = password;
+
+			item._direccion.dir1 = dir1;
+			item._direccion.dir2 = dir2;
+			item._direccion.ciudad = ciudad;
+			item._direccion.provincia = provincia;
+			item._direccion.codPostal = codPostal;
+
 			item._estado = estado;
 			item._esAdmin = esAdmin;
 		}

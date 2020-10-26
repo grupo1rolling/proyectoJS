@@ -27,3 +27,5 @@ window.comprarProd= function (i) {
     let botonVaciar = document.getElementById('botonVaciar');
 */
    
+
+ // IMPORTANTE para saber donde estamos: alert ('El pathname actual: '+window.location.pathname);  

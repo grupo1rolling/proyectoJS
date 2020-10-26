@@ -86,7 +86,7 @@
 			<table class="table table-sm table-striped table-dark">
 				<thead>
 					<tr id="usuariosCabecera">
-						<th scope="col" class="">Código</th>
+						<th scope="col" class="">#</th>
 						<th scope="col" class="">Nombre</th>
 						<th scope="col" class="">Apellido</th>
 						<th scope="col" class="">E-mail</th>
@@ -135,11 +135,11 @@
 			<table class="table table-sm table-striped table-dark">
 				<thead>
 					<tr id="productosCabecera">
-						<th scope="col" class="">Código</th>
+						<th scope="col" class="">#</th>
 						<th scope="col" class="">Nombre</th>
 						<th scope="col" class="">Categoría</th>
 						<th scope="col" class="text-center">Talle</th>
-						<th scope="col" class="text-center">Imagen</th>
+						<!-- <th scope="col" class="text-center">Imagen</th> -->
 						<th scope="col" class="text-center">Precio de Venta</th>
 						<th scope="col" class="text-center">Stock</th>
 						<th scope="col" class="text-center">Acciones</th>
@@ -200,8 +200,7 @@
 										</div>
 										<div class="form-group">
 											<label for="repContrasena">Repetir Contraseña</label>
-											<input type="password" class="form-control"
-												id="repContrasenaAltaUsrAdmPage">
+											<input type="password" class="form-control" id="repContrasenaAltaUsrAdmPage">
 										</div>
 									</div>
 								</div>
@@ -228,35 +227,34 @@
 											<label for="provincia">Provincia</label>
 											<select id="provincia" class="form-control">
 												<option selected>Seleccione una provincia...</option>
-												<option value="bue">Buenos Aires</option>
-												<option value="cat">Catamarca</option>
-												<option value="cha">Chaco</option>
-												<option value="chu">Chubut</option>
-												<option value="ciu">Ciudad Autónoma de Buenos Aires</option>
-												<option value="cor">Córdoba</option>
-												<option value="cte">Corrientes</option>
-												<option value="eri">Entre Ríos</option>
-												<option value="for">Formosa</option>
-												<option value="juj">Jujuy</option>
-												<option value="lap">La Pampa</option>
-												<option value="lar">La Rioja</option>
-												<option value="mdz">Mendoza</option>
-												<option value="mis">Misiones</option>
-												<option value="nqn">Neuquén</option>
-												<option value="rne">Río Negro</option>
-												<option value="sla">Salta</option>
-												<option value="sju">San Juan</option>
-												<option value="slu">San Luis</option>
-												<option value="scr">Santa Cruz</option>
-												<option value="sfe">Santa Fe</option>
-												<option value="sgo">Santiago</option>
-												<option value="tdf">Tierra del Fuego</option>
-												<option value="tuc">Tucumán</option>
+												<option value="Buenos Aires">Buenos Aires</option>
+												<option value="Catamarca">Catamarca</option>
+												<option value="Chaco">Chaco</option>
+												<option value="Chubut">Chubut</option>
+												<option value="Córdoba">Córdoba</option>
+												<option value="Corrientes">Corrientes</option>
+												<option value="Entre Ríos">Entre Ríos</option>
+												<option value="Formosa">Formosa</option>
+												<option value="Jujuy">Jujuy</option>
+												<option value="La Pampa">La Pampa</option>
+												<option value="La Rioja">La Rioja</option>
+												<option value="Mendoza">Mendoza</option>
+												<option value="Misiones">Misiones</option>
+												<option value="Neuquén">Neuquén</option>
+												<option value="Río Negro">Río Negro</option>
+												<option value="Salta">Salta</option>
+												<option value="San Juan">San Juan</option>
+												<option value="San Luis">San Luis</option>
+												<option value="Santa Cruz">Santa Cruz</option>
+												<option value="Santa Fe">Santa Fe</option>
+												<option value="Santiago">Santiago</option>
+												<option value="Tierra del Fuego">Tierra del Fuego</option>
+												<option value="Tucumán">Tucumán</option>
 											</select>
 										</div>
 										<div class="form-group col-md-3">
-											<label for="zip">Código Postal</label>
-											<input type="text" class="form-control" id="zip">
+											<label for="codPostal">Código Postal</label>
+											<input type="text" class="form-control" id="codPostal">
 										</div>
 									</div>
 								</div>
@@ -549,7 +547,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="verCarritoTitulo">Tu carrito: </h5>
+						<h5 class="modal-title" id="verCarritoTitulo">Productos: </h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -581,15 +579,47 @@
 						<!-- </div> -->
 					</div>
 					<div class="modal-footer">
-						<button type="button" id="botonVaciar" class="btn btn-danger"
-							data-dismiss="modal">Vaciar</button>
-						<button type="button" id="botonFinalizar" class="btn btn-green" data-dismiss="modal">Finalizar
-							Compra</button>
+						<!-- <button type="button" id="botonVaciar" class="btn btn-danger" data-dismiss="modal">Vaciar</button>
+						<button type="button" id="botonFinalizar" class="btn btn-green" data-dismiss="modal">Finalizar Compra</button> -->
+						<button type="button" id="" class="btn btn-green" data-dismiss="modal">Cerrar</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- / Modal Productos del Usuario -->
+		<!-- FIN - Modal para ver los Productos de un Usuario -->
+
+
+
+
+
+
+
+		<!-- ------------------------- [Modal para ver los Productos de un Usuario] ------------------------- -->
+		 <div class="modal fade" id="modalConfirmaBorrado" tabindex="-1" role="dialog" aria-labelledby="verCarritoTitulo" aria-hidden="true">
+			<!-- <div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="verCarritoTitulo">Atención!</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" text-align="right">
+							<h5>¿Está seguro que desea eliminar a ...?</h5>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="" class="btn btn-green" data-dismiss="modal">Aceptar</button>
+						<button type="button" id="" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+					</div>
+				</div>
+			</div> -->
+		</div> 
+		<!-- FIN - Modal para ver los Productos de un Usuario -->
+
+		
+
+		<button data-toggle="modal" data-target="#modalConfirmaBorrado">Prueba MODAL BORRAR</button>
+
 
 	</main>
 
