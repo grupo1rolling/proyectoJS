@@ -23,12 +23,6 @@ export class Usuario {
 		this._esAdmin = esAdmin;
 	}
 
-	// OBSERVACION : podemos cambiar Apellido por usuario y en la funcion login
-	//function checkLogin(mailL, passL) {
-	// 	usuarioOK = usuariosArray.find(item => {
-	// 		return (item._email === mailL||item_usuario === mailL) && (item._password === passL)
-	// 	})
-	// }
 	//-----[Getter]-----//
 	get codigo() {
 		return this._codigo;
@@ -101,8 +95,6 @@ export class Usuario {
 	}
 }
 
-
-//CHECK QUE  DESCRIPCION TENGA LA MISMA CANT DE CARACTERES PARA QUE LAS CARD QUEDEN IGUALES Y NO UNA MAS ALTA QUE LA OTRA
 export class Producto {
 	constructor(codigo, nombre, descripcion, talle, foto, precio, stock, categoria) {
 		this._codigo = codigo;

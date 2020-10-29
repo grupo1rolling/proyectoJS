@@ -9,23 +9,13 @@ export function agregarUsuario(usuario) {
 	//-- Verifico si ya existe el nombre de Usuario ingresado
 	existeUs = existeUsuario(usuario);
 	if (existeUs) {
-		alert("Usuario existente");
+		//alert("Usuario existente");
 	} else {
 		usuariosArray = getAllUsuarios();
 		usuariosArray.push(usuario);
 		localStorage.setItem("usuarios", JSON.stringify(usuariosArray));
 	}
 }
-
-// export function getUsuario(codigo) {
-// 	let usuarioArray = getAllUsuarios();
-
-// 	let usuarioDatos = usuarioArray.find(item => {
-// 		return item._codigo === usuario.codigo ? item : "";
-// 	});
-
-// 	return usuarioDatos;
-// }
 
 export function getAllUsuarios() {
 	//-- Verifico si existe la key 'usuarios' en LocalStorage
